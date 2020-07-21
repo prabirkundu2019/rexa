@@ -1,0 +1,42 @@
+// label {
+//   font-size: medium;
+//   font-weight: 100;
+// }
+
+label {
+  font-size: 12px;
+  font-weight: 100;
+}
+
+
+.popoverStyle {
+  background: #f1f7f7;
+  height: 100%;
+  width: 20vw;
+  label {
+    font-weight: 400;
+  }
+}
+
+.card {
+	position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 10px;
+    border-radius: 0;
+    box-shadow: 1px 1px 5px 1px #cccccc94;
+    text-align:center;
+}
+.share{
+	background:#ec2664;	
+	color:#FFF;
+	border:none;
+	border-radius: 10px;
+}

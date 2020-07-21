@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>{{replaceunserscore(itemName) | titlecase}}</div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button><!--<ion-icon name="search"></ion-icon>--></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	    <ion-button routerLink="/menu/wishlist">
+        <ion-icon name="list"></ion-icon>
+      </ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="data">
+  	<div class="product_content">
+      <div class="product_title"><a>{{data.product_name | titlecase}}</a></div>
+      <div class="product_price">&#8377; {{data.mrp_price}}<span class="mrp_tag">&#8377; {{data.display_price}}</span></div>
+      <div class="inclusive">Inc. of all taxes</div>
+    </div>
+    <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
+    <p [innerHtml]=data.product_description></p>
+    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+      <ion-button (click)=addToCart(data)>Add To Cart</ion-button>
+    </div>
+    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+      <ion-button (click)=buyNow(data)>Buy Now</ion-button>
+    </div>
+  	<hr>
+   	<!--<div class="form-group pt-2" style="margin-top: 10px;" *ngIf="data?.selected">
+    	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select Range" (ionChange)="selectRange($event)">
+        <ion-select-option *ngFor="let price of data?.ItemRateList;let i=index" [selected]="data.selected.RateDateSetupId==price.RateDateSetupId" [value]="price">{{price.RangeFrom}}<span *ngIf="price.RangeUpto != price.RangeFrom">-</span>{{price.RangeUpto != price.RangeFrom?price.RangeUpto:''}} {{price.UnitName | titlecase}} &#8377;{{price.SaleRate}}</ion-select-option>
+      </ion-select>
+    </div>
+  	<hr>
+  	<ion-segment [ngClass]="{'hide':!aboutdata}" style="overflow: auto;justify-content: start;" (ionChange)="segmentChanged($event)" [value]="aboutdata[0]?.head.CategoryName" #segment>
+      <ion-segment-button [value]="data.head.CategoryName" *ngFor="let data of aboutdata">
+        <ion-label>{{data.head.CategoryName}}</ion-label>
+      </ion-segment-button>
+  	</ion-segment>
+  	<div class="about" [ngClass]="{'hide':segment.value != data.head.CategoryName}" *ngFor="let data of aboutdata">
+      <p *ngIf="data.head.Name">{{data.head.Name}}</p>
+      <table class="table" *ngIf="data.subhead.length">
+        <tbody>
+          <tr *ngFor="let subdata of data.subhead">
+            <th scope="row">{{subdata.CategoryName}}</th>
+            <td class="subhead-data">{{subdata.Name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>-->
+  </div>
+  <div *ngIf="!data">
+    <div class="product_content">
+      <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+    </div>
+    <ion-skeleton-text animated style="width: 100%;height: 250px;"></ion-skeleton-text>
+    <ion-grid>
+      <ion-row>
+        <ion-col size='3' *ngFor="let data of ' '.repeat(4).split('')">
+          <ion-skeleton-text animated style="width: 100%;height:40px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-skeleton-text animated style="width: 100%;height:20px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-grid>
+      <ion-row>
+        <ion-col size='4' *ngFor="let data of ' '.repeat(3).split('')">
+          <ion-skeleton-text animated style="width: 100%;height:40px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="data">
+  <ion-toolbar>
+    <!--<div style="display: inline-flex;width: 100%;">
+      <div class="fbtn white" style="padding: 8px;" *ngIf="data?.selected.IsAddedToCart">
+        <div class="final_amt"> &#8377;{{totalsaleprice}}</div>
+        <div class="toatl_save">Saved &#8377;{{totalmrpprice - totalsaleprice | number:'0.0-2'}}</div>
+      </div>
+      
+      <button *ngIf="!data?.selected.IsAddedToWishList && !data?.selected.IsAddedToCart" class="fbtn white" (click)="presentIncdecModal(data,'wishlist')">Add to wishlist</button>
+      <ion-button *ngIf="data?.selected.IsAddedToWishList" class="fbtn white">Added to wishlist</ion-button>
+      <ion-button *ngIf="data?.selected.IsAddedToCart" class="fbtn orange" routerLink="/menu/cart">View cart</ion-button>
+      <ion-button *ngIf="!data?.selected.IsAddedToCart && this.CustomerLoginId" class="fbtn orange" (click)="data?.selected.IsAddedToWishList?moveToCart():presentIncdecModal(data,'cart')">Add to cart</ion-button>
+      <ion-button *ngIf="!this.CustomerLoginId" routerLink="/login" class="fbtn orange">Add to cart</ion-button>
+    </div>-->
+  </ion-toolbar>
+</ion-footer>

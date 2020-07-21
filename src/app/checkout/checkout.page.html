@@ -1,0 +1,238 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Checkout</div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="delivery-add">
+		<div class="ion-padding">
+			<div class="checkout_title">Deliver Address</div>
+			<ion-grid class="saved-address">
+				<ion-row>
+					<ion-col size="9" *ngIf="address">
+						<p class="add-name">{{address.addtype == 4?address.DescriptionForOther:address.AddressTypeName | titlecase}}</p>
+						<p>{{address.addtype}}</p>
+						<p>{{address.city}}, {{address.state}}, {{address.country}}</p>
+						<p>PIN: {{address.zip}}</p>
+					</ion-col>
+					<ion-col size="3" class="change-add">
+						<ion-button routerLink="/menu/alladd" [queryParams]="{ from: 'checkout' }">Change</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</div>
+	</div>
+	<div class="cart_total_inner checkout_box">
+		<div class="ion-padding">
+    		<div class="checkout_title">Bill Details</div>
+				<ion-grid>
+				<ion-row style="border-top: solid 1px #eee; padding: 10px 0px;" *ngFor="let cart of cartdata">
+					<ion-col size="7">{{cart.productdetails.product_sku}}</ion-col>
+					<ion-col size="3">&#8377;{{cart.productdetails.display_price}} X {{cart.quantity}}</ion-col>
+					<ion-col size="2">
+						<p class="checkout-price">&#8377; {{cart.quantity * cart.productdetails.display_price | number:'1.0-2'}}</p>
+					</ion-col>
+				</ion-row>
+				<hr>
+				<ion-row>
+    				<ion-col size="9">Item Total</ion-col>
+    				<ion-col size="3">
+      					<p class="checkout-price">&#8377; {{subtotal | number:'1.0-2'}}</p>
+    				</ion-col>
+  				</ion-row>
+  				<ion-row class="bill-discount" *ngIf="discount">
+    				<ion-col size="9">Discount</ion-col>
+    				<ion-col size="3">
+      					<p class="checkout-price">- &#8377; {{discount | number:'1.0-2'}}</p>
+    				</ion-col>
+  				</ion-row>
+				<ion-row>
+					<ion-col size="9">
+						Delivery Fee <!-- <span class="other-charges">(Shipping, Express, Gifting, etc ..)</span> -->
+					</ion-col>
+					<ion-col size="3">
+						<p class="checkout-price">{{othercharges?'+ &#8377; '+othercharges:'Free'}}</p>
+					</ion-col>
+				</ion-row>
+				<hr>
+		    	<ion-row class="checkout-total">
+		    		<ion-col size="9">To Pay</ion-col>
+		    		<ion-col size="3">
+		    			<p class="checkout-price">&#8377; {{(othercharges+subtotal)-discount | number:'1.0-2'}}</p>
+		    		</ion-col>
+		    	</ion-row>
+				<hr>
+			</ion-grid>
+		</div>
+	</div>
+	
+	<div class="wallet-details">
+		<div class="wallet-details-inner">
+			<div class="ion-padding">
+				<div>
+  					<ion-label class="label1">Apply Coupon(Offer)</ion-label>
+  					<ion-row>
+  						<ion-col size="7" class="change-add">
+							<ion-input type="text" style="border:dashed 1px #ebebeb; border-radius: 15px;" class="input1" [(ngModel)]="couponCode" name="cpCode" id="cpCode" #cpCode="ngModel" (keypress)="onCouponCodeChange()" placeholder="Enter Coupon Code"></ion-input>
+						</ion-col>
+						<ion-col size="5">
+							<ion-button (click)="applyCoupon()" class="redBtn">Apply Coupon</ion-button>
+						</ion-col>
+						<ion-col size="12" *ngIf="couponCodeError" class="text-danger"> 
+							Coupon Code Not Valid
+						</ion-col>
+						<ion-col size="12" *ngIf="couponCodeSucces !=''" class="text-success"> 
+							{{couponCodeSucces}}
+						</ion-col>	
+					</ion-row>	
+  				</div>
+				<div class="checkout_title">Wallet Detail</div> 
+  				<div style="display: flex;margin-bottom: 13px;">
+  					<div>{{walletname}}<br>{{walletno}}</div>
+  					<div class="checkout_title" style="margin-left: auto;font-size: 20px;">
+  						&#8377; {{walletamt}}  		
+  					</div>
+  				</div>
+  				
+  				<div>
+  					<ion-label class="label1">Amout in your wallet</ion-label>
+					<ion-input type="tel" class="input1" [(ngModel)]="WalletAmount" name="uname" id="uname" #uname="ngModel" placeholder="Amount to redeem from wallet"></ion-input>
+  				</div>
+  				<br/><br/>
+
+  				<!--<div class="custom-control custom-checkbox">
+           			<input type="checkbox" class="custom-control-input" id="donationSelectionId" name="donationSelectionName" [(ngModel)]="isDonation" (change)="calculateCharges()" />
+            		<label class="custom-control-label" for="donationSelectionId">Do you want to donate some amount ? <br/>
+            		<ion-label class="label1">Enter Amount to Donate</ion-label>
+					<ion-input type="tel" style="border:dashed 1px #ebebeb; border-radius: 15px;" class="input1" [(ngModel)]="donateAmount" name="damt" id="damt" #damt="ngModel" placeholder="Amount to Donate" (change)="calculateCharges()"></ion-input>	
+            		</label>
+              	</div>
+              	<br/>
+
+  				<div class="row donationpart_payment pt-0" style="padding: 2%;">
+              		<div class="form-group form-inline">
+                		<label for="amountToDonate">Safety Amount : {{ safetyAmount }}</label>
+              		</div>
+            	</div>
+            	<br/>
+
+            	<div>
+	            	<div class="custom-control custom-checkbox">
+	                	<input type="checkbox" checked="checked" class="custom-control-input" id="tipAmountId" name="isTipAmountName" [(ngModel)]="isTipAmount" (change)="calculateCharges()"/>
+	                	<label class="custom-control-label" for="tipAmountId">Support your delivery hero</label>
+	              	</div>
+              	 	<div class="row donationpart_payment pt-0" style="padding: 2%;">
+              			<div class="form-group form-inline">
+                			<label for="amountToDonate">Add Tip for his risks to deliver your products safely in this crucial time</label>
+			               	<div class="m-3">
+			                  <a
+			                    title="Select Tip Amount"
+			                    *ngFor="let tip of tipAmountList"
+			                    href="javascript:void(0)"
+			                    (click)="tipAmount = tip; calculateCharges()"
+			                    class="btn btn-sq-xs btn-primary m-1"
+			                  >
+			                    {{ tip }}
+			                  </a>
+			                </div>
+			                <input type="number" [disabled]="!isTipAmount" class="form-control ml-2"
+			                  placeholder="Enter Amount" name="tipAmountName" [(ngModel)]="tipAmount"
+			                  (change)="calculateCharges()" />
+              			</div>
+            		</div>
+            	</div>
+
+			  	<div class="couponlist" style="margin-top: 25px;" *ngIf="couponList.length > 0">
+			  	<div class="checkout_title pb-3">Avaiable Coupon</div>
+			  	<ion-radio-group>  	
+						<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of couponList;let i = index;">
+					    <ion-radio class="add-radio" slot="start" id="saved" [value]="mode.CouponId" (click)="selectCoupon(mode.CouponId)"></ion-radio>
+					    <ion-label class="add-radio-label" for="#saved" >{{mode.name}}</ion-label>		    
+					  </div>
+				  </ion-radio-group>
+			  	</div>-->
+
+				<div id="checkOutId">
+				  <form
+				    method="post"
+				    action="https://securegw-stage.paytm.in/theia/processTransaction"
+				    id="paytmForm"
+				    name="paytm_form"
+				  >
+				    <input type="hidden" name="MID" value="RasaMu09464840267222" />
+				    <input type="hidden" name="CHANNEL_ID" value="WEB" />
+				    <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail105" />
+				    <input type="hidden" name="WEBSITE" value="DEFAULT" />
+				    <input
+				      type="hidden"
+				      name="ORDER_ID"
+				      [value]="buyNowData?.ORDER_ID"
+				    />
+				    <input
+				      type="hidden"
+				      name="TXN_AMOUNT"
+				      [value]="buyNowData?.TXN_AMOUNT"
+				    />
+				    <input
+				      type="hidden"
+				      name="CUST_ID"
+				      [value]="buyNowData?.CUST_ID"
+				    />
+				    <input
+				      type="hidden"
+				      name="CALLBACK_URL"
+				      [value]="buyNowData?.CALLBACK_URL"
+				    />
+				    <input
+				      type="hidden"
+				      name="CHECKSUMHASH"
+				      [value]="buyNowData?.CHECKSUMHASH"
+				    />
+				  </form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="payment-opt">
+		<div class="payment-opt-inner">
+			<div class="ion-padding">
+				<div class="payment-options" style="margin-top: 25px;">
+				  	<div class="checkout_title pb-3">Payment Option</div>
+				  	<ion-radio-group [(ngModel)]="spmode">  	
+						<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of pmode;let i = index;">
+					    	<ion-radio [checked]="spmode==mode.id" class="add-radio" slot="start" id="saved" [value]="mode.id"></ion-radio>
+					    	<ion-label class="add-radio-label" for="#saved" >{{mode.name}}</ion-label>
+					    	<!-- <ion-img [src]="'/assets/images/'+mode.ShortName+'.png'"></ion-img> -->
+					  	</div>
+					  	<div class="in-flx" style="margin: 5px;width: 100%" *ngIf="allowCashOnDelivery">
+					    	<ion-radio class="add-radio" slot="start" id="saved" value="COD"></ion-radio>
+					    	<ion-label class="add-radio-label" for="#saved" >Cash On Delivery</ion-label>
+					  	</div>
+					</ion-radio-group>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</ion-content>
+
+<ion-footer>
+  	<ion-toolbar>
+  		<div style="display: inline-flex;width: 100%; background-color: #ebebeb;">
+	    	<div class="fbtn white" style="padding: 8px;">
+	    		<div class="final_amt"> &#8377;{{subtotal | number:'1.0-2'}}</div>
+	      		<div class="toatl_save">Saved &#8377;{{discount | number:'1.0-2'}}</div>
+	    	</div>
+	    	<ion-button class="fbtn orange" (click)="buy()">Place order</ion-button>
+	  	</div>
+  	</ion-toolbar>
+</ion-footer>

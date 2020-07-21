@@ -1,0 +1,32 @@
+<ion-content class="ion-padding">
+  <div class="d-flex login_page flex-column align-items-center justify-content-center ">
+	  <div class="logo">
+	    <img src="/assets/images/logo.png" style="width: 50%;background: #ed4834;">
+	  </div>
+	  <div class="checkout_form_container">
+	    <form (ngSubmit)="loginForm.valid && login()" id="checkout_form" class="checkout_form" #loginForm="ngForm">
+	    	<ion-grid>
+	    		<ion-row>
+	    			<ion-col size="12">
+	    				<ion-label class="label1">Enter Email</ion-label>
+	  					<ion-input type="email" [(ngModel)]="model.email" name="email" required id="email" #email="ngModel" class="input1"></ion-input>
+	    			</ion-col>
+	    			<ion-col size="12">
+	    				<ion-label class="label1">Password</ion-label>
+	  					<ion-input type="password" [(ngModel)]="model.password" name="password" required id="password" #password="ngModel" class="input1"></ion-input>
+	    			</ion-col>
+	    			<div class="forgotpass"><a routerLink="/forgotpass">forgot Password ?</a></div>
+	    			<ion-col size="12">
+							
+							<button color="cprimary" class="ion-button1" type="submit" expand="full" [disabled]="!loginForm.valid">Login</button>
+	    			</ion-col>
+	    			<ion-col size="12">
+							
+							<button routerLink="/signup" color="cprimary" class="ion-button1 ion-button2" type="submit" expand="full" fill="outline">New to Rexa Planet? Signup</button>
+	    			</ion-col>
+	    		</ion-row>
+	    	</ion-grid>
+	    </form>
+	  </div>
+	</div>
+</ion-content>

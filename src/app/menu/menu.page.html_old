@@ -1,0 +1,51 @@
+<ion-split-pane>
+  <ion-menu contentId="content" class="menu">
+    <ion-header style="background-color: #d3d3d3;">
+      <ion-toolbar color="menu" (click)="openProfile()" class="page_header">
+        <ion-img slot="start" [src]="image?image:'assets/images/user.png'"> </ion-img>
+        <ion-title>{{name | titlecase}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list style="padding: 0;">
+        <ion-menu-toggle auto-hide="false">
+          <ion-grid class="saved-address">
+            <ion-row>
+              <ion-col size="9" *ngIf="add">
+                <p class="add-name">Delivering Address: {{add.AddressType == 4?add.DescriptionForOther:add.AddressTypeName | titlecase}}</p>
+                <p>{{add.AddressValue}}</p>
+                <p>{{add.CityName}}, {{add.ShortNameState}}, {{add.ShortNameCountry}}</p>
+                <p>PIN: {{add.PostCode}}</p>
+              </ion-col>
+              <ion-col size="3" class="change-add" auto-hide="true">
+                <ion-img routerLink="/menu/alladd" src="assets/images/edit.png"></ion-img>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-item routerDirection="root" routerLink="/menu/tabs/tab2">
+            <ion-label>
+              Shop by category
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/menu/wallet">
+            <ion-label>
+              Wallet
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/menu/milktopup">
+            <ion-label>
+              Milk Topup
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item tappable routerLink="/login" routerDirection="root">
+          <ion-label>
+            Logout
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <p class="version">v {{version}}</p>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content" main></ion-router-outlet>
+</ion-split-pane>

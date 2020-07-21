@@ -1,0 +1,18 @@
+<ion-content class="ion-padding" style="text-align: center">
+	<h5>Select Qty</h5>
+	<h6 style="margin: 3px;">Selected Range: {{data.selected.RangeFrom}}<span *ngIf="data.selected.RangeUpto != data.selected.RangeFrom">-</span>{{data.selected.RangeUpto != data.selected.RangeFrom?data.selected.RangeUpto:''}} {{data.selected.UnitName | titlecase}} &#8377;{{data.selected.SaleRate}}</h6>
+	<p class="qty-note">* Rates depend upon the range selection</p>
+	<ion-grid>
+		<ion-row style="justify-content: center;">
+			<ion-col size="5" style="text-align: center;">
+				<div class="qty mt-1 in-flx" style="width: 100%">
+			    <span class="minus bg-dark" (click)="dec(input)">-</span>
+			    <ion-input type="number" class="count" #input readonly name="qty" [min]="data.selected.RangeFrom?data.selected.RangeFrom:'1'" [max]="data.selected.RangeUpto == data.selected.RangeFrom?'100':data.selected.RangeUpto" [value]="data.selected.RangeFrom?data.selected.RangeFrom:'1'"></ion-input>
+			    <span class="plus bg-dark" (click)="inc(input)">+</span>
+			  </div>
+			  <h6>Total: &#8377;{{data.total}}</h6>
+			  <ion-button (click)="addToCart(input)" class="btn3" fill="outline" style="margin: 20px 0px 0px;">continue</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

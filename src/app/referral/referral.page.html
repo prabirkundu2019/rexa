@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">  		
+	    <ion-menu-button></ion-menu-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Make Money</div>
+      </div>
+    </ion-title>    	
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home">	
+	<ion-grid>
+		<ion-row>		
+			<ion-col size="4" class="card">
+				<button type="button" class="btn btn-primary share" (click)="presentPrompt()">Share to Friend </button>
+			</ion-col>		
+			<ion-col size="8" class="card" style="text-align:right; font-size: 10px;">		 		
+				<label for=""> {{ 'Total Referral Shared' | uppercase }} :  <span *ngIf="customerlist?.length > 0" for="">{{customerlist[0]?.TotalCount}}</span></label>		       
+		        <label for=""> {{ 'Used By Customer' | uppercase }} :  <span *ngIf="customerlist?.length > 0" for="">{{customerlist[0]?.TotalUsed}}</span></label>		        
+		        <label  for=""> {{ 'Un used' | uppercase }} :  <span *ngIf="customerlist?.length > 0" for="">{{customerlist[0]?.TotalUnUsed}}</span></label>		        
+			</ion-col>			
+		
+		</ion-row>
+			<ion-row>					    			
+			<ion-col size="12">
+				<!--<div class="card-body" style="background-color: aliceblue;">
+      				<div class="row justify-content-center">
+        				<div class="input-group col-md-6 position-relative ">
+	          				<input type="text" class="form-control input-lg p-4" placeholder="Search By Mobile and Email" name="searchElementName"  [(ngModel)]="searchText" (input)="getAllSharedCustomer()" />
+	          				<span class="input-group-btn" style="position: absolute;right: 2vw;top: 1vh;">
+	            				<a><i class="fas fa-search"></i></a>
+	            			</span>
+        				</div>
+      				</div>
+				</div>-->
+    			<div class="row">
+			      <div class="col" style="overflow: scroll;width: 100%;">
+			        <table class="table table-bordered table-hover">
+			          <!--<thead>
+			            <tr>
+			              <th>S.No.</th>			              
+			              <th>Mobile</th>
+			              <th>Email</th>
+			              <th>Shared On</th>
+			              <th>Used On</th>
+			              <th>Used By</th>			              			             
+			            </tr>
+			          </thead>-->
+			          <tbody>
+			            <tr class="text-center" *ngIf="customerlist?.length === 0">
+			              <td colspan="6">
+			                No Customer Found</td>
+			            </tr>
+			            <tr *ngFor="let item of customerlist; let i = index">
+			              <td>{{ i + 1 }}</td>
+			              <td>Mobile : {{ item?.ToMobileNo }}<br/>
+			              	Email : {{item.ToEmail}}<br/>
+			              	Shared On : {{ item?.CreatedOn }}<br/>
+			              	Used On : {{ item?.UsedOn }}<br/>
+			              	Used By : {{ item?.UsedBy }}<br/>
+			              </td>
+			              <!--<td>{{item.ToEmail}}</td>
+			              <td>{{ item?.CreatedOn }}</td>
+			              <td>{{ item?.UsedOn }}</td>
+			              <td>{{ item?.UsedBy }}</td>-->
+			              <!-- <td>
+			                <a href="javascript:void(0)" (click)="submit()" *ngIf="item?.IsUsed"
+			                  ><i class="fas fa-share-square"></i
+			                ></a>
+			              </td> -->
+			            </tr>
+			          </tbody>
+			        </table>
+			      </div>
+			    </div>
+			</ion-col>			
+		</ion-row>
+	</ion-grid>			
+</ion-content>

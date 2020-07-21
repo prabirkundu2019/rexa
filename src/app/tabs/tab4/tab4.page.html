@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-menu-button></ion-menu-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Offers</div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button (click)="opensearch()"><ion-icon name="search"></ion-icon></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	    <ion-button><ion-icon name="list"></ion-icon></ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>

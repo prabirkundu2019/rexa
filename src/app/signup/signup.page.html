@@ -1,0 +1,139 @@
+<ion-content class="ion-padding">
+  <div class="d-flex login_page flex-column align-items-center justify-content-center ">
+	  <div class="logo">
+	    <img src="/assets/images/logo.png" style="width: 50%;background: #ed4834;">
+	  </div>
+	  <div class="checkout_form_container">
+	    <form id="checkout_form" class="checkout_form" #loginForm="ngForm">
+	    	<ion-grid>
+	    		<ion-row>
+	    			<!--<ion-col size="12">
+	    				<ion-label class="label1">Enter Email</ion-label>
+	  					<ion-input type="tel" [(ngModel)]="model.email" name="email" required id="email" #mobile="ngModel" class="input1"></ion-input>
+	    			</ion-col>
+	    			<ion-col size="12" *ngIf="otpres">
+	    				<ion-label class="label1">OTP</ion-label>
+	  					<ion-input type="tel" [(ngModel)]="model.otp" [disabled]="otpverified" name="otp" required id="otp" #otp="ngModel" class="input1"></ion-input>
+	    			</ion-col>-->
+	    			<ion-col size="12">
+	    				<ion-label class="label1">Enter Your Name<span style="color: red;">*</span></ion-label>
+	  					<!--<select class="newSelect form-control" [(ngModel)]="model.title" name="title" id="title" #title="ngModel">			
+							<option value="Mr.">Mr.</option>
+							<option value="Mrs.">Mrs.</option>
+							<option value="Miss.">Miss.</option>
+							<option value="Ms.">Ms.</option>
+						</select>-->
+	  					<ion-input type="text" [(ngModel)]="model.name" autocapitalize name="name" required id="name" #name="ngModel" class="input1"></ion-input>
+                        <ion-label class="label1">Email</ion-label>
+						<ion-input type="email" class="input1" [(ngModel)]="model.email" name="email" id="email" #email="ngModel" placeholder="Email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}"></ion-input>
+	    				<ion-label class="label1">Enter password<span style="color: red;">*</span></ion-label>
+	  					<ion-input type="password" [(ngModel)]="model.password" name="password" required id="password" #password="ngModel" class="input1"></ion-input>
+	  					<!--<ion-label class="label1">Gender</ion-label>
+							<ion-radio-group style="display: inline-flex;width: 100%;padding:10px"  [(ngModel)]="model.gender" name="gender" id="gender" #gender="ngModel">
+								<div style="width: 50%;display: flex;">
+							    <ion-radio checked class="add-radio" slot="start" id="saved" value="Male"></ion-radio>
+							    <ion-label class="add-radio-label" for="#saved" (click)="setG('Male')">Male</ion-label>
+						    </div>
+						    <div style="display: flex;">
+							    <ion-radio class="add-radio" slot="start" value="Female"></ion-radio>
+							    <ion-label class="add-radio-label" (click)="setG('Female')">Female</ion-label>
+						    </div>
+							</ion-radio-group>-->							
+							<!--<ion-label class="label1">Father Name</ion-label>
+							<ion-input type="text" class="input1" [(ngModel)]="model.fname" name="fname" id="fname" #fname="ngModel" placeholder="Father Name"></ion-input>
+							<ion-label class="label1">Wallet Card Type</ion-label>
+						  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.WalletCardId" id="WalletCardId" name="WalletCardId" #WalletCardId="ngModel" class="input1" interface="action-sheet" placeholder="Select Wallet Card Type" style="padding: 15px 10px;" (ionChange)="WalletCardChange(model.WalletCardId)">
+						  	<ng-container *ngFor="let data of WalletCard">					      		
+					      		<ion-select-option [value]="data.Id">{{data.Name}}</ion-select-option>
+					  		</ng-container>
+					    </ion-select>
+					    <ion-label class="label1">Wallet Card Amount</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.price" autocapitalize name="price" id="price" #price="ngModel" class="input1" readonly></ion-input>
+	  					<ion-label class="label1">Additional Amount</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.extra" autocapitalize name="extra" id="extra" #extra="ngModel" class="input1" readonly></ion-input>
+	  					<ion-label class="label1">Item with Wallet</ion-label>
+						  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.Items" id="Items" name="Items" #Item="ngModel" class="input1" interface="action-sheet" placeholder="Select Item" style="padding: 15px 10px;" (ionChange)="ItemChange(model.Items)">
+					      <ion-select-option [value]="data.Id" *ngFor="let data of Items">{{data.Name}}</ion-select-option>
+					    </ion-select>
+	  					<ion-label class="label1">Validity of Item</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.exp" autocapitalize name="exp" id="exp" #exp="ngModel" class="input1" readonly></ion-input>
+					    <ion-label class="label1">Country</ion-label>
+						  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.country" id="country" name="country" #country="ngModel" class="input1" interface="action-sheet" placeholder="Select Country" style="padding: 15px 10px;" (ionChange)="getstates(model.country)">
+					      <ion-select-option [value]="cntry.Id" *ngFor="let cntry of countries">{{cntry.CommonDesc}}</ion-select-option>
+					    </ion-select>
+							<ion-label class="label1">State</ion-label>
+						  <ion-select [interfaceOptions]="customPopoverOptions" class="input1" [(ngModel)]="model.state" id="state" name="state" #state="ngModel" interface="action-sheet" placeholder="Select State" style="padding: 15px 10px;" (ionChange)="getcities(model.state)">
+					      <ion-select-option [value]="state.Id" *ngFor="let state of states">{{state.CommonDesc1}}</ion-select-option>
+					    </ion-select>
+						  <ion-label class="label1">City/Town/District</ion-label>
+						  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.city" id="city" name="city" #city="ngModel" class="input1" interface="action-sheet" placeholder="Select City" style="padding: 15px 10px;">
+					      <ion-select-option [value]="city.Id" *ngFor="let city of cities">{{city.CommonDesc2}}</ion-select-option>
+					    </ion-select>
+					    <ion-label class="label1">Zipcode</ion-label>
+							<ion-input type="tel" [(ngModel)]="model.zip" id="zip" name="zip" #zip="ngModel" class="input1" placeholder="Enter Zipcode"></ion-input>
+							<ion-label class="label1">Address</ion-label>
+							<ion-textarea [(ngModel)]="model.add1" id="add1" name="add1" #add1="ngModel" class="input1" placeholder="Address"></ion-textarea>
+							<ion-label class="label1">Occupation</ion-label>
+							<ion-input type="text" class="input1" [(ngModel)]="model.occupation" name="occupation" id="occupation" #occupation="ngModel" placeholder="Occupation"></ion-input>
+							<ion-label class="label1">Aadhar Card / Driving Licence / Pan Card</ion-label>
+							<ion-input type="text" class="input1" [(ngModel)]="model.card" name="card" id="card" #card="ngModel" placeholder="Aadhar Card / Driving Licence / Pan Card"></ion-input>
+							<ion-label class="label1">FassiNo</ion-label>
+							<ion-input type="text" class="input1" [(ngModel)]="model.fssaiNo" name="fssaiNo" id="fssaiNo" #fssaiNo="ngModel" placeholder="FassiNo"></ion-input>
+							<ion-label>Feadback</ion-label>-->
+							<!-- <ion-textarea [(ngModel)]="model.feadback" id="feadback" name="feadback" #feadback="ngModel" class="input1" placeholder="Feadback"></ion-textarea> -->
+	    			</ion-col>
+	    			<!--<ion-col size="12">
+							
+							<button class="ion-button1" (click)="getOtp()" type="submit" expand="full" fill="outline">Send otp</button>
+	    			</ion-col>
+	    			<ion-col size="12" *ngIf="otpres && !otpverified">
+	    				<ion-button class="btn1" (click)="verifyOtp()" expand="full" fill="outline" [disabled]="!model.otp">verify otp</ion-button>
+	    			</ion-col>-->
+	    			<ion-col size="12">
+	    				<!--<ion-button class="btn1" (click)="createuser()" expand="full" fill="outline" [disabled]="!(model.name && model.password)">Submit</ion-button>-->
+	    				<ion-button class="btn1" (click)="createuser()" expand="full" fill="outline">Submit</ion-button>
+	    			</ion-col>
+	    		</ion-row>
+	    	</ion-grid>
+	    </form>
+	    <div id="checkOutId">
+			  <form
+			    method="post"
+			    action="https://securegw-stage.paytm.in/theia/processTransaction"
+			    id="paytmForm"
+			    name="paytm_form"
+			  >
+			    <input type="hidden" name="MID" value="FBZBDS12535883745021" />
+			    <input type="hidden" name="CHANNEL_ID" value="WEB" />
+			    <input type="hidden" name="INDUSTRY_TYPE_ID" value="Retail" />
+			    <input type="hidden" name="WEBSITE" value="WEBSTAGING" />
+			    <input
+			      type="hidden"
+			      name="ORDER_ID"
+			      [value]="paymentData?.ORDER_ID"
+			    />
+			    <input
+			      type="hidden"
+			      name="TXN_AMOUNT"
+			      [value]="paymentData?.TXN_AMOUNT"
+			    />
+			    <input
+			      type="hidden"
+			      name="CUST_ID"
+			      [value]="paymentData?.CUST_ID"
+			    />
+			    <input
+			      type="hidden"
+			      name="CALLBACK_URL"
+			      [value]="paymentData?.CALLBACK_URL"
+			    />
+			    <input
+			      type="hidden"
+			      name="CHECKSUMHASH"
+			      [value]="paymentData?.CHECKSUMHASH"
+			    />
+			  </form>
+			</div>
+	  </div>
+	</div>
+</ion-content>

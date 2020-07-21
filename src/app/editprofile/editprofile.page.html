@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+      	<div>Edit Profile</div>
+    	</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding editprof">
+	<ion-grid>
+		<ion-row style="justify-content: center;">
+			<ion-col size="6">
+				<ion-img *ngIf="!imageData && !image" (click)="select()" class="pimg" [src]="'/assets/images/user-black.png'"></ion-img>
+				<ion-img *ngIf="image && !imageData" (click)="select()" class="pimg" [src]="image"></ion-img>
+				<ion-img *ngIf="image && imageData" (click)="select()" class="pimg" [src]="imageData"></ion-img>
+				<ion-img *ngIf="!image && imageData" (click)="select()" class="pimg" [src]="imageData"></ion-img>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<form id="checkout_form" class="checkout_form" #PForm="ngForm">
+		<ion-label class="label1">Name</ion-label>
+		<!--<select class="newSelect form-control" [(ngModel)]="model.title" name="title" id="title" #title="ngModel">			
+			<option value="Mr.">Mr.</option>
+			<option value="Mrs.">Mrs.</option>
+			<option value="Miss.">Miss.</option>
+			<option value="Ms.">Ms.</option>
+		</select>-->
+		<ion-input type="text" class="input1" [(ngModel)]="model.name" name="name" id="name" #name="ngModel" placeholder="Name" style="width: 80%;"></ion-input>
+        <ion-label class="label1">Email</ion-label>
+		<ion-input type="email" class="input1" [(ngModel)]="model.email" name="email" id="email" #email="ngModel" placeholder="Email" pattern="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}"></ion-input>
+        <ion-label class="label1">Mobile No</ion-label>
+		<ion-input type="tel" class="input1" [(ngModel)]="model.mobile" name="mobile" id="mobile" #mobile="ngModel" placeholder="Mobile no"></ion-input>
+		<!--<ion-label class="label1">Gender</ion-label>
+		<ion-radio-group style="display: inline-flex;width: 100%;padding:10px"  [(ngModel)]="model.gender" name="gender" id="gender" #gender="ngModel">
+			<div style="width: 50%;display: flex;">
+		    <ion-radio checked class="add-radio" slot="start" id="saved" value="Male"></ion-radio>
+		    <ion-label class="add-radio-label" for="#saved" (click)="setG('Male')">Male</ion-label>
+	    </div>
+	    <div style="display: flex;">
+		    <ion-radio class="add-radio" slot="start" value="Female"></ion-radio>
+		    <ion-label class="add-radio-label" (click)="setG('Female')">Female</ion-label>
+	    </div>
+		</ion-radio-group>
+		
+		
+		<ion-label class="label1">Father Name</ion-label>
+		<ion-input type="text" class="input1" [(ngModel)]="model.fname" name="fname" id="fname" #fname="ngModel" placeholder="Father Name"></ion-input>
+		<ion-label class="label1">Country</ion-label>
+	  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.country" id="country" name="country" #country="ngModel" class="input1" interface="action-sheet" placeholder="Select Country" style="padding: 15px 10px;" (ionChange)="getstates(model.country)">
+      <ion-select-option [value]="cntry.Id" *ngFor="let cntry of countries">{{cntry.CommonDesc}}</ion-select-option>
+    </ion-select>
+		<ion-label class="label1">State</ion-label>
+	  <ion-select [interfaceOptions]="customPopoverOptions" class="input1" [(ngModel)]="model.state" id="state" name="state" #state="ngModel" interface="action-sheet" placeholder="Select State" style="padding: 15px 10px;" (ionChange)="getcities(model.state)">
+      <ion-select-option [value]="state.Id" *ngFor="let state of states">{{state.CommonDesc1}}</ion-select-option>
+    </ion-select>
+	  <ion-label class="label1">City/Town/District</ion-label>
+	  <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.city" id="city" name="city" #city="ngModel" class="input1" interface="action-sheet" placeholder="Select City" style="padding: 15px 10px;">
+      <ion-select-option [value]="city.Id" *ngFor="let city of cities">{{city.CommonDesc2}}</ion-select-option>
+    </ion-select>
+    <ion-label class="label1">Zipcode</ion-label>
+		<ion-input type="tel" [(ngModel)]="model.zip" id="zip" name="zip" #zip="ngModel" class="input1" placeholder="Enter Zipcode"></ion-input>
+		<ion-label class="label1">Address</ion-label>
+		<ion-textarea [(ngModel)]="model.add1" id="add1" name="add1" #add1="ngModel" class="input1" placeholder="Address"></ion-textarea>
+		<ion-label class="label1">Occupation</ion-label>
+		<ion-input type="text" class="input1" [(ngModel)]="model.occupation" name="occupation" id="occupation" #occupation="ngModel" placeholder="Occupation"></ion-input>
+		<ion-label class="label1">Aadhar Card / Driving Licence / Pan Card</ion-label>
+		<ion-input type="text" class="input1" [(ngModel)]="model.card" name="card" id="card" #card="ngModel" placeholder="Occupation"></ion-input>
+		<!-- <ion-label class="label1">fssaiNo</ion-label>
+		<ion-input type="text" class="input1" [(ngModel)]="model.fssaiNo" name="fssaiNo" id="fssaiNo" #fssaiNo="ngModel" placeholder="Occupation"></ion-input> -->
+		<!-- <ion-label>Feadback</ion-label>
+		<ion-textarea [(ngModel)]="model.feadback" id="feadback" name="feadback" #feadback="ngModel" class="input1" placeholder="Feadback"></ion-textarea> -->
+	</form>
+	<p *ngIf="!PForm.valid" style="color:red">NOTE: Fill all the (*) fields</p>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+	
+		<button color="cprimary" style="width:100%" (click)="PForm.valid && update()" class="fbtn orange ion-button3">Update</button>
+  </ion-toolbar>
+</ion-footer>

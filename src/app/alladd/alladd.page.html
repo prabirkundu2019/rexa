@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Saved address</div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<div class="checkout_title">Saved address</div>
+	<ion-grid *ngIf="addresses" class="saved-address" style="line-height: 1.4;padding: 5px;">
+		<div *ngFor="let add of addresses">
+			<ion-item tappable button="true" lines="none" style="--padding-start: 0px;--padding-end: 0px;--inner-padding-end:0px;">
+		  	<ion-row style="width: 100%">
+		  		<ion-col size="9" tappable (click)="params.from && selectadd(add)">
+	  				<div>
+			  			<p class="add-name" style="line-height: 2"><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 6" name="home"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 5" name="briefcase"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 4" name="pin"></ion-icon>{{add.addtype == 4?add.DescriptionForOther:add.addtype | titlecase}} <span *ngIf="add.isdefault">(Defult)</span></p>
+			  			<p style="font-size: 14px;">{{add.mobile_no}}</p>
+			  			<p style="font-size: 14px;">{{add.add1}}</p>
+			  			<p style="font-size: 14px;">{{add.city}}, {{add.state}}, {{add.country}}</p>
+			  			<p style="font-size: 14px;">PIN: {{add.zip}}</p>
+			  		</div>
+		  		</ion-col>
+		  		<ion-col size="3" style="padding-top: 25px; text-align: right;">
+		  			<ion-icon (click)="edit(add)" name="create" style="font-size: 20px;margin: 2px;color: #ec2664;"></ion-icon> 			
+		  			<ion-icon (click)="del(add.Id)" name="trash" style="font-size: 20px;margin: 2px;color: #ec2664;"></ion-icon> 			
+		  		</ion-col>
+		  	</ion-row>
+			</ion-item>
+	  	<hr>
+	  </div>
+  </ion-grid>
+  <ion-grid *ngIf="!addresses">
+    <ion-row *ngFor="let data of ' '.repeat(10).split('')">
+      <ion-col size="8">
+        <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 0%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="btnfab" (click)="presentAddAdderssModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> 
+</ion-content>

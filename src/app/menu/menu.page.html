@@ -1,0 +1,85 @@
+<ion-split-pane>
+  <ion-menu contentId="content" class="menu">
+    <ion-header style="background-color: #d3d3d3;">
+      <ion-toolbar color="menu" (click)="openProfile()" class="page_header">
+        <ion-img slot="start" [src]="image?image:'assets/images/user.png'" class="blankuser"> </ion-img>
+        <ion-title>{{name | titlecase}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list style="padding: 0;">
+        <ion-menu-toggle auto-hide="false">
+          <ion-grid class="saved-address" *ngIf="name && add">
+            <ion-row>
+              <ion-col size="9">
+                <p class="add-name">Delivering Address: {{add.AddressType == 4?add.DescriptionForOther:add.AddressTypeName | titlecase}}</p>
+                <p>{{add.AddressValue}}</p>
+                <p>{{add.CityName}}, {{add.ShortNameState}}, {{add.ShortNameCountry}}</p>
+                <p>PIN: {{add.PostCode}}</p>
+              </ion-col>
+              <ion-col size="3" class="change-add" auto-hide="true">
+                <ion-img routerLink="/menu/alladd" src="assets/images/edit.png"></ion-img>
+              </ion-col>
+            </ion-row>
+          </ion-grid> 
+          
+        <!--<ion-item *ngFor="let data of menuCategory" [routerLink]="['/menu/singlecat',replacespace(data.Name),data.Id]"><ion-label>{{data.Name}}</ion-label></ion-item>   
+      	<ion-item tappable routerLink="/login" routerDirection="root" *ngIf="name"><ion-label>Logout</ion-label></ion-item>  -->              
+        </ion-menu-toggle>
+
+        <ng-container *ngFor="let p of menuCategory">
+        	<ion-menu-toggle *ngIf="p.subcatlist?.length == 0">
+	        	<ion-item   [routerLink]="['/menu/singlecat',replacespace(p.catname),p.Id]"><ion-label>{{ p.catname }}</ion-label></ion-item>
+	        </ion-menu-toggle>
+
+	        <ion-item *ngIf="p.subcatlist?.length > 0" (click)="p.open = !p.open" style="font-weight: 500;" detail="false">
+	          <ion-icon slot="end" name="arrow-down" *ngIf="!p.open"></ion-icon>
+	          <ion-icon slot="end" name="arrow-up" *ngIf="p.open"></ion-icon>
+	          <ion-label>{{ p.catname }}</ion-label>
+	        </ion-item>
+        
+          	<ion-menu-toggle *ngIf="p.subcatlist?.length > 0">
+            	<ion-item *ngFor="let sub of p.subcatlist" class="sub-item" [hidden]="!p.open" [routerLink]="['/menu/singlecatitems',replacespace(sub.subcatname),sub.subcatid,p.id]">
+              		<ion-icon slot="start"></ion-icon><ion-label>{{ sub.subcatname }}</ion-label>
+            	</ion-item>
+          	</ion-menu-toggle>
+      </ng-container>
+
+      	<ion-item (click)="mItemLegel = !mItemLegel" style="font-weight: 500;" detail="false">
+          <ion-icon slot="end" name="arrow-down" *ngIf="!mItemLegel"></ion-icon>
+          <ion-icon slot="end" name="arrow-up" *ngIf="mItemLegel"></ion-icon>
+          <ion-label>Legal</ion-label>
+	    </ion-item>
+	    <ion-menu-toggle >
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/privacy_policy">
+            	<ion-icon slot="start"></ion-icon><ion-label>Privacy Policy</ion-label>
+            </ion-item>
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/terms">
+            	<ion-icon slot="start"></ion-icon><ion-label>Terms & Condition</ion-label>
+            </ion-item>
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/user_aggrement">
+            	<ion-icon slot="start"></ion-icon><ion-label>User Agreement</ion-label>
+            </ion-item>
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/cancellation">
+            	<ion-icon slot="start"></ion-icon><ion-label>Cancellation Policy</ion-label>
+            </ion-item>
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/guidelines">
+            	<ion-icon slot="start"></ion-icon><ion-label>Guidelines</ion-label>
+            </ion-item>
+            <ion-item class="sub-item" [hidden]="!mItemLegel" routerLink="/menu/legel/support">
+            	<ion-icon slot="start"></ion-icon><ion-label>Customer-Support</ion-label>
+            </ion-item>
+        </ion-menu-toggle>
+      
+      <ion-menu-toggle>
+      <ion-item tappable routerLink="/login" routerDirection="root" *ngIf="name"><ion-label>Logout</ion-label></ion-item>
+      </ion-menu-toggle>
+
+      </ion-list><br/><br/><br/>
+      <ion-footer>
+      <p class="version">v {{version}}</p>
+      </ion-footer>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content" main></ion-router-outlet>
+</ion-split-pane>

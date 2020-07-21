@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">  		
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Rexa Card</div>
+      </div>
+    </ion-title>    	
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home">	
+	<ion-grid *ngIf="!showcards">
+		<ion-row>
+			<ion-col size="12">		 		
+				<ion-img (click)="getCards()" class="offerimg" src="assets/images/offer1.jpeg"></ion-img>
+			</ion-col>
+			<ion-col size="12">				
+				<ion-img class="offerimg" src="assets/images/offer2.jpeg"></ion-img>
+			</ion-col>
+			<ion-col size="12">				
+				<ion-img  class="offerimg" src="assets/images/offer3.jpeg"></ion-img>
+				<!-- (click)="getCards()" -->
+			</ion-col>
+		</ion-row>
+	</ion-grid>	
+	<ion-grid *ngIf="showcards">
+		<ion-row>			
+			<ion-col size="12" *ngFor="let data of cards;let i = index;">		 		
+				<h2>{{data.Name}}</h2>
+				<ion-img class="offerimg" src="{{data.Img}}" *ngIf="data.Img"></ion-img>				
+				<div   [innerHTML]="data.Remark"></div>
+				<ion-button routerLink="/signup" [queryParams]="{walletCardId: data.Id}" fill="clear" class="regbtn">Shop Now</ion-button>
+				<hr>
+			</ion-col>
+		</ion-row>
+	</ion-grid>			
+</ion-content>

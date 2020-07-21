@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-menu-button></ion-menu-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div><span>R</span>exa Planet</div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button (click)="opensearch()"><ion-icon name="search"></ion-icon></ion-button>
+	    <ion-button (click)="openwallet()"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	    <ion-button routerLink="/menu/wishlist">
+	    	<ion-icon name="list"></ion-icon>
+	    </ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home">
+	<div *ngIf="newitems">
+		<ion-slides pager="true" [options]="slideOpts" #slider (ionSlidesDidLoad)="slider.startAutoplay()" style="height: auto;">
+	    <ion-slide *ngFor="let data of coupon" style="width: 413px;padding: 10px;background: antiquewhite;">
+	      <ion-img src="assets/images/logo.png" style="background: #f24925;width: 50%"></ion-img>
+	      <div style="display: inline;padding: 0px 10px;">
+		      <p style="font-weight: 500;margin: 0;">{{data.Name}}</p>
+		      <p>Use Code: {{data.Code}}</p>
+		    </div>
+	    </ion-slide>
+	  </ion-slides>
+	  <ion-grid>
+	  	<ion-row>
+	  		<ion-col size='6' *ngFor="let cat of catData?.CategoryDetailsList" [routerLink]="['/menu/singlecat',replacespace(cat.Name),cat.Id]">
+	  			<div class="box">
+            <div class="box_image"><ion-img [src]="cat.Img?cat.Img:'assets/images/box_1.jpg'" alt="" style="height: 123px;"></ion-img></div>
+            <div class="box_title trans_200"><a href="categories.html">{{cat.Name}}</a></div>
+          </div>
+	  		</ion-col>
+	  	</ion-row>
+	  </ion-grid>
+	  <div class="newarrivals">
+	  	<p class="main-heading">new arrivals</p>
+	  </div>
+	  <ion-grid class="newitem">
+	  	<ion-row *ngFor="let cat of newitems;let i =index">
+	  		<ion-col size="4" [routerLink]="['/menu/singleitem',replacespace(cat.name.ItemName),cat.name.CategoryId,cat.name.ItemId]">
+	  			<ion-img [src]="cat.name.FilePath?cat.name.FilePath:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
+	  			<div class="offper" *ngIf="cat.selected.PercentageOff"><span>{{cat.selected.PercentageOff | number:'1.0-0'}}%</span><br>off</div>
+	  		</ion-col>
+	  		<ion-col size="8">
+	  			<div class="product_title">
+	  				<a>{{cat.name.ItemName}}</a>
+	  			</div>
+          <div class="form-group pt-2">
+          	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select One" (ionChange)="selectRange(i,$event)">
+				      <ion-select-option *ngFor="let price of cat.rate;let i=index" [selected]="i==0" [value]="price">{{price.RangeFrom}}<span *ngIf="price.RangeUpto != price.RangeFrom">-</span>{{price.RangeUpto != price.RangeFrom?price.RangeUpto:''}} {{price.UnitName | titlecase}} &#8377;{{price.SaleRate}}</ion-select-option>
+				    </ion-select>
+          </div>
+          <div class="product_price" *ngIf="cat.rate.length"><span class="cut" *ngIf="cat.rate[0].MrpRate">&#8377;{{cat.selected.MrpRate}}</span>&#8377;{{cat.selected.SaleRate}}</div>
+          <div class="product_button ml-auto mr-auto trans_200">
+          	<ion-button *ngIf="cat.selected.IsAddedToCart" style="--background: #b1b1b1;" routerLink="/menu/cart">view cart</ion-button>
+          	<ion-button *ngIf="!cat.selected.IsAddedToCart" (click)="cat?.selected.IsAddedToWishList?moveToCart(cat?.selected.ItemId,cat?.selected.WishListID):presentIncdecModal(cat)">add to cart</ion-button>
+          </div>
+	  		</ion-col>
+	  	</ion-row>
+	  </ion-grid>
+	  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+	    <ion-infinite-scroll-content
+	      loadingSpinner="bubbles"
+	      loadingText="Loading more data...">
+	    </ion-infinite-scroll-content>
+	  </ion-infinite-scroll>
+	</div>
+
+
+	<div *ngIf="!newitems">
+	  <div>
+	    <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
+	  </div>
+	  <ion-grid>
+	  	<ion-row>
+	  		<ion-col size="6" *ngFor="let data of ' '.repeat(4).split('')">
+	    		<ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+	  		</ion-col>
+	  	</ion-row>
+	  </ion-grid>
+	  <ion-grid>
+	  	<ion-row *ngFor="let data of ' '.repeat(10).split('')">
+	  		<ion-col size="4">
+	    		<ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+	  		</ion-col>
+	  		<ion-col size="8">
+	    		<ion-skeleton-text animated style="width: 0%;"></ion-skeleton-text>
+	    		<ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+	    		<ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+	    		<ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+	    		<ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+	    		<ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+	  		</ion-col>
+	  	</ion-row>
+	  </ion-grid>
+	</div>
+</ion-content>

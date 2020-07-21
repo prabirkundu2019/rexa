@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <!--<ion-back-button></ion-back-button>-->
+	    <ion-menu-button></ion-menu-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+      	<div>Wishlist</div>
+    	</div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button><ion-icon name="search"></ion-icon></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="empty-cart" *ngIf="wishListItems && !wishListItems?.length">
+    <ion-img src="assets/images/wishlist-empty.png"></ion-img>
+    <h4>Your wishlist is empty</h4>
+    <div class="text">Explore our ever growing selection of products and exciting new offers today!</div>
+    <ion-button routerLink="/menu/tabs/tab2" routerDirection="root" color="cprimary" fill="outline" style="margin-top: 20px;">Start Shopping</ion-button>
+  </div>
+  <ion-grid *ngIf="!wishListItems">
+    <ion-row *ngFor="let data of ' '.repeat(10).split('')">
+      <ion-col size="4">
+        <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+      </ion-col>
+      <ion-col size="8">
+        <ion-skeleton-text animated style="width: 0%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-toolbar *ngIf="wishListItems?.length" style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
+    <ion-label style="float: left;padding: 10px;">{{wishListItems?.length}} Items</ion-label>
+    <ion-button (click)="presentEmptyCartAlert()" class="del" style="margin-right: 10px;">
+      <span style="text-transform: none;color: #5d5d5d;margin-right: 10px;font-weight: normal;">Empty Wishlist</span>
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-grid class="newitem">
+    <ion-row *ngFor="let data of wishListItems;let i=index">
+      <ion-col size="4" [routerLink]="['/menu/singleitem']">
+        <ion-img [src]="data.ImagePath?data.ImagePath:'assets/images/product_1.jpg'" alt="" style="height: 100%;"></ion-img>
+        <div class="offper" *ngIf="data.PercentageOff"><span>{{data.PercentageOff | number:'1.0-0'}}%</span><br>off</div>
+      </ion-col>
+      <ion-col size="8">
+        <div class="product_title">
+          <b class="font-weight-bold">{{data.ItemName | titlecase}}</b>
+          <ion-button class="del" (click)="deletesingleItem(data.ItemId,data.Id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </div>
+        <div>
+          <p style="margin: 0px;color: #4a4a4a;">
+              {{data.ItemRangeFrom}}<span *ngIf="data.ItemRangeTo != data.ItemRangeFrom">-</span>{{data.ItemRangeTo != data.ItemRangeFrom?data.ItemRangeTo:''}} {{data.UnitName | titlecase}} &#8377;{{data.SaleRate}}
+          </p>
+        </div>
+        <div class="qty mt-1 in-flx" style="margin: 9px 0 0 auto;">
+          <span class="minus bg-dark" (click)="dec(i)">-</span>
+          <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [min]="data.RangeFrom?data.RangeFrom:'1'" [max]="data.RangeUpto == data.RangeFrom?'100':data.RangeUpto" [value]="data.Qty"></ion-input>
+          <span class="plus bg-dark" (click)="inc(i)">+</span>
+        </div>
+        <div class="in-flx" style="width: 100%;">
+          <b style="margin: auto 0;font-size: 19px;" class=" font-weight-bold  txt-primary margin-left-xs pl-2">
+            &#8377; {{data.totalsaleprice}}
+          </b>
+          <div class="qty mt-1 in-flx" style="margin: 0 0 0 auto;">
+            <ion-button color="cprimary" fill="outline" (click)="moveToCart(data.ItemId,data.Id)">add to cart</ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer *ngIf="wishListItems?.length">
+  <ion-toolbar>
+  	<div style="display: inline-flex;width: 100%;">
+	    <div class="fbtn white" style="padding: 8px;">
+        <div class="final_amt"> &#8377;{{totalsaleprice}}</div>
+        <div class="toatl_save">Saved &#8377;{{totalmrpprice - totalsaleprice}}</div>
+      </div>
+	    <ion-button class="fbtn orange" (click)="moveAllToCart()">add all to cart</ion-button>
+	  </div>
+  </ion-toolbar>
+</ion-footer>

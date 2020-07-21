@@ -1,0 +1,7 @@
+{
+  "name": "mangalam",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

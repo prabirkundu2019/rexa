@@ -1,0 +1,15 @@
+<ion-content>
+	<ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button style="--background: #00000047;" (click)="modal.dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+	<pinch-zoom class="zoom" height="100vh" #zoom style="overflow: auto !important;">
+		<ion-slides pager="true" #slider style="height: 100%;width: 100%;background: #000;">
+	    <ion-slide *ngFor="let image of images">
+     	 	<ion-img [src]="image.FilepathActual" (ionImgDidLoad)="error()"></ion-img>
+	    </ion-slide>
+	  </ion-slides>
+	</pinch-zoom>
+    <!-- <ion-img [src]="image" #img (ionImgDidLoad)="error()"></ion-img> -->
+</ion-content>
