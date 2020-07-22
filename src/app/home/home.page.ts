@@ -16,8 +16,17 @@ export class HomePage implements OnInit {
 	@ViewChild('loginForm',{static:false}) form :any;
 	back:any;
 	page='';
+	CustomerLoginId: string;
 
   	constructor(public navCtrl:NavController,private apis:ApiService,public router: Router, public activatedRoute: ActivatedRoute,private other:OtherService,private platform:Platform,private location:Location) {
+		if('userdata' in localStorage && localStorage.getItem('userdata') != "undefined")
+		{
+		  this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+		  if (this.CustomerLoginId === undefined){
+			this.CustomerLoginId = '';
+		  }
+		}
+		//alert(this.CustomerLoginId);
   	}
 
   	ngOnInit() {
@@ -25,7 +34,15 @@ export class HomePage implements OnInit {
 	   	this.apis.vendoragent().subscribe(res=>{
 	    	localStorage.setItem("userdata",JSON.stringify(res.body.Data));
 	    });	    
-  	}
+	}
+	  
+	ionViewWillEnter(){
+		//alert(this.CustomerLoginId);
+		if(this.CustomerLoginId != "undefined")
+		{
+			//this.navCtrl.navigateRoot('/menu/tabs/tab2');
+		}
+	}
 
   	ionViewDidEnter(){
   		var lastTimeBackPress = 0;
@@ -52,7 +69,8 @@ export class HomePage implements OnInit {
           			localStorage.setItem("userdata",JSON.stringify(res.body.udetails));
 	        		this.other.dismissLoading();
 	        		//this.location.back();	        		
-          			this.navCtrl.navigateRoot('/menu/tabs/tab2');
+					  this.navCtrl.navigateRoot('/menu/tabs/tab2');
+					  this.other.dorefresh();
 	      		}else{
 		        	this.other.dismissLoading();
 		        	this.other.presentToast(res.body.save_response,'danger');

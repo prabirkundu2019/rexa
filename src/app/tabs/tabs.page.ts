@@ -11,9 +11,18 @@ import { OtherService } from '../service/other.service';
 })
 export class TabsPage implements OnInit {
 
-	back:any;
+  back:any;
+  CustomerLoginId = "";
 
-  constructor(public router:Router,public modalController: ModalController,private platform:Platform, private other:OtherService) { }
+  constructor(public router:Router,public modalController: ModalController,private platform:Platform, private other:OtherService) {
+    if('userdata' in localStorage && localStorage.getItem('userdata') != "undefined")
+		{
+		  this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+		  if (this.CustomerLoginId === undefined){
+			this.CustomerLoginId = '';
+		  }
+		}
+  }
 
   ngOnInit() {
   }

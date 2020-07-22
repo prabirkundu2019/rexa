@@ -55,11 +55,12 @@ export class AlladdPage implements OnInit {
   }
 
   del(id){
-    this.apis.delSavedAdd(id).subscribe(res=>{
+    this.apis.deleteAdd(id).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
-      if(res.body.Code === 5015){
+      if(res.body.status === "true"){
         this.other.presentToast('Address deleted !!','success');
         this.getSavedAdd();
+        //this.other.dorefresh();
       }
     })
   }

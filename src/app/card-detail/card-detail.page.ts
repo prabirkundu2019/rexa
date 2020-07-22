@@ -100,23 +100,23 @@ export class CardDetailPage implements OnInit {
     let formdata = {"userid":this.CustomerLoginId, "cardid": this.pid};
     this.apis.buycard(formdata).subscribe(res=>{
       console.log(res);
-      // if(res.body.status == "true"){
-      //   const browser = this.iab.create(res.body.paymenturl, "_self", {
-			// 		location: 'no',
-			// 		clearcache: 'yes',
-			// 		hardwareback: 'no',
-			// 	});
-			// 	browser.on('loadstart').subscribe((event) => {		
-			// 		if (event.url == res.body.success_paymenturl) {		  		
-			// 			this.router.navigate(['/menu/profile'],{replaceUrl:true});
-	    //       this.other.presentToast("Wallet Upgraded Successfully !!",'success');
-			// 			browser.close();
-			// 		} else if (event.url == res.body.failed_paymenturl) {		  		
-			// 			this.other.presentToast("Error In Order Processing Please try again !!",'danger');
-			// 			browser.close();
-			// 		}
-			// 	});
-      // }
+      if(res.body.status == "true"){
+        const browser = this.iab.create(res.body.paymenturl, "_self", {
+					location: 'no',
+					clearcache: 'yes',
+					hardwareback: 'no',
+				});
+				browser.on('loadstart').subscribe((event) => {		
+					if (event.url == res.body.success_paymenturl) {		  		
+						this.router.navigate(['/menu/profile'],{replaceUrl:true});
+	          this.other.presentToast("Wallet Upgraded Successfully !!",'success');
+						browser.close();
+					} else if (event.url == res.body.failed_paymenturl) {		  		
+						this.other.presentToast("Error In Order Processing Please try again !!",'danger');
+						browser.close();
+					}
+				});
+      }
     })
   }
 

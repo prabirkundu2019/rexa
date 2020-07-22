@@ -20,8 +20,16 @@ export class MenuPage implements OnInit {
 	menuCategory:any;
 	isRemainder:0;
 	mItemLegel=false;
+	CustomerLoginId="";
 
   	constructor(public router:Router,public navCtrl:NavController,private apis:ApiService,private other:OtherService,private menu:MenuController,private app:AppVersion) {
+		if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != "")
+		{
+			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+			if (this.CustomerLoginId === undefined){
+				this.CustomerLoginId = '';
+			}
+		}
 	  	this.other.getrefresh().subscribe(res =>{
 	  		if(res.do){
 	  			this.getCartSize();
@@ -55,11 +63,21 @@ export class MenuPage implements OnInit {
   	}
   
 	ionViewWillEnter(){
+		if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != "")
+		{
+			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+			if (this.CustomerLoginId === undefined){
+				this.CustomerLoginId = '';
+			}
+		}
 		this.getProfileData();
 	}
 
 	getProfileData(){
-		this.name = JSON.parse(localStorage.getItem('userdata')).name;
+		if(this.CustomerLoginId != "")
+		{
+			this.name = JSON.parse(localStorage.getItem('userdata')).name;
+		}
 		// this.apis.getProfileData('',JSON.parse(localStorage.getItem('userdata')).ContactNo).subscribe(res=>{
 		// 	//this.other.isValidToken(res.body.Message);
 		// 	this.image =  res.body.Data[0] ? res.body.Data[0].Img : "";
@@ -70,10 +88,10 @@ export class MenuPage implements OnInit {
 	}
 
   	getCartSize(){   	  				
-    	this.apis.getCartSize().subscribe(res=>{      		
-      		if(parseInt(res.body.Data) != 0){
+    	this.apis.getCartItems(this.CustomerLoginId).subscribe(res=>{      		
+      		if(res.body.status == 'true'){
       			localStorage.setItem('cart','true');
-      			localStorage.setItem('cartcount',res.body.Data);
+      			localStorage.setItem('cartcount',res.body.cartcount);
       			this.other.setcart();      			
       		}else{
       			localStorage.setItem('cart','false');
@@ -93,9 +111,9 @@ export class MenuPage implements OnInit {
   	}
 
   	defaultAdd(){
-	    this.apis.getSavedAdd(true).subscribe(res=>{
+	    this.apis.getDefaultAdd(this.CustomerLoginId).subscribe(res=>{
 	      //this.other.isValidToken(res.body.Message);
-	      this.add = res.body.Data[0];	      
+	      this.add = res.body.defaultaddress;	      
 	    });
   	}
   	replacespace(name) {

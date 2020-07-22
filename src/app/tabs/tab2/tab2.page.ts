@@ -58,6 +58,7 @@ export class Tab2Page implements OnInit {
 	}
 
 	ngOnInit() {
+		this.other.dorefresh();
 		try {
 			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).CustomerLoginId;
 			this.getDefaultData();

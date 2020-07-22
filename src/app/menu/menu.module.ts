@@ -58,8 +58,10 @@ const routes: Routes = [
         loadChildren:() => import('../editprofile/editprofile.module').then(m=> m.EditprofilePageModule)
       },
       { 
-      	path: 'orderlist', 
-      	loadChildren: './orderlist/orderlist.module#OrderlistPageModule' },
+        path: 'orderlist', 
+        loadChildren:() => import('../orderlist/orderlist.module').then(m=> m.OrderlistPageModule)
+        //loadChildren: './orderlist/orderlist.module#OrderlistPageModule' 
+      },
       {
         path:'orderhistory/:id',
         loadChildren:() => import('../orderhistory/orderhistory.module').then(m=> m.OrderhistoryPageModule)

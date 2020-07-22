@@ -42,13 +42,15 @@
   		</ion-col>
   		<ion-col size="8">
   			<div class="product_title">
-  				<a>{{ cat.product_sku }}</a>
+  				<a>{{ cat.pname }}<br />&#8377; {{ cat.display_price }}</a>
   			</div>
         <div class="form-group pt-2">
-        	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select One" (ionChange)="onSelectChange(cat, i, $event)">
+        	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select One" (ionChange)="onSelectChange(cat, i, $event)" style="max-width:200px;">
             	<ion-select-option selected>1</ion-select-option>
                 <ion-select-option>2</ion-select-option>
                 <ion-select-option>3</ion-select-option>
+                <ion-select-option>4</ion-select-option>
+                <ion-select-option>5</ion-select-option>
 			      <!--<ion-select-option *ngFor="let qty of cat.quantity;let i=index">{{ i }}</ion-select-option>-->
 			</ion-select>
         </div>

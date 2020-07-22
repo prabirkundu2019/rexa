@@ -151,6 +151,7 @@ export class SingleitemPage implements OnInit {
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         this.other.presentToast('Item added to cart','success');
+        localStorage.setItem('cartcount',res.body.cartcount);
         this.other.dorefresh();
       }
     })
@@ -160,6 +161,7 @@ export class SingleitemPage implements OnInit {
     this.apis.addToCart(this.CustomerLoginId,item.id,1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
+        localStorage.setItem('cartcount',res.body.cartcount);
         this.other.presentToast('Item added to cart','success');
         this.router.navigate(['/menu/checkout'],{replaceUrl:true})
       }

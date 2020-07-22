@@ -161,6 +161,15 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/getshipaddress?userid='+userid,{observe:'response'}); 
   }
 
+  getDefaultAdd(userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/defaultaddress/'+userid,{observe:'response'}); 
+  }
+
+  deleteAdd(id):Observable<HttpResponse<any>>{
+    let formdata = {"shippingid":id};
+    return this.http.post<any>(environment.baseurl1+'/deleteshippingaddress/'+id,formdata,{observe:'response'});
+  }
+
   // getSavedAdd(filter = null):Observable<HttpResponse<any>>{
   //   if(filter){
   //     return this.http.get<any>(environment.baseurl1+'/getSavedAdd?IsDefault=1',{observe:'response'}); 

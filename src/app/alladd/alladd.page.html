@@ -19,7 +19,7 @@
 		  	<ion-row style="width: 100%">
 		  		<ion-col size="9" tappable (click)="params.from && selectadd(add)">
 	  				<div>
-			  			<p class="add-name" style="line-height: 2"><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 6" name="home"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 5" name="briefcase"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 4" name="pin"></ion-icon>{{add.addtype == 4?add.DescriptionForOther:add.addtype | titlecase}} <span *ngIf="add.isdefault">(Defult)</span></p>
+			  			<p class="add-name" style="line-height: 2"><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 1" name="home"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 2" name="briefcase"></ion-icon><ion-icon style="margin-right: 5px;" *ngIf="add.addtype == 3" name="pin"></ion-icon><span *ngIf="add.isdefault=='1'">(Default)</span></p>
 			  			<p style="font-size: 14px;">{{add.mobile_no}}</p>
 			  			<p style="font-size: 14px;">{{add.add1}}</p>
 			  			<p style="font-size: 14px;">{{add.city}}, {{add.state}}, {{add.country}}</p>
@@ -28,7 +28,7 @@
 		  		</ion-col>
 		  		<ion-col size="3" style="padding-top: 25px; text-align: right;">
 		  			<ion-icon (click)="edit(add)" name="create" style="font-size: 20px;margin: 2px;color: #ec2664;"></ion-icon> 			
-		  			<ion-icon (click)="del(add.Id)" name="trash" style="font-size: 20px;margin: 2px;color: #ec2664;"></ion-icon> 			
+		  			<ion-icon (click)="del(add.id)" name="trash" style="font-size: 20px;margin: 2px;color: #ec2664;"></ion-icon> 			
 		  		</ion-col>
 		  	</ion-row>
 			</ion-item>

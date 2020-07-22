@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseurl: 'http://api.rexaplanet.com/api/v1',
+  //baseurl: 'http://api.rexaplanet.com/api/v1',
   baseurl1: 'http://pagaprint.pe.hu/rexaplanet/api',
 
   payumoneyPage: 'http://webdesigningoffice.com/payumoney/index.php',

@@ -63,13 +63,12 @@ export class CheckoutPage implements OnInit {
         this.CustomerLoginId = '';
       }
 	}
-	//this.address = this.other.getadd();
   }
 
   ngOnInit() {
-
+	this.other.dorefresh();
   	this.userData = JSON.parse(localStorage.getItem('userdata'));  	
-  	this.getcountries();
+  	//this.getcountries();
     this.getdefadd();
     this.getcartdetails();
   	this.getPaymentMethods();
@@ -123,11 +122,15 @@ export class CheckoutPage implements OnInit {
   	}
 
   getdefadd(){
-	this.apis.getSavedAdd(this.CustomerLoginId).subscribe(res=>{
-  		this.address = res.body.shipaddlist[0];  		
-  		// if(this.address.AllowCashOnDelivery == '1'){  			
-  		// 	this.allowCashOnDelivery = true;
-  		// }	
+	// this.other.getadd().subscribe(address => {
+	// 	console.log(address);
+	// 	this.address = address.add;
+	// })
+	this.apis.getDefaultAdd(this.CustomerLoginId).subscribe(res=>{
+		if(res.body.status == "true")
+		{
+			this.address = res.body.defaultaddress;  
+		}	
 	});	
   }
 
@@ -154,33 +157,33 @@ export class CheckoutPage implements OnInit {
   	this.addresstype = type;
   }
 
-  getcountries(){
-  	this.apis.getcountries().subscribe(res=>{
-  		this.countries = res.body.Data;
-  	})
-  }
+//   getcountries(){
+//   	this.apis.getcountries().subscribe(res=>{
+//   		this.countries = res.body.Data;
+//   	})
+//   }
 
-  getstates(){
-  	this.apis.getstates(this.modal.cntry).subscribe(res=>{
-  		this.states = res.body.Data;
-      for(let i=0;i<this.states.length;i++){
-        if(this.states[i].CommonDesc1 == this.data[0].State){
-          this.modal.state = this.states[i].Id;
-        }
-      }
-  	})
-  }
+//   getstates(){
+//   	this.apis.getstates(this.modal.cntry).subscribe(res=>{
+//   		this.states = res.body.Data;
+//       for(let i=0;i<this.states.length;i++){
+//         if(this.states[i].CommonDesc1 == this.data[0].State){
+//           this.modal.state = this.states[i].Id;
+//         }
+//       }
+//   	})
+//   }
 
-  getcities(){
-  	this.apis.getcities(this.modal.state).subscribe(res=>{
-  		this.cities = res.body.Data;
-      for(let i=0;i<this.cities.length;i++){
-        if(this.cities[i].CommonDesc2 == this.data[0].District){
-          this.modal.city = this.cities[i].Id;
-        }
-      }
-  	})
-  }
+//   getcities(){
+//   	this.apis.getcities(this.modal.state).subscribe(res=>{
+//   		this.cities = res.body.Data;
+//       for(let i=0;i<this.cities.length;i++){
+//         if(this.cities[i].CommonDesc2 == this.data[0].District){
+//           this.modal.city = this.cities[i].Id;
+//         }
+//       }
+//   	})
+//   }
 
   getPaymentMethods(){
   	this.apis.getPaymentMethods().subscribe(res=>{
@@ -233,7 +236,7 @@ export class CheckoutPage implements OnInit {
 			console.log(res);
   			if(res.body.status === "true"){    
     			this.couponData = res.body.couponamount;
-				this.discount = this.discount + parseFloat(res.body.couponamount);
+				this.discount = parseFloat(res.body.couponamount);
 				this.subtotal =res.body.totalpriceafterdeduction;
     			this.couponCodeSucces ="Coupon applied Successfully. Discount of "+res.body.couponamount+" added to your cart.";
     		}

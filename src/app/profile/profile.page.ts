@@ -93,7 +93,7 @@ export class ProfilePage implements OnInit {
   logOut(){
     localStorage.removeItem('userdata');
     this.other.presentToast("Logout successfully !!",'success');
-    this.router.navigateByUrl('/menu/tabs/tab2');
+    this.router.navigateByUrl('/menu/tabs/tab2');    
   }
 
 }

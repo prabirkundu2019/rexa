@@ -29,12 +29,12 @@
       <ion-icon name="trash"></ion-icon>
     </ion-button>
   </ion-toolbar>
-  <ion-toolbar *ngIf="cartItems?.length" style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
+  <!--<ion-toolbar *ngIf="cartItems?.length" style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
     <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">
 	    <ion-label>Is Same Day Delivery (With Applicable Charges: 50 Rs.)</ion-label>
 	    <ion-checkbox slot="end" (ionChange)="sameDay()" [(ngModel)]="sameday"></ion-checkbox>
 	  </ion-item>
-  </ion-toolbar>
+  </ion-toolbar>-->
 	<ion-grid class="newitem">
   	<ion-row *ngFor="let data of cartItems;let i=index">
   		<ion-col size="4" routerLink="/menu/singleitem">

@@ -25,17 +25,17 @@
   <div *ngIf="data">
   	<div class="product_content">
       <div class="product_title"><a>{{data.product_name | titlecase}}</a></div>
-      <div class="product_price">&#8377; {{data.mrp_price}}<span class="mrp_tag">&#8377; {{data.display_price}}</span></div>
+      <div class="product_price">&#8377; {{data.display_price}}<span class="mrp_tag">&#8377; {{data.mrp_price}}</span></div>
       <div class="inclusive">Inc. of all taxes</div>
     </div>
     <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
     <p [innerHtml]=data.product_description></p>
-    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+    <!--<div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
       <ion-button (click)=addToCart(data)>Add To Cart</ion-button>
     </div>
     <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
       <ion-button (click)=buyNow(data)>Buy Now</ion-button>
-    </div>
+    </div>-->
   	<hr>
    	<!--<div class="form-group pt-2" style="margin-top: 10px;" *ngIf="data?.selected">
     	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select Range" (ionChange)="selectRange($event)">
@@ -97,17 +97,11 @@
 
 <ion-footer *ngIf="data">
   <ion-toolbar>
-    <!--<div style="display: inline-flex;width: 100%;">
-      <div class="fbtn white" style="padding: 8px;" *ngIf="data?.selected.IsAddedToCart">
-        <div class="final_amt"> &#8377;{{totalsaleprice}}</div>
-        <div class="toatl_save">Saved &#8377;{{totalmrpprice - totalsaleprice | number:'0.0-2'}}</div>
-      </div>
-      
-      <button *ngIf="!data?.selected.IsAddedToWishList && !data?.selected.IsAddedToCart" class="fbtn white" (click)="presentIncdecModal(data,'wishlist')">Add to wishlist</button>
-      <ion-button *ngIf="data?.selected.IsAddedToWishList" class="fbtn white">Added to wishlist</ion-button>
-      <ion-button *ngIf="data?.selected.IsAddedToCart" class="fbtn orange" routerLink="/menu/cart">View cart</ion-button>
-      <ion-button *ngIf="!data?.selected.IsAddedToCart && this.CustomerLoginId" class="fbtn orange" (click)="data?.selected.IsAddedToWishList?moveToCart():presentIncdecModal(data,'cart')">Add to cart</ion-button>
-      <ion-button *ngIf="!this.CustomerLoginId" routerLink="/login" class="fbtn orange">Add to cart</ion-button>
-    </div>-->
+    <div style="display: inline-flex;width: 100%;">
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="this.CustomerLoginId" (click)="addToCart(data)">Add To Cart</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="!this.CustomerLoginId" routerLink="/login">Add To Cart</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="this.CustomerLoginId" (click)="buyNow(data)">Buy Now</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="!this.CustomerLoginId" routerLink="/login">Buy Now</button>
+    </div>
   </ion-toolbar>
 </ion-footer>

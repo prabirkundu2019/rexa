@@ -99,7 +99,7 @@ export class EditprofilePage implements OnInit {
 	      		this.model.name = res.body.udetails.name;
 				this.model.email = res.body.udetails.email;
 				this.model.mobile = res.body.udetails.mobile;
-				//this.image = res.body.Data[0].Img;
+				this.image = res.body.udetails.image;
 				//this.imageId = res.body.Data[0].ImgId;
 	      }
 	    });
@@ -114,7 +114,8 @@ export class EditprofilePage implements OnInit {
 		"userid":this.CustomerLoginId,
     	"name":this.model.name,
     	"email":this.model.email,
-    	"mobile":this.model.mobile
+		"mobile":this.model.mobile,
+		"image":this.imageData
     }
     this.apis.updateProfile(formdata).subscribe(res=>{
       if(res.body.status === "true"){

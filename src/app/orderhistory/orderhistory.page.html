@@ -38,19 +38,35 @@
   			{{cart.product_sku}}
   		</ion-col>
   		<ion-col size="3">
-  			&#8377; {{cart.subtotal}} X {{cart.quantity}}
+  			{{ cart.quantity }}
   		</ion-col>
   		<ion-col size="3">
-  			<p class="checkout-price">&#8377; {{cart.quantity * cart.subtotal | number:'1.0-2'}}</p>
+  			<p class="checkout-price">&#8377; {{ cart.subtotal | number:'1.0-2'}}</p>
   		</ion-col>
   	</ion-row>
   	<hr>
   	<ion-row>
   		<ion-col size="9">
-  			Subtotal
+  			Sub Total
   		</ion-col>
   		<ion-col size="3">
-  			<p class="checkout-price">&#8377; {{order?.total | number:'1.0-2'}}</p>
+  			<p class="checkout-price">&#8377; {{order?.main_price | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row class="bill-discount" *ngIf="order?.ccvalue != ''">
+  		<ion-col size="9">
+  			Coupon Discount
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">- &#8377; {{order?.ccvalue | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row class="checkout-total">
+  		<ion-col size="9">
+  			Total Price
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.total_price | number:'1.0-2'}}</p>
   		</ion-col>
   	</ion-row>
   	<!--<ion-row class="bill-discount" *ngIf="order?.BuyNowMainOrderList[0].Discount">
@@ -92,7 +108,7 @@
   		<ion-col size="3">
   			<p class="checkout-price">+ &#8377; {{order?.BuyNowMainOrderList[0].TipAmount | number:'1.0-2'}}</p>
   		</ion-col>
-  	</ion-row>-->
+  	</ion-row>
   	<hr>
   	<ion-row class="checkout-total">
   		<ion-col size="9">
@@ -101,7 +117,7 @@
   		<ion-col size="3">
   			<p class="checkout-price">&#8377; {{this.total | number:'1.0-2'}}</p>
   		</ion-col>
-  	</ion-row>
+  	</ion-row>-->
   	<hr>
   </ion-grid>
 	<div class="checkout_title">Delivery Address</div>

@@ -12,11 +12,6 @@
 		</ion-title>		
     	
     	<ion-buttons slot="end">
-    		<ion-button >
-					<!-- (click)="opennotification()" -->
-    			<ion-icon name="notifications"></ion-icon>
-      		<!-- 	<ion-badge class="badge">1</ion-badge> -->
-    		</ion-button>
 	    	<ion-button (click)="openwallet()" *ngIf="this.CustomerLoginId"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
 	    	<ion-button routerLink="/menu/cart">
 	    		<ion-icon name="cart"></ion-icon>
@@ -97,7 +92,7 @@
   		<ion-col size='6' *ngFor="let cat of catData?.catlist" [routerLink]="['/menu/singlecat',replacespace(cat.catname),cat.id]">
   			<div class="box">
           <div class="box_image"><ion-img [src]="cat.image?cat.image:'assets/images/box_1.jpg'" alt="" style="height: 123px;"></ion-img></div>
-          <div class="box_title trans_200" style="text-align: center;"><a href="categories.html">{{cat.id}} {{cat.catname}}</a></div>
+          <div class="box_title trans_200" style="text-align: center;"><a href="categories.html">{{cat.catname}}</a></div>
         </div>
   		</ion-col>
   	</ion-row>  		
