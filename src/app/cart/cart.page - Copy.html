@@ -29,10 +29,10 @@
       <ion-icon name="trash"></ion-icon>
     </ion-button>
   </ion-toolbar>
-  <!--<ion-toolbar style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
-    <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">	  
-        <ion-input type="text" class="" placeholder="Enter Picode"></ion-input>
-	    <ion-button routerLink="" routerDirection="root" color="cprimary" fill="outline" style="margin-top: 6px; width: 72px;">Add</ion-button>
+  <!--<ion-toolbar *ngIf="cartItems?.length" style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
+    <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">
+	    <ion-label>Is Same Day Delivery (With Applicable Charges: 50 Rs.)</ion-label>
+	    <ion-checkbox slot="end" (ionChange)="sameDay()" [(ngModel)]="sameday"></ion-checkbox>
 	  </ion-item>
   </ion-toolbar>-->
 	<ion-grid class="newitem">
@@ -43,34 +43,24 @@
   		</ion-col>
   		<ion-col size="8">
   			<div class="product_title">
-          <b class="font-weight-bold" style="display: flex;width: 153px;font-size: 15px;">{{data.productdetails.pname | titlecase}}</b>
-          <div class="product_price" style="padding-top: 10px;
-    font-size: 20px;
-    margin-top: 5px;">&#8377; {{data.productdetails.display_price}}<span class="mrp_tag">&#8377; {{data.productdetails.mrp_price}}</span>
-    	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;">19% OFF</span>   
-    </div>
-          <ion-button class="del" (click)="deletesingleItem(data.productdetails.id)" style="margin-top: -90px;">
+          <b class="font-weight-bold">{{data.productdetails.product_sku | titlecase}}</b>
+          <ion-button class="del" (click)="deletesingleItem(data.productdetails.id)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
   			</div>
   			<div>
-         <!-- <p style="margin: 0px;color: #4a4a4a;">
+          <p style="margin: 0px;color: #4a4a4a;">
               {{data.quantity}}
-          </p>-->
+          </p>
         </div>
-        <div class="in-flx" style="width: 100%;margin-top: 10px;">
-          <!--<b style="margin: auto 0;font-size: 19px; color: #ec2664;" class=" font-weight-bold  txt-primary margin-left-xs pl-2">
+        <div class="in-flx" style="width: 100%;margin-top: 45px;">
+          <b style="margin: auto 0;font-size: 19px; color: #ec2664;" class=" font-weight-bold  txt-primary margin-left-xs pl-2">
             &#8377; {{data.subtotal | number:'1.0-2'}}
-          </b>-->
-          <div class="qty mt-1 in-flx" style="">
+          </b>
+          <div class="qty mt-1 in-flx" style="margin: 0 0 0 auto;">
             <span class="minus bg-dark" (click)="dec(i)">-</span>
-            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [min]="data.RangeFrom?data.RangeFrom:'1'" [max]="data.RangeUpto == data.RangeFrom?'100':data.RangeUpto" [value]="data.quantity" style="width: 40px;
-    text-align: center;
-    --padding-start: 6px;
-    font-size: 18px;
-    margin-top: -5px;
-    margin-left: 0px;"></ion-input>
-            <span class="plus bg-dark" (click)="inc(i)" style="margin-left: -10px;">+</span>
+            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [min]="data.RangeFrom?data.RangeFrom:'1'" [max]="data.RangeUpto == data.RangeFrom?'100':data.RangeUpto" [value]="data.quantity"></ion-input>
+            <span class="plus bg-dark" (click)="inc(i)">+</span>
           </div>
         </div>
   		</ion-col>

@@ -20,73 +20,16 @@
 	  </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!--ion-padding-->
-<ion-content class="">
+
+<ion-content class="ion-padding">
   <div *ngIf="data">
-  	
-    <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
-    <div style="padding:15px;-webkit-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
--moz-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
-    <div class="product_content">
+  	<div class="product_content">
       <div class="product_title"><a>{{data.product_name | titlecase}}</a></div>
-      <div style="padding-top: 10px;">
-      	Sold By <span style="color:#ec2664;">{{data.storename}}</span>
-      </div>
-      
-      <div class="product_price" style="padding-top: 10px;
-    font-size: 22px;
-    border-top: 2px solid #f99cb9;
-    margin-top: 20px;">
-     <span style="float: left;width: 50%;border-radius: 5px;color: #fff;padding: 8px 13px;margin-top: 6px;color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;">Enquiry Sent</span>
-     <ion-button (click)="sendEnquiry(data.id)" color="cprimary" fill="outline" style="margin-top: 6px;width: 150px;float: right;">Send Enquiry</ion-button>
-     <br /><br />
-    &#8377; {{data.display_price}}<span class="mrp_tag">&#8377; {{data.mrp_price}}</span>
-    	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ data.discount }}% OFF</span>   
-        
+      <div class="product_price">&#8377; {{data.display_price}}<span class="mrp_tag">&#8377; {{data.mrp_price}}</span></div>
+      <div class="inclusive">Inc. of all taxes</div>
     </div>
-      <!--<div class="inclusive">Inc. of all taxes</div>-->
-    </div>
-    
-    <ion-toolbar style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;border-top: 5px solid #eee;margin-top: 20px;">
-    <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">
-	    <!--<ion-label>Is Same Day Delivery (With Applicable Charges: 50 Rs.)</ion-label>-->
-        <ion-input type="tel" class="" placeholder="Enter Picode" [(ngModel)]="pincode"></ion-input>
-	    <ion-button (click)="pincodeCheck()" color="cprimary" fill="outline" style="margin-top: 6px; width: 72px;">Check</ion-button>
-	  </ion-item>
-  </ion-toolbar>
-    
-     <p style="margin-top:20px;">
-    	Specification        
-    </p>
-    <p style="border-bottom:1px solid #eee;display:flex;margin: 0px;padding-bottom: 6px;padding-top: 6px;">
-		<span style="width:40%;color: #999;">
-        	Brand
-        </span>
-        <span style="width:50%;">
-        	Fortune
-        </span>
-    </p>
-    <p style="border-bottom:1px solid #eee;display:flex;margin: 0px;padding-bottom: 6px;padding-top: 6px;">
-		<span style="width:40%;color: #999;">
-        	Product Type
-        </span>
-        <span style="width:50%;">
-        	Musturd Oil
-        </span>
-    </p>
-    
-    <p style="margin-top: 20px;" [innerHtml]=data.product_description></p>
-    </div>
-    
-    <div style="padding:10px;margin-top:0px;">
-    	
-        <p style="margin-top:20px;">
-            Similar Product        
-        </p>	
-           
-    </div>
-    
+    <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
+    <p [innerHtml]=data.product_description></p>
     <!--<div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
       <ion-button (click)=addToCart(data)>Add To Cart</ion-button>
     </div>
@@ -153,14 +96,12 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
 </ion-content>
 
 <ion-footer *ngIf="data">
-  <ion-toolbar style="-webkit-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);
--moz-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);
-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);">
+  <ion-toolbar>
     <div style="display: inline-flex;width: 100%;">
       <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="this.CustomerLoginId" (click)="addToCart(data)">Add To Cart</button>
       <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="!this.CustomerLoginId" routerLink="/login">Add To Cart</button>
-      <button class="fbtn" style="background:#fff; color:#000;" *ngIf="this.CustomerLoginId" (click)="buyNow(data)">Buy Now</button>
-      <button class="fbtn" style="background:#fff; color:#000;" *ngIf="!this.CustomerLoginId" routerLink="/login">Buy Now</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="this.CustomerLoginId" (click)="buyNow(data)">Buy Now</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="!this.CustomerLoginId" routerLink="/login">Buy Now</button>
     </div>
   </ion-toolbar>
 </ion-footer>

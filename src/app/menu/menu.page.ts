@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { OtherService } from '../service/other.service';
 import { Router } from '@angular/router';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController, NavController, Events } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
@@ -22,14 +22,13 @@ export class MenuPage implements OnInit {
 	mItemLegel=false;
 	CustomerLoginId="";
 
-  	constructor(public router:Router,public navCtrl:NavController,private apis:ApiService,private other:OtherService,private menu:MenuController,private app:AppVersion) {
-		if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != "")
-		{
-			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
-			if (this.CustomerLoginId === undefined){
-				this.CustomerLoginId = '';
-			}
-		}
+  	constructor(public router:Router,public navCtrl:NavController,private apis:ApiService,private other:OtherService,private menu:MenuController,private app:AppVersion, public events: Events) {
+		events.subscribe('user:created', (user, time) => {
+			console.log(user);
+			// user and time are the same arguments passed in `events.publish(user, time)`
+			this.CustomerLoginId = user.id;
+			this.name = user.name;
+		});
 	  	this.other.getrefresh().subscribe(res =>{
 	  		if(res.do){
 	  			this.getCartSize();
@@ -42,11 +41,11 @@ export class MenuPage implements OnInit {
 	      }
 	    });
 
-	    this.other.getUpdateProfile().subscribe(res=>{
-	      if(res.do){
-	        this.getProfileData();
-	      }
-	    });
+	    // this.other.getUpdateProfile().subscribe(res=>{
+	    //   if(res.do){
+	    //     this.getProfileData();
+	    //   }
+	    // });
 
    		this.getMenuCategory();
   	}
@@ -63,28 +62,14 @@ export class MenuPage implements OnInit {
   	}
   
 	ionViewWillEnter(){
-		if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != "")
-		{
-			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
-			if (this.CustomerLoginId === undefined){
-				this.CustomerLoginId = '';
-			}
-		}
-		this.getProfileData();
-	}
-
-	getProfileData(){
-		if(this.CustomerLoginId != "")
-		{
-			this.name = JSON.parse(localStorage.getItem('userdata')).name;
-		}
-		// this.apis.getProfileData('',JSON.parse(localStorage.getItem('userdata')).ContactNo).subscribe(res=>{
-		// 	//this.other.isValidToken(res.body.Message);
-		// 	this.image =  res.body.Data[0] ? res.body.Data[0].Img : "";
-		// 	localStorage.setItem('profiledate',JSON.stringify(res.body.Data[0]));
-		// 	localStorage.setItem('image',res.body.Data[0].Img);
-		// 	this.name = res.body.Data[0].CustomerName;
-		// });
+		// if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != "")
+		// {
+		// 	this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+		// 	if (this.CustomerLoginId === undefined){
+		// 		this.CustomerLoginId = '';
+		// 	}
+		// }
+		//this.getProfileData();
 	}
 
   	getCartSize(){   	  				

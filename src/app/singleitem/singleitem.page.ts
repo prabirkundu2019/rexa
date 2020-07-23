@@ -29,6 +29,7 @@ export class SingleitemPage implements OnInit {
   totalmrpprice = 0;
   refresh:any;
   CustomerLoginId='';
+  pincode="";
 
   constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService) {
     if(localStorage.getItem('userdata') != "undefined")
@@ -169,6 +170,18 @@ export class SingleitemPage implements OnInit {
   }
 
   error(){
+  }
+
+  pincodeCheck(){
+    this.apis.pincodeCheck(this.pincode).subscribe(res=>{
+      this.other.presentToast(res.body.message,'success');
+    })
+  }
+
+  sendEnquiry(product_id){
+    this.apis.sendEnquiry(this.CustomerLoginId,product_id).subscribe(res=>{
+      this.other.presentToast('Enquiry sent succssfully!','success');
+    })
   }
 
 }

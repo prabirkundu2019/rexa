@@ -13,6 +13,7 @@
     	
     	<ion-buttons slot="end">
 	    	<ion-button (click)="openwallet()" *ngIf="this.CustomerLoginId"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
+            <ion-button *ngIf="!this.CustomerLoginId" routerLink="/login"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
 	    	<ion-button routerLink="/menu/cart">
 	    		<ion-icon name="cart"></ion-icon>
       			<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>

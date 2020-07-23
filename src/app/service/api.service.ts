@@ -60,6 +60,15 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/productsingle/'+id,{observe:'response'});
   }
 
+  sendEnquiry(userid, productid):Observable<HttpResponse<any>>{
+    let formdata = {"userid": userid, "productid":productid}
+    return this.http.post<any>(environment.baseurl1+'/sendenquiry',formdata,{observe:'response'});
+  }
+
+  pincodeCheck(pincode):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/pincodecheck/'+pincode,{observe:'response'});
+  }
+
   // getItemDetail(cid,id,uid):Observable<HttpResponse<any>>{
   //   return this.http.get<any>(environment.baseurl1+'/SP_FrontendItemDetails?CustomerLoginId='+uid+'&CategoryId='+cid+'&ItemId='+id,{observe:'response'});
   // }

@@ -15,7 +15,8 @@ export class WalletPage implements OnInit {
 	CustomerLoginId:"";
 
   constructor(private apis:ApiService,private other:OtherService,public router:Router) { 
-	if(localStorage.getItem('userdata') != "undefined")
+	console.log(localStorage.getItem('userdata'));
+	if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
 	{
 		this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
 		if (this.CustomerLoginId === undefined){

@@ -2,8 +2,9 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { OtherService } from '../service/other.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomePage implements OnInit {
 	page='';
 	CustomerLoginId: string;
 
-  	constructor(public navCtrl:NavController,private apis:ApiService,public router: Router, public activatedRoute: ActivatedRoute,private other:OtherService,private platform:Platform,private location:Location) {
+  	constructor(public navCtrl:NavController,private apis:ApiService,public router: Router, public activatedRoute: ActivatedRoute,private other:OtherService,private platform:Platform,private location:Location, public events: Events) {
 		if('userdata' in localStorage && localStorage.getItem('userdata') != "undefined")
 		{
 		  this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
@@ -66,11 +67,11 @@ export class HomePage implements OnInit {
 	  		this.apis.login(this.model.email,this.model.password).subscribe(res=>{
 				console.log(res.body.status);
 				if(res.body.status == "true"){
-          			localStorage.setItem("userdata",JSON.stringify(res.body.udetails));
+					localStorage.setItem("userdata",JSON.stringify(res.body.udetails));
 	        		this.other.dismissLoading();
-	        		//this.location.back();	        		
-					  this.navCtrl.navigateRoot('/menu/tabs/tab2');
-					  this.other.dorefresh();
+					//this.location.back();	
+					this.events.publish('user:created', res.body.udetails, Date.now());        		
+					this.navCtrl.navigateRoot('/menu/tabs/tab2');					  
 	      		}else{
 		        	this.other.dismissLoading();
 		        	this.other.presentToast(res.body.save_response,'danger');

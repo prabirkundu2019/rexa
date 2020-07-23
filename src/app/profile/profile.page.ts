@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { OtherService } from '../service/other.service';
+import { Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,14 +20,16 @@ export class ProfilePage implements OnInit {
     add:any;
     CustomerLoginId: "";
 
-  constructor(private apis:ApiService,private other:OtherService,public router:Router) {
-    if(localStorage.getItem('userdata') != "undefined")
+  constructor(public navCtrl:NavController,private apis:ApiService,private other:OtherService,public router:Router) {
+    if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
 		{
 			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
 			if (this.CustomerLoginId === undefined){
 				this.CustomerLoginId = '';
 			}
-		}
+		}else{
+      this.navCtrl.navigateRoot('/menu/tabs/tab2');
+    }
   	this.other.getcart().subscribe(res=>{
       if(res.do){
         this.cart = localStorage.getItem('cart')=='true'?true:false;
@@ -46,7 +49,7 @@ export class ProfilePage implements OnInit {
   	this.name = JSON.parse(localStorage.getItem('userdata')).CustomerName;
   	this.no = JSON.parse(localStorage.getItem('userdata')).ContactNo;
   	//this.getOrderHistory();
-    this.defaultAdd();
+    //this.defaultAdd();
   }
 
   ionViewWillEnter(){
@@ -83,17 +86,17 @@ export class ProfilePage implements OnInit {
   	})
   }
 
-  defaultAdd(){
-    this.apis.getSavedAdd(true).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-      this.add = res.body.Data[0];
-    })
-  }
+  // defaultAdd(){
+  //   this.apis.getSavedAdd(true).subscribe(res=>{
+  //     this.other.isValidToken(res.body.Message);
+  //     this.add = res.body.Data[0];
+  //   })
+  // }
 
   logOut(){
     localStorage.removeItem('userdata');
     this.other.presentToast("Logout successfully !!",'success');
-    this.router.navigateByUrl('/menu/tabs/tab2');    
+    window.location.reload();
   }
 
 }

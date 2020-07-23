@@ -39,7 +39,24 @@ import { MainnotificationPage } from './mainnotification/mainnotification.page';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [MainwalletPage, MainnotificationPage, TopupPage, CancelorderPage, RateandreviewPage, AddAddressPage, FilterPage, IncdecPage, SearchPage, ImageviewerPage],
-  imports: [MainwalletPageModule, MainnotificationPageModule, TopupPageModule, CancelorderPageModule, RateandreviewPageModule, AddAddressPageModule, FilterPageModule, IncdecPageModule, SearchPageModule, ImageviewerPageModule, BrowserAnimationsModule, ToastrModule.forRoot(), HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    MainwalletPageModule, 
+    MainnotificationPageModule, 
+    TopupPageModule, 
+    CancelorderPageModule, 
+    RateandreviewPageModule, 
+    AddAddressPageModule, 
+    FilterPageModule, 
+    IncdecPageModule, 
+    SearchPageModule, 
+    ImageviewerPageModule, 
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(), 
+    HttpClientModule, 
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule
+  ],
   providers: [
     Deeplinks,
     InAppBrowser,

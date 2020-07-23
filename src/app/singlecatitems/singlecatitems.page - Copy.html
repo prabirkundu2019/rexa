@@ -20,62 +20,46 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="items?.length" class="product_filter" style="border-bottom: 5px solid #eee; background: #fff;    padding: 0px 0px;">
-    
+  <div *ngIf="items?.length" class="product_filter">
+    <div class="">{{items.length}} Item</div>
     <!--<div class="Filter_btn" *ngIf="!expfilter" (click)="expFilter()">
       <a><ion-img src="assets/images/delivery-fast-red.png" style="width:12px;margin-right: 5px;"></ion-img> Express</a>
     </div>
     <div class="Filter_btn filter-active" *ngIf="expfilter" (click)="expFilter()">
       <a><ion-img src="assets/images/delivery-fast-selected.png" style="width:12px;margin-right: 5px;"></ion-img> Express</a>
-    </div>-->
-    <div class="" >
-    	  <a><ion-img src="assets/images/grid.png" style="margin-right: 5px;border-bottom: 0px solid #eee;margin-left: 10px;"></ion-img></a>
     </div>
-    <div class="">{{items.length}} Item</div>
-    
     <div class="Filter_btn filter-active" *ngIf="filterapplied" (click)="presentFilterModal()">
       <a><ion-img src="assets/images/filter-selected.png" style="width:12px;margin-right: 5px;"></ion-img> Filter <span>({{filterapplied}})</span></a>
     </div>
-    <div class="Filter_btn" *ngIf="!filterapplied" (click)="presentFilterModal()" style="border-left: 1px solid #eee;
-    width: 100px;
-    text-align: center;">
-      <a style="padding-top: 5px;"><ion-img src="assets/images/filter.png" style="width:12px;margin-right: 5px;"></ion-img> Filter</a>
-    </div>
+    <div class="Filter_btn" *ngIf="!filterapplied" (click)="presentFilterModal()">
+      <a><ion-img src="assets/images/filter.png" style="width:12px;margin-right: 5px;"></ion-img> Filter</a>
+    </div>-->
   </div>
 	<ion-grid class="newitem" *ngIf="items">
   	<ion-row *ngFor="let cat of items; let i = index">
   		<ion-col size="4" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
   			<ion-img [src]="cat.image?cat.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
   		</ion-col>
-  		<ion-col size="8" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
-  			<div class="product_title" style="line-height: 14px; margin-top: 15px;">
-  				<a >{{ cat.pname }}<br /><br /> 
-                <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> 
-                &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span>  
-                &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ cat.discount }}% OFF</span>              
-                </a>
+  		<ion-col size="8">
+  			<div class="product_title">
+  				<a>{{ cat.pname }}<br />&#8377; {{ cat.display_price }}</a>
   			</div>
-       <!-- <div class="form-group pt-2">
+        <div class="form-group pt-2">
         	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select One" (ionChange)="onSelectChange(cat, i, $event)" style="max-width:200px;">
             	<ion-select-option selected>1</ion-select-option>
                 <ion-select-option>2</ion-select-option>
                 <ion-select-option>3</ion-select-option>
                 <ion-select-option>4</ion-select-option>
                 <ion-select-option>5</ion-select-option>
-                <ion-select-option>6</ion-select-option>
-                
-			      <!--<ion-select-option *ngFor="let qty of cat.quantity;let i=index">{{ i }}</ion-select-option>--
+			      <!--<ion-select-option *ngFor="let qty of cat.quantity;let i=index">{{ i }}</ion-select-option>-->
 			</ion-select>
-        </div>-->
-        
+        </div>
         <!--<div class="product_price" *ngIf="cat?.rate.length"><span class="cut">&#8377;{{cat.rate[0].MrpRate}}</span>&#8377;{{cat.rate[0].SaleRate}}</div>-->
-        
-       <!-- <div class="product_button ml-auto mr-auto trans_200">
+        <div class="product_button ml-auto mr-auto trans_200">
           <ion-button *ngIf="cat?.selected?.IsAddedToCart" style="--background: #b1b1b1;" routerLink="/menu/cart">view cart</ion-button>
           <ion-button *ngIf="this.CustomerLoginId" (click)="moveToCart(cat)">add to cart</ion-button>
           <ion-button *ngIf="!this.CustomerLoginId" routerLink="/login">add to cart</ion-button>
-        </div>-->
-        
+        </div>
   		</ion-col>
   	</ion-row>
   </ion-grid>

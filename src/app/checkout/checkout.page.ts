@@ -54,6 +54,9 @@ export class CheckoutPage implements OnInit {
 	couponCodeSucces = '';
 	allowCashOnDelivery = false;
 	CustomerLoginId: "";
+	marker: '';
+	cartcountdata : "";
+	walleticondata: "";
 
   constructor(private apis:ApiService, private other:OtherService,public router:Router,private winRef:WindowRef,private iab: InAppBrowser) {
 	if(localStorage.getItem('userdata') != "undefined")
@@ -65,17 +68,17 @@ export class CheckoutPage implements OnInit {
 	}
   }
 
-  ngOnInit() {
-	this.other.dorefresh();
-  	this.userData = JSON.parse(localStorage.getItem('userdata'));  	
-  	//this.getcountries();
-    this.getdefadd();
-    this.getcartdetails();
-  	this.getPaymentMethods();
-    this.getPriceRange();
-    this.getProfileData();
-    //this.getCouponList();
-  }
+	ngOnInit() {
+		this.other.dorefresh();
+		this.userData = JSON.parse(localStorage.getItem('userdata'));  	
+		//this.getcountries();
+		this.getdefadd();
+		this.getcartdetails();
+		this.getPaymentMethods();
+		this.getPriceRange();
+		this.getProfileData();
+		//this.getCouponList();
+	}
 
  	getProfileData(){
 	    this.apis.getProfileData(JSON.parse(localStorage.getItem('userdata')).id).subscribe(res=>{
@@ -119,7 +122,16 @@ export class CheckoutPage implements OnInit {
 		    });
 		},2000);
   		
-  	}
+	}
+	  
+  ionViewWillEnter(){
+	this.apis.getDefaultAdd(this.CustomerLoginId).subscribe(res=>{
+		if(res.body.status == "true")
+		{
+			this.address = res.body.defaultaddress;  
+		}	
+	});
+  }
 
   getdefadd(){
 	// this.other.getadd().subscribe(address => {
@@ -130,6 +142,7 @@ export class CheckoutPage implements OnInit {
 		if(res.body.status == "true")
 		{
 			this.address = res.body.defaultaddress;  
+			this.marker = res.body.marker; 
 		}	
 	});	
   }
@@ -143,13 +156,15 @@ export class CheckoutPage implements OnInit {
   getcartdetails(){
     this.apis.getCartItems(this.CustomerLoginId).subscribe(res=>{
 	  console.log(res.body);
-      //this.other.isValidToken(res.body.Message);
+	  //this.other.isValidToken(res.body.Message);
+	  this.cartcountdata = res.body.cartcount;
 	  this.cartdata = res.body.cartdetails;
 	  this.discount = 0;
 	  this.subtotal = res.body.totalsum;
 	  this.othercharges = 0;
 	  this.WalletAmount = res.body.totalbalance;
 	  this.WalletMessage = res.body.walletbalance_message;
+	  this.walleticondata = res.body.walleticon;
     })
   }
 

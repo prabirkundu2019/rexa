@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Events } from '@ionic/angular';
 import { SearchPage } from '../../search/search.page';
 import { OtherService } from '../../service/other.service';
+import { Router } from '@angular/router';
 import { IncdecPage } from '../../incdec/incdec.page';
 
 
@@ -37,12 +38,25 @@ export class Tab2Page implements OnInit {
 	newitems: any;
 	CustomerLoginId = '';
 
-	constructor(private apis: ApiService, public modalController: ModalController, public other: OtherService) {
+	constructor(private apis: ApiService, public modalController: ModalController, public other: OtherService,public router:Router, public events: Events) {
+		events.subscribe('user:created', (user, time) => {
+			// user and time are the same arguments passed in `events.publish(user, time)`
+			this.CustomerLoginId = user.id;
+		});
+
 		this.other.getrefresh().subscribe(res => {
 			if (res.do) {
 				this.getItems();
 			}
 		});
+
+		// if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
+		// {
+		// 	this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+		// 	if (this.CustomerLoginId === undefined){
+		// 		this.CustomerLoginId = '';
+		// 	}
+		// }
 
 		this.other.getcart().subscribe(res => {			
 			if (res.do) {
@@ -60,7 +74,7 @@ export class Tab2Page implements OnInit {
 	ngOnInit() {
 		this.other.dorefresh();
 		try {
-			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).CustomerLoginId;
+			//this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).CustomerLoginId;
 			this.getDefaultData();
 		} catch (err) {
 			this.apis.vendoragent().subscribe(res => {
@@ -69,6 +83,7 @@ export class Tab2Page implements OnInit {
 			});
 		}
 	}
+
 	getDefaultData() {
 		this.cart = localStorage.getItem('cart') == 'true' ? true : false;
 		this.cartCount = localStorage.getItem('cartcount') ? localStorage.getItem('cartcount') : '';
@@ -86,7 +101,8 @@ export class Tab2Page implements OnInit {
 	}
 
 	openwallet() {
-		this.other.presentWalletPopover();
+		// this.other.presentWalletPopover();
+		this.router.navigate(['/menu/wallet']);
 	}
 	opennotification() {
 		this.other.presentNotificationPopover();
