@@ -16,8 +16,10 @@ const routes: Routes = [
   { path: 'offer', loadChildren: './offer/offer.module#OfferPageModule' },
   { path: 'referral', loadChildren: './referral/referral.module#ReferralPageModule' },
   { path: 'mainnotification', loadChildren: './mainnotification/mainnotification.module#MainnotificationPageModule' },
-  { path: 'legel/:type', loadChildren: './legel/legel.module#LegelPageModule' },  { path: 'orderlist', loadChildren: './orderlist/orderlist.module#OrderlistPageModule' },
-  { path: 'card-detail', loadChildren: './card-detail/card-detail.module#CardDetailPageModule' }
+  { path: 'legel/:type', loadChildren: './legel/legel.module#LegelPageModule' },
+  { path: 'orderlist', loadChildren: './orderlist/orderlist.module#OrderlistPageModule' },
+  { path: 'card-detail', loadChildren: './card-detail/card-detail.module#CardDetailPageModule' },
+  { path: 'seller/:id', loadChildren: './seller/seller.module#SellerPageModule' }
 
 
 

@@ -252,7 +252,7 @@ export class CheckoutPage implements OnInit {
   			if(res.body.status === "true"){    
     			this.couponData = res.body.couponamount;
 				this.discount = parseFloat(res.body.couponamount);
-				this.subtotal =res.body.totalpriceafterdeduction;
+				this.subtotal =res.body.totalprice;
     			this.couponCodeSucces ="Coupon applied Successfully. Discount of "+res.body.couponamount+" added to your cart.";
     		}
     		else{

@@ -18,6 +18,7 @@ export class CartPage implements OnInit {
 	samedayPrice:any = 0;
 	CustomerLoginId = "";
 	pictureUrl: "";
+	pincode: "";
 
   constructor(private apis:ApiService, private other:OtherService,private alertController:AlertController,public router:Router) {
 	if(localStorage.getItem('userdata') != "undefined")
@@ -76,23 +77,17 @@ export class CartPage implements OnInit {
   }
 
   inc(i){
-  	if(!this.cartItems[i].loading && this.cartItems[i].Qty < (this.cartItems[i].ItemRangeTo == 1?100:this.cartItems[i].ItemRangeTo)){
-  		this.cartItems[i].loading = true;
-  		this.cartItems[i].Qty ++;
-  		this.updateCartItem(i,this.cartItems[i].Id,this.cartItems[i].Qty);
-  	}
+	this.cartItems[i].quantity ++;
+	this.updateCartItem(this.CustomerLoginId,this.cartItems[i].productdetails.id,this.cartItems[i].quantity);
   }
 
   dec(i){
-  	if(!this.cartItems[i].loading && this.cartItems[i].Qty > this.cartItems[i].ItemRangeFrom){
-  		this.cartItems[i].loading = true;
-  		this.cartItems[i].Qty--;  		
-  		this.updateCartItem(i,this.cartItems[i].Id,this.cartItems[i].Qty);
-  	}
+	this.cartItems[i].quantity --;
+	this.updateCartItem(this.CustomerLoginId,this.cartItems[i].productdetails.id,this.cartItems[i].quantity);
   }
 
   updateCartItem(i,id,qty){
-  	this.apis.updateCartItem(id,qty).subscribe(res=>{
+  	this.apis.updateCartItem(this.CustomerLoginId,id,qty).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
   		if(res.body.Code === 1000){
   			this.cartItems[i].loading = false;
@@ -143,6 +138,12 @@ export class CartPage implements OnInit {
 			this.other.dorefresh();
 		}
   	})
+  }
+
+  pincodeCheck(){
+    this.apis.pincodeCheck(this.pincode).subscribe(res=>{
+      this.other.presentToast(res.body.message,'success');
+    })
   }
 
 }

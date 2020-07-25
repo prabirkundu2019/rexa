@@ -92,60 +92,60 @@ export class WishlistPage implements OnInit {
   	})
   }
 
-  deletesingleItem(id,cid){
-  	this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-  		if(res.body.Code === 1000){
-  			this.other.presentToast('Item deleted !!','success');
-				this.other.dorefresh();
-  		}
-  	})
-  }
+  // deletesingleItem(id,cid){
+  // 	this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
+  //     this.other.isValidToken(res.body.Message);
+  // 		if(res.body.Code === 1000){
+  // 			this.other.presentToast('Item deleted !!','success');
+	// 			this.other.dorefresh();
+  // 		}
+  // 	})
+  // }
 
-  moveToCart(id,cid){
-    this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-      if(res.body.Code === 1000){
-        this.other.presentToast('Item added to cart','success');
-        this.other.dorefresh();
-      }
-    })
-  }
+  // moveToCart(id,cid){
+  //   this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
+  //     this.other.isValidToken(res.body.Message);
+  //     if(res.body.Code === 1000){
+  //       this.other.presentToast('Item added to cart','success');
+  //       this.other.dorefresh();
+  //     }
+  //   })
+  // }
 
-  moveAllToCart(){
-    this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-      if(res.body.Code === 1000){
-        this.other.presentToast('Item added to cart','success');
-        this.other.dorefresh();
-      }
-    })
-  }
+  // moveAllToCart(){
+  //   this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
+  //     this.other.isValidToken(res.body.Message);
+  //     if(res.body.Code === 1000){
+  //       this.other.presentToast('Item added to cart','success');
+  //       this.other.dorefresh();
+  //     }
+  //   })
+  // }
 
-  inc(i){
-  	if(!this.wishListItems[i].loading && this.wishListItems[i].Qty < (this.wishListItems[i].ItemRangeTo == 1?100:this.wishListItems[i].ItemRangeTo)){
-  		this.wishListItems[i].loading = true;
-  		this.wishListItems[i].Qty ++;
-  		this.updateCartItem(i,this.wishListItems[i].Id,this.wishListItems[i].Qty);
-  	}
-  }
+  // inc(i){
+  // 	if(!this.wishListItems[i].loading && this.wishListItems[i].Qty < (this.wishListItems[i].ItemRangeTo == 1?100:this.wishListItems[i].ItemRangeTo)){
+  // 		this.wishListItems[i].loading = true;
+  // 		this.wishListItems[i].Qty ++;
+  // 		this.updateCartItem(i,this.wishListItems[i].Id,this.wishListItems[i].Qty);
+  // 	}
+  // }
 
-  dec(i){
-  	if(!this.wishListItems[i].loading && this.wishListItems[i].Qty > this.wishListItems[i].ItemRangeFrom){
-  		this.wishListItems[i].loading = true;
-  		this.wishListItems[i].Qty--;  		
-  		this.updateCartItem(i,this.wishListItems[i].Id,this.wishListItems[i].Qty);
-  	}
-  }
+  // dec(i){
+  // 	if(!this.wishListItems[i].loading && this.wishListItems[i].Qty > this.wishListItems[i].ItemRangeFrom){
+  // 		this.wishListItems[i].loading = true;
+  // 		this.wishListItems[i].Qty--;  		
+  // 		this.updateCartItem(i,this.wishListItems[i].Id,this.wishListItems[i].Qty);
+  // 	}
+  // }
 
-  updateCartItem(i,id,qty){
-  	this.apis.updateCartItem(id,qty).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-  		if(res.body.Code === 1000){
-  			this.wishListItems[i].loading = false;
-  			this.getWishlistItems();
-  		}
-  	})
-  }
+  // updateCartItem(i,id,qty){
+  // 	this.apis.updateCartItem(id,qty).subscribe(res=>{
+  //     this.other.isValidToken(res.body.Message);
+  // 		if(res.body.Code === 1000){
+  // 			this.wishListItems[i].loading = false;
+  // 			this.getWishlistItems();
+  // 		}
+  // 	})
+  // }
 
 }

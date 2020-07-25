@@ -9,14 +9,14 @@ import { Platform, NavController } from '@ionic/angular';
 //import { ConsoleReporter } from 'jasmine';
 
 @Component({
-  selector: 'app-singlecatitems',
-  templateUrl: './singlecatitems.page.html',
-  styleUrls: ['./singlecatitems.page.scss'],
+  selector: 'app-seller',
+  templateUrl: './seller.page.html',
+  styleUrls: ['./seller.page.scss'],
 })
-export class SinglecatitemsPage implements OnInit {
+export class SellerPage implements OnInit {
 
 	catName:any;
-  cid:any;
+  id:any;
   subcatid: any;
 	items:any;
 	customPopoverOptions: any = {
@@ -30,9 +30,7 @@ export class SinglecatitemsPage implements OnInit {
 	cartCount = '';
 	filterapplied:any;
 	CustomerLoginId='';
-  selectedOption=0;
-  listHidden=false;
-  gridHidden=true;
+	selectedOption=0;
 
 	constructor(public navCtrl:NavController,private other:OtherService,public router:Router,private apis:ApiService,private modalController:ModalController) {
     if(localStorage.getItem('userdata') != "undefined")
@@ -66,9 +64,7 @@ export class SinglecatitemsPage implements OnInit {
     this.cart = localStorage.getItem('cart')=='true'?true:false;
     this.cartCount = localStorage.getItem('cartcount');
   	let url = this.router.url.split('/');
-  	this.catName = url[url.length - 3];
-    this.subcatid = url[url.length-2];
-    this.cid = url[url.length-1];
+    this.id = url[url.length-1];
   	this.getItems();
   }  
 
@@ -107,18 +103,19 @@ export class SinglecatitemsPage implements OnInit {
   }
 
   replaceunserscore(name){
+    name = "test";
     return name.replace(/_/g,' ');
   }
 
   replacespace(name){
+    name = "test";
     return name.replace(/\s/g,'_');
   }
 
   getItemswithFilter(filter,order){
-    console.log(filter);
     this.other.presentLoading().then(m=>{
       this.items = [];
-      this.apis.getItems(this.cid,this.subcatid,filter,order,JSON.parse(localStorage.getItem('userdata')).CustomerLoginId).subscribe(res=>{
+      this.apis.getSellertItems(this.id).subscribe(res=>{
         console.log(res.body);
         this.other.dismissLoading();
         //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;
@@ -135,7 +132,7 @@ export class SinglecatitemsPage implements OnInit {
 
   getItems(){  	
 	
-  	this.apis.getItems(this.cid,null,null,this.CustomerLoginId).subscribe(res=>{
+  	this.apis.getSellertItems(this.id).subscribe(res=>{
       console.log(res.body.productlist.length);
       //this.items = [];
       //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;
@@ -169,16 +166,6 @@ export class SinglecatitemsPage implements OnInit {
       }
     });
     return await modal.present();
-  }
-
-  showGrid(){
-    this.listHidden = true;
-    this.gridHidden = false;
-  }
-
-  showList(){
-    this.listHidden = false;
-    this.gridHidden = true;
   }
 
 }

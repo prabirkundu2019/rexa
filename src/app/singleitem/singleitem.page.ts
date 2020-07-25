@@ -30,6 +30,8 @@ export class SingleitemPage implements OnInit {
   refresh:any;
   CustomerLoginId='';
   pincode="";
+  enquiryMsg=0;
+  sliders:any=[];
 
   constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService) {
     if(localStorage.getItem('userdata') != "undefined")
@@ -73,9 +75,8 @@ export class SingleitemPage implements OnInit {
     }
   }
 
-  makeactive(i){
-    this.activeimage.url = this.data.image;
-  	this.activeimage.index = i;
+  productDetails(data){
+    this.router.navigate(['/menu/singleitem/'+data.product_slug+'/'+data.catid+'/'+data.id],{replaceUrl:true})
   }
 
   segmentChanged(ev: any) {
@@ -84,6 +85,7 @@ export class SingleitemPage implements OnInit {
   getItemDetail(cid,id){
   	this.apis.getItemDetail(cid,id).subscribe(res=>{
       this.data = res.body.productdetails;
+      this.sliders = res.body.relatedproductlist;
       this.data.mrp_price = 1111;
       this.activeimage.url = res.body.productdetails.image;
       console.log(this.data);
@@ -180,6 +182,7 @@ export class SingleitemPage implements OnInit {
 
   sendEnquiry(product_id){
     this.apis.sendEnquiry(this.CustomerLoginId,product_id).subscribe(res=>{
+      this.enquiryMsg = 1;
       this.other.presentToast('Enquiry sent succssfully!','success');
     })
   }

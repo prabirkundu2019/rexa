@@ -29,13 +29,13 @@
       <ion-icon name="trash"></ion-icon>
     </ion-button>
   </ion-toolbar>
-  <!--<ion-toolbar style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
+  <ion-toolbar style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
     <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">	  
-        <ion-input type="text" class="" placeholder="Enter Picode"></ion-input>
-	    <ion-button routerLink="" routerDirection="root" color="cprimary" fill="outline" style="margin-top: 6px; width: 72px;">Add</ion-button>
+        <ion-input type="text" class="" placeholder="Enter Pincode" [(ngModel)]="pincode"></ion-input>
+	    <ion-button (click)="pincodeCheck()" color="cprimary" fill="outline" style="margin-top: 6px; width: 130px;">Check Pincode</ion-button>
 	  </ion-item>
-  </ion-toolbar>-->
-	<ion-grid class="newitem">
+  </ion-toolbar>
+  <ion-grid class="newitem">
   	<ion-row *ngFor="let data of cartItems;let i=index">
   		<ion-col size="4" routerLink="/menu/singleitem">
   			<ion-img [src]="data.productdetails.image?data.productdetails.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
@@ -64,7 +64,7 @@
           </b>-->
           <div class="qty mt-1 in-flx" style="">
             <span class="minus bg-dark" (click)="dec(i)">-</span>
-            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [min]="data.RangeFrom?data.RangeFrom:'1'" [max]="data.RangeUpto == data.RangeFrom?'100':data.RangeUpto" [value]="data.quantity" style="width: 40px;
+            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [value]="data.quantity" style="width: 40px;
     text-align: center;
     --padding-start: 6px;
     font-size: 18px;

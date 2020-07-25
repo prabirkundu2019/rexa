@@ -31,14 +31,14 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
     <div class="product_content">
       <div class="product_title"><a>{{data.product_name | titlecase}}</a></div>
       <div style="padding-top: 10px;">
-      	Sold By <span style="color:#ec2664;">{{data.storename}}</span>
+      	Sold By <span style="color:#ec2664;" routerLink="/seller/{{ data.seller_id }}">{{data.storename}}</span>
       </div>
       
       <div class="product_price" style="padding-top: 10px;
     font-size: 22px;
     border-top: 2px solid #f99cb9;
     margin-top: 20px;">
-     <span style="float: left;width: 50%;border-radius: 5px;color: #fff;padding: 8px 13px;margin-top: 6px;color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;">Enquiry Sent</span>
+     <span style="float: left;width: 50%;border-radius: 5px;color: #fff;padding: 8px 13px;margin-top: 6px;color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;" *ngIf="enquiryMsg==1">Enquiry Sent</span>
      <ion-button (click)="sendEnquiry(data.id)" color="cprimary" fill="outline" style="margin-top: 6px;width: 150px;float: right;">Send Enquiry</ion-button>
      <br /><br />
     &#8377; {{data.display_price}}<span class="mrp_tag">&#8377; {{data.mrp_price}}</span>
@@ -86,7 +86,17 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
         </p>	
            
     </div>
-    
+    <div *ngIf="data">
+      <owl-carousel
+       	[options]="{items: 5, dots: false, navigation: false}"
+       	[items]="sliders"
+       	[carouselClasses]="['owl-theme', 'row', 'sliding']">
+       	<div class="item" *ngFor="let data1 of sliders;let i = index" class="carousel-img" (click)="productDetails(data1)">
+    		<ion-img style="height: 50px;" [src]="data1.image"></ion-img>
+            <p style="text-align:center;">{{ data1.product_name | slice:0:20 }}....</p>
+       	</div>
+      </owl-carousel>
+    </div>
     <!--<div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
       <ion-button (click)=addToCart(data)>Add To Cart</ion-button>
     </div>

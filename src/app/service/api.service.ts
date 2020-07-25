@@ -52,6 +52,10 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/productlist/'+cid,{observe:'response'});
   }
 
+  getSellertItems(id):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/sellerproductlist/'+id,{observe:'response'});
+  }
+
   // getItems(cid = 0,filter=null,order=null,uid,page = null,size = null):Observable<HttpResponse<any>>{
   //   return this.http.get<any>(environment.baseurl1+'/SP_FrontendAllItems?CustomerLoginId='+uid+'&CategoryId='+cid+'&'+filter+'&'+order+'&Page='+page+'&Size='+size,{observe:'response'});
   // }
@@ -115,8 +119,9 @@ export class ApiService {
     return this.http.post<any>(environment.baseurl1+'/cart',formdata,{observe:'response'}); 
   }
 
-  updateCartItem(id,qty):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/SP_UpdateQtyAddToCart?Id='+id+'&Qty='+qty,{observe:'response'});  
+  updateCartItem(user_id, productId, quantity):Observable<HttpResponse<any>>{
+    let formdata = {"userid":user_id,"productid":productId,"quantity":quantity,"action":"update"};
+    return this.http.post<any>(environment.baseurl1+'/cart',formdata,{observe:'response'}); 
   }
 
   removeCart(user_id, productId, qty):Observable<HttpResponse<any>>{
