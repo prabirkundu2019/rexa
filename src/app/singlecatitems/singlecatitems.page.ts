@@ -118,7 +118,7 @@ export class SinglecatitemsPage implements OnInit {
     console.log(filter);
     this.other.presentLoading().then(m=>{
       this.items = [];
-      this.apis.getItems(this.cid,this.subcatid,filter,order,JSON.parse(localStorage.getItem('userdata')).CustomerLoginId).subscribe(res=>{
+      this.apis.getItemsWithFilter(this.subcatid,filter,order).subscribe(res=>{
         console.log(res.body);
         this.other.dismissLoading();
         //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;

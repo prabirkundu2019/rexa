@@ -52,6 +52,10 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/productlist/'+cid,{observe:'response'});
   }
 
+  getItemsWithFilter(cid = 0,filter=null,order=null):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/apifilter?subcatid='+cid+'&sortby='+order+'&'+filter,{observe:'response'});
+  }
+
   getSellertItems(id):Observable<HttpResponse<any>>{
     return this.http.get<any>(environment.baseurl1+'/sellerproductlist/'+id,{observe:'response'});
   }

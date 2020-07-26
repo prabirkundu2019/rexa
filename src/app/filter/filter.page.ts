@@ -36,15 +36,20 @@ export class FilterPage implements OnInit {
   setFilter(){
   	clearTimeout(this.settimeout);
   	this.settimeout = setTimeout(()=>{
-		let filter = 'MinRate='+this.pricerange.value.lower+'&MaxRate='+this.pricerange.value.upper;
-		console.log(filter);
-	  	this.other.setFilter(filter);
+		let filter = 'minprice='+this.pricerange.value.lower+'&maxprice='+this.pricerange.value.upper;
+		this.filter = filter;
+	  	this.other.setFilter(this.filter,this.order);
   	},700);
   }
 
   closeModel(){
   	this.other.setFilter(this.filter,this.order);
   	this.modal.dismiss();
+  }
+
+  setOrder(order){
+	this.order = order;
+	this.other.setFilter(this.filter,this.order);
   }
 
 }

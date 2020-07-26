@@ -75,11 +75,11 @@
             </ion-list-header>        
             <ion-item>
               <ion-label>Recent</ion-label>
-              <ion-radio slot="start" value="recent"></ion-radio>
+              <ion-radio slot="start" value="recent" (click)="setOrder('recent')"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>Popular</ion-label>
-              <ion-radio slot="start" value="popular"></ion-radio>
+              <ion-radio slot="start" value="popular" (click)="setOrder('popular')"></ion-radio>
             </ion-item>
           </ion-radio-group>
         </ion-list>
