@@ -32,9 +32,13 @@ export class SingleitemPage implements OnInit {
   pincode="";
   enquiryMsg=0;
   sliders:any=[];
+  shortDescription:boolean=false;
+  longDescription:boolean=true;
+  availableMsg:boolean=true;
+  nonAvailableMsg:boolean=true;
 
   constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService) {
-    if(localStorage.getItem('userdata') != "undefined")
+    if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
     {
       this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
       if (this.CustomerLoginId === undefined){
@@ -86,7 +90,7 @@ export class SingleitemPage implements OnInit {
   	this.apis.getItemDetail(cid,id).subscribe(res=>{
       this.data = res.body.productdetails;
       this.sliders = res.body.relatedproductlist;
-      this.data.mrp_price = 1111;
+      this.data.mrp_price = res.body.productdetails.mrp_price;
       this.activeimage.url = res.body.productdetails.image;
       console.log(this.data);
       // this.data.selected = this.data.ItemRateList[0];
@@ -175,8 +179,17 @@ export class SingleitemPage implements OnInit {
   }
 
   pincodeCheck(){
-    this.apis.pincodeCheck(this.pincode).subscribe(res=>{
-      this.other.presentToast(res.body.message,'success');
+    this.apis.pincodeCheck(this.pincode)
+    .subscribe(res=>{
+      if(res.body.status == "true")
+      {
+        this.availableMsg = false;
+        this.nonAvailableMsg = true;
+      }else{
+        this.availableMsg = true;
+        this.nonAvailableMsg = false;
+      }
+      //this.other.presentToast(res.body.message,'success');
     })
   }
 
@@ -185,6 +198,11 @@ export class SingleitemPage implements OnInit {
       this.enquiryMsg = 1;
       this.other.presentToast('Enquiry sent succssfully!','success');
     })
+  }
+
+  readMore(){
+    this.shortDescription = true;
+    this.longDescription = false;
   }
 
 }

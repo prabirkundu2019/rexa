@@ -15,7 +15,7 @@
         <ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
       </ion-button>
       <ion-button routerLink="menu/wishlist">
-        <ion-icon name="list"></ion-icon>
+        <ion-icon name="heart-empty"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -30,8 +30,8 @@
       <a><ion-img src="assets/images/delivery-fast-selected.png" style="width:12px;margin-right: 5px;"></ion-img> Express</a>
     </div>-->
     <div class="" style="display:flex;"> 
-        <ion-img (click)="showGrid()" src="assets/images/grid.png" style="margin-right: 5px;border-bottom: 0px solid #eee;margin-left: 10px;"></ion-img>
-        <ion-img (click)="showList()" src="assets/images/list.png" style="margin-right: 5px;border-bottom: 0px solid #eee;"></ion-img>
+        <ion-img (click)="showGrid()" [hidden]="showGridIcon" src="assets/images/grid.png" style="margin-right: 5px;border-bottom: 0px solid #eee;margin-left: 15px;"></ion-img>
+        <ion-img (click)="showList()" [hidden]="showListIcon" src="assets/images/list.png" style="margin-right: 5px;border-bottom: 0px solid #eee; margin-left: 15px;"></ion-img>
     </div>
     <div class="">{{items.length}} Item</div>
     <div class="Filter_btn filter-active" *ngIf="filterapplied" (click)="presentFilterModal()"> <a>
@@ -51,7 +51,9 @@
       <ion-col size="8" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
         <div class="product_title" style="line-height: 14px; margin-top: 15px;"> <a >{{ cat.pname }}<br />
           <br />
-          <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span> &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ cat.discount }}% OFF</span> </a> </div>
+          <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> &nbsp;&nbsp; 
+          <span *ngIf="cat.discount!=0" style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span> &nbsp;&nbsp; 
+          <span *ngIf="cat.discount!=0" style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ cat.discount }}% OFF</span> </a> </div>
         <!-- <div class="form-group pt-2">
         	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select One" (ionChange)="onSelectChange(cat, i, $event)" style="max-width:200px;">
             	<ion-select-option selected>1</ion-select-option>
@@ -85,7 +87,9 @@
         <ion-col size="12" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
           <div class="product_title" style="line-height: 14px; margin-top: 15px;"> <a >{{ cat.pname }}<br />
             <br />
-            <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span> &nbsp;&nbsp; <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ cat.discount }}% OFF</span> </a> </div>
+            <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> &nbsp;&nbsp; 
+            <span *ngIf="cat.discount!=0" style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span> &nbsp;&nbsp; 
+            <span *ngIf="cat.discount!=0" style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ cat.discount }}% OFF</span> </a> </div>
         </ion-col>
       </ion-col>
     </ion-row>

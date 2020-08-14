@@ -24,16 +24,27 @@ export class ApiService {
   }
 
   getOtp(no):Observable<HttpResponse<any>>{
-  	return this.http.get<any>(environment.baseurl1+'/SP_GenerateOtp/?MobileNo='+no,{observe:'response'});
+    let formdata = {'mobile':no}
+  	return this.http.post<any>(environment.baseurl1+'/loginsms',formdata,{observe:'response'});
   }
 
   getFrogotOtp(no):Observable<HttpResponse<any>>{
     return this.http.get<any>(environment.baseurl1+'/ForgotPasswordGenerateOTP/?MobileNo='+no,{observe:'response'});
   }
 
-  verifyOtp(otp,no,type):Observable<HttpResponse<any>>{
-  	let formdata = {'Code':otp,'MobileNo':no,'Type':type}
-  	return this.http.post<any>(environment.baseurl1+'/authentication/otp',formdata,{observe:'response'});
+  verifyOtp(otp,no):Observable<HttpResponse<any>>{
+  	let formdata = {'otp':otp,'mobile':no}
+  	return this.http.post<any>(environment.baseurl1+'/loginverifyotp',formdata,{observe:'response'});
+  }
+
+  registerOtp(name, mobile):Observable<HttpResponse<any>>{
+    let formdata = {'fullname':name, 'mobile':mobile}
+  	return this.http.post<any>(environment.baseurl1+'/registersms',formdata,{observe:'response'});
+  }
+
+  registerVerifyOtp(otp, mobile):Observable<HttpResponse<any>>{
+    let formdata = {'otp':otp, 'mobile':mobile}
+  	return this.http.post<any>(environment.baseurl1+'/registerverifyotp',formdata,{observe:'response'});
   }
 
   // getCategory(level=0,size=0,page=0):Observable<HttpResponse<any>>{
@@ -48,8 +59,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/subcategory/'+pid,{observe:'response'});
   }
 
-  getItems(cid = 0,filter=null,order=null,uid,page = null,size = null):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/productlist/'+cid,{observe:'response'});
+  getItems(cid = 0,subcatid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/productlist/'+cid+'/'+subcatid,{observe:'response'});
   }
 
   getItemsWithFilter(cid = 0,filter=null,order=null):Observable<HttpResponse<any>>{

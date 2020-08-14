@@ -20,13 +20,13 @@ export class FilterPage implements OnInit {
 
   ngOnInit() {
   	let min
-		let max
+	let max
   	if(this.filter){
   		min = parseInt(this.filter.split('&')[0].split('=')[1]);
   		max = parseInt(this.filter.split('&')[1].split('=')[1]);
   	}
   	setTimeout(()=>{
-  		this.pricerange.value = { lower: min?min:this.data[0].MinRate, upper: max?max:this.data[0].MaxRate };
+  		this.pricerange.value = { lower: min?min:this.data[0], upper: max?max:this.data[1] };
   	},300);
   	this.other.getTotalItems().subscribe(res=>{
   		this.totalitems = res.items;

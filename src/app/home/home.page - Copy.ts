@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 })
 export class HomePage implements OnInit {
 
-	model = {mobile:'',password:""};
+	model = {email:'',password:""};
 	@ViewChild('loginForm',{static:false}) form :any;
 	back:any;
 	page='';
@@ -64,16 +64,17 @@ export class HomePage implements OnInit {
 
   	login(){
 	  	this.other.presentLoading().then(res=>{
-	  		this.apis.getOtp(this.model.mobile).subscribe(res=>{
-				console.log(res.body);
-				if(res.body.status == "true"){					
+	  		this.apis.login(this.model.email,this.model.password).subscribe(res=>{
+				console.log(res.body.status);
+				if(res.body.status == "true"){
+					localStorage.setItem("userdata",JSON.stringify(res.body.udetails));
 	        		this.other.dismissLoading();
 					//this.location.back();	
-					//this.events.publish('mobile', this.model.mobile, Date.now());        		
-					this.navCtrl.navigateRoot('/otp/'+this.model.mobile);					  
+					this.events.publish('user:created', res.body.udetails, Date.now());        		
+					this.navCtrl.navigateRoot('/menu/tabs/tab2');					  
 	      		}else{
 		        	this.other.dismissLoading();
-		        	this.other.presentToast(res.body.message,'danger');
+		        	this.other.presentToast(res.body.save_response,'danger');
 		      	}
 				},err =>{
 		      		this.other.dismissLoading();

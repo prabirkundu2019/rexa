@@ -10,13 +10,24 @@
       <ion-icon name="list-box"></ion-icon>
       <ion-label>ARRIVALS</ion-label>
     </ion-tab-button>-->
-    <ion-tab-button tab="profile" *ngIf="this.CustomerLoginId">
+
+    <!-- <ion-tab-button tab="profile" *ngIf="this.CustomerLoginId">
       <ion-icon name="person"></ion-icon>
-      <ion-label>Profile</ion-label>
+      <ion-label>PROFLE</ion-label>
     </ion-tab-button>
     <ion-tab-button *ngIf="!this.CustomerLoginId" routerLink="/login">
       <ion-icon name="person"></ion-icon>
-      <ion-label>Profile</ion-label>
+      <ion-label>PROFILE</ion-label>
+    </ion-tab-button> -->
+
+    <ion-tab-button tab="tab4">
+      <ion-icon name="cash"></ion-icon>
+      <ion-label>MAKE MONEY</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="whislist">
+      <ion-icon name="heart-empty"></ion-icon>
+      <ion-label>WISHLIST</ion-label>
     </ion-tab-button>
 
 <!-- 
@@ -30,10 +41,13 @@
       <ion-label>OFFER</ion-label>
     </ion-tab-button>-->
 
-    <ion-tab-button tab="cart">
+    <!-- <ion-tab-button tab="cart">
       <ion-icon name="cart"></ion-icon>
       <ion-label>Cart</ion-label>
-    </ion-tab-button>
+    </ion-tab-button> -->
+
+  
+
 
   </ion-tab-bar>
 </ion-tabs>

@@ -14,13 +14,32 @@
 	    	<ion-icon name="cart"></ion-icon>
       	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
 	    </ion-button>
-	    <ion-button routerLink="/menu/wishlist"><ion-icon name="list"></ion-icon></ion-button>
+	    <ion-button routerLink="/menu/wishlist"><ion-icon name="heart-empty"></ion-icon></ion-button>
 	  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="home">
-  <ion-grid *ngIf="subcatdata">
+
+<div *ngIf="subcatdata?.length" class="product_filter" style="border-bottom: 5px solid #eee; background: #fff;    padding: 5px 6px;"> 
+    
+    <!--<div class="Filter_btn" *ngIf="!expfilter" (click)="expFilter()">
+      <a><ion-img src="assets/images/delivery-fast-red.png" style="width:12px;margin-right: 5px;"></ion-img> Express</a>
+    </div>
+    <div class="Filter_btn filter-active" *ngIf="expfilter" (click)="expFilter()">
+      <a><ion-img src="assets/images/delivery-fast-selected.png" style="width:12px;margin-right: 5px;"></ion-img> Express</a>
+    </div>-->
+    <div class="" style="display:flex;"> 
+        <ion-img (click)="showGrid()" [hidden]="showGridIcon" src="assets/images/grid.png" style="margin-right: 5px;border-bottom: 0px solid #eee;margin-left: 10px;"></ion-img>
+        <ion-img (click)="showList()" [hidden]="showListIcon" src="assets/images/list.png" style="margin-right: 5px;border-bottom: 0px solid #eee;margin-left: 10px;"></ion-img>
+    </div>
+    <div class="">{{subcatdata.length}} Item</div>
+    
+    
+  </div>
+
+
+  <ion-grid *ngIf="subcatdata"[hidden]="listHidden">
     <ion-row>
       <ion-col size='6' *ngFor="let cat of subcatdata" [routerLink]="['/menu/singlecatitems',replacespace(cat.subcatname),cat.id,catdata.id]">
         <div class="box">
@@ -36,6 +55,28 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>-->
   </ion-grid>
+  
+  
+  
+  <ion-grid *ngIf="subcatdata" [hidden]="gridHidden">
+    <ion-row>
+      <ion-col size='12' *ngFor="let cat of subcatdata" [routerLink]="['/menu/singlecatitems',replacespace(cat.subcatname),cat.id,catdata.id]">
+        <div class="box">
+          <div class="box_image"><ion-img [src]="cat.image?cat.image:'assets/images/box_1.jpg'" alt="" style="height: 123px;"></ion-img></div>
+          <div class="box_title trans_200" style="text-align: center;"><a href="categories.html">{{cat.subcatname | titlecase}}</a></div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!--<ion-infinite-scroll threshold="100px" *ngIf="subcatdata && subcatdata.TotalRowsList[0].RemainingRecords" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>-->
+  </ion-grid>
+  
+  
+  
   <ion-grid *ngIf="!subcatdata">
     <ion-row>
       <ion-col size="6" *ngFor="let data of ' '.repeat(12).split('')">
@@ -43,6 +84,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  
+  
+  
   <!--<div class="empty-cart" *ngIf="subcatdata.length == 0">
     <ion-img src="/assets/images/nodata.png"></ion-img>
     <h4>No Results Found !!</h4>

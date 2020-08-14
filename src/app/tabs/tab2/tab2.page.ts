@@ -50,13 +50,13 @@ export class Tab2Page implements OnInit {
 			}
 		});
 
-		// if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
-		// {
-		// 	this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
-		// 	if (this.CustomerLoginId === undefined){
-		// 		this.CustomerLoginId = '';
-		// 	}
-		// }
+		if(this.CustomerLoginId == "" && "userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
+		{
+			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+			if (this.CustomerLoginId === undefined){
+				this.CustomerLoginId = '';
+			}
+		}
 
 		this.other.getcart().subscribe(res => {			
 			if (res.do) {
@@ -152,7 +152,7 @@ export class Tab2Page implements OnInit {
 	}
 
 	getItems() {
-		this.apis.getItems(0, 'IsMobile=1', null, JSON.parse(localStorage.getItem('userdata')).CustomerLoginId, 1, 20).subscribe(res => {
+		this.apis.getItems(0, 'IsMobile=1').subscribe(res => {
 			this.other.isValidToken(res.body.Message);
 			this.newitems = [];
 			this.page = 2;

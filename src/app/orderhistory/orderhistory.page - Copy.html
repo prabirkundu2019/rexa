@@ -20,7 +20,7 @@
 			</ion-col>
 			<ion-col size="6">
 				<div class="product_title">
-          <b class="font-weight-bold">{{data.product_name | titlecase}}</b>
+          <b class="font-weight-bold">{{data.product_sku | titlecase}}</b>
   			</div>
   			<!--<p style="margin: 0px;color: #4a4a4a;">
            {{data.Status}}
@@ -50,23 +50,7 @@
   			Sub Total
   		</ion-col>
   		<ion-col size="3">
-  			<p class="checkout-price">&#8377; {{order?.totalsub | number:'1.0-2'}}</p>
-  		</ion-col>
-  	</ion-row>
-    <ion-row *ngIf="cod != '0'">
-  		<ion-col size="9">
-  			COD Charge
-  		</ion-col>
-  		<ion-col size="3">
-  			<p class="checkout-price">&#8377; {{order?.cod | number:'1.0-2'}}</p>
-  		</ion-col>
-  	</ion-row>
-    <ion-row *ngIf="delivery != '0'">
-  		<ion-col size="9">
-  			Shipping Charge
-  		</ion-col>
-  		<ion-col size="3">
-  			<p class="checkout-price">&#8377; {{order?.delivery | number:'1.0-2'}}</p>
+  			<p class="checkout-price">&#8377; {{order?.main_price | number:'1.0-2'}}</p>
   		</ion-col>
   	</ion-row>
     <ion-row class="bill-discount" *ngIf="order?.ccvalue != ''">

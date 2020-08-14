@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, Events } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SearchPage } from '../search/search.page';
 import { OtherService } from '../service/other.service';
@@ -14,13 +14,18 @@ export class TabsPage implements OnInit {
   back:any;
   CustomerLoginId = "";
 
-  constructor(public router:Router,public modalController: ModalController,private platform:Platform, private other:OtherService) {
-    if('userdata' in localStorage && localStorage.getItem('userdata') != "undefined")
+  constructor(public router:Router,public modalController: ModalController,private platform:Platform, private other:OtherService, public events: Events) {
+    this.events.subscribe('user:created', (user, time) => {
+      console.log('Welcome', user, 'at', time);
+			// user and time are the same arguments passed in `events.publish(user, time)`
+			this.CustomerLoginId = user.id;
+    });
+    if(this.CustomerLoginId == "" && "userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
 		{
-		  this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
-		  if (this.CustomerLoginId === undefined){
-			this.CustomerLoginId = '';
-		  }
+			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+			if (this.CustomerLoginId === undefined){
+				this.CustomerLoginId = '';
+			}
 		}
   }
 

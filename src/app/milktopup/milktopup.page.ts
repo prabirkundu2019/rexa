@@ -32,12 +32,12 @@ export class MilktopupPage implements OnInit {
   	constructor(private apis:ApiService,private other:OtherService,private iab: InAppBrowser,public router:Router) { }
 
   	ngOnInit() {
-  		this.userData = JSON.parse(localStorage.getItem('profiledate'));
-	  	this.getBrand();
-	  	this.getPaymentMethods();
-	  	this.walletamt = JSON.parse(localStorage.getItem('profiledate')).WalletBalance;
-	    this.walletname = JSON.parse(localStorage.getItem('profiledate')).WalletCardName;
-	    this.walletno = JSON.parse(localStorage.getItem('profiledate')).WalletCardNo;
+  		// this.userData = JSON.parse(localStorage.getItem('profiledate'));
+	  	// this.getBrand();
+	  	// this.getPaymentMethods();
+	  	// this.walletamt = JSON.parse(localStorage.getItem('profiledate')).WalletBalance;
+	    // this.walletname = JSON.parse(localStorage.getItem('profiledate')).WalletCardName;
+	    // this.walletno = JSON.parse(localStorage.getItem('profiledate')).WalletCardNo;
   	}
 
   	getBrand(){

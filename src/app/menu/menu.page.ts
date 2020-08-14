@@ -29,6 +29,14 @@ export class MenuPage implements OnInit {
 			this.CustomerLoginId = user.id;
 			this.name = user.name;
 		});
+		if(this.CustomerLoginId == "" && "userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
+		{
+			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
+			this.name = JSON.parse(localStorage.getItem('userdata')).name;	
+			if (this.CustomerLoginId === undefined){
+				this.CustomerLoginId = '';
+			}
+		}
 	  	this.other.getrefresh().subscribe(res =>{
 	  		if(res.do){
 	  			this.getCartSize();

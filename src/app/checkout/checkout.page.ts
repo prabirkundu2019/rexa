@@ -30,8 +30,12 @@ export class CheckoutPage implements OnInit {
 	subtotal:number = 0;
 	total:number = 0;
 	othercharges:number = 0;
-	final:any = [];
+	codCharge:number = 0;
+	codHide = true;
+	final:number = 0;
+	totalsum:number = 0;
 	discount:number = 0;
+	shippingcharge:number = 0;
 	pricerange:any;
 	buyNowData:any;
 	walletamt:any;
@@ -39,6 +43,7 @@ export class CheckoutPage implements OnInit {
 	walletno:any;
 	WalletMessage:string;
 	WalletAmount:any = 0;
+	payableAmount:any = 0;
 	donateAmount:any = 0;
 	safetyAmount:any = 0;
 	tipAmount:any = 0;
@@ -83,15 +88,15 @@ export class CheckoutPage implements OnInit {
  	getProfileData(){
 	    this.apis.getProfileData(JSON.parse(localStorage.getItem('userdata')).id).subscribe(res=>{
 	      //this.other.isValidToken(res.body.Message);
-	      localStorage.setItem('profiledate',JSON.stringify(res.body.Data[0]));
-	      localStorage.setItem('image',res.body.Data[0].Img);
-	      this.walletamt = JSON.parse(localStorage.getItem('profiledate')).WalletBalance;
-	      this.walletname = JSON.parse(localStorage.getItem('profiledate')).WalletCardName;
-	      this.walletno = JSON.parse(localStorage.getItem('profiledate')).WalletCardNo;
-	      this.donateAmount = JSON.parse(localStorage.getItem('profiledate')).DonationAmount;
-	      this.safetyAmount = JSON.parse(localStorage.getItem('profiledate')).SafetyAmount;
-	      this.tipAmount = JSON.parse(localStorage.getItem('profiledate')).TipAmount;
-	      this.tipAmountList = JSON.parse(localStorage.getItem('profiledate')).TipAmounts.split(',');	      
+	      localStorage.setItem('profiledate',JSON.stringify(res.body.userdata));
+	      //localStorage.setItem('image',res.body.Data[0].Img);
+	      this.walletamt = 0;
+	      this.walletname = 0;
+	      this.walletno = 0;
+	      this.donateAmount = 0;
+	      this.safetyAmount = 0;
+	      this.tipAmount = 0;
+	      this.tipAmountList = 0;      
 	      this.calculateCharges();    
 	    });
   	}
@@ -160,11 +165,16 @@ export class CheckoutPage implements OnInit {
 	  this.cartcountdata = res.body.cartcount;
 	  this.cartdata = res.body.cartdetails;
 	  this.discount = 0;
-	  this.subtotal = res.body.totalsum;
+	  this.subtotal = res.body.tsum;
+	  this.shippingcharge = res.body.shipcharge;
+	  this.final = res.body.totalsum;
+	  this.totalsum = res.body.totalsum;
 	  this.othercharges = 0;
+	  this.codCharge = res.body.cashondelivery_charge;
 	  this.WalletAmount = res.body.totalbalance;
 	  this.WalletMessage = res.body.walletbalance_message;
 	  this.walleticondata = res.body.walleticon;
+	  this.payableAmount = res.body.payableamount;
     })
   }
 
@@ -264,6 +274,14 @@ export class CheckoutPage implements OnInit {
   }
 
   setPmode(type){
+	if(type == 2)
+	{
+		this.codHide = false;
+		this.final = this.totalsum + Number(this.codCharge);
+	}else{
+		this.codHide = true;
+		this.final = this.totalsum;
+	}
   	this.spmode = type;  	
   }
 
@@ -274,7 +292,7 @@ export class CheckoutPage implements OnInit {
   	{
   		this.other.presentToast("Your Cart is Empty!",'danger');
   		return true;	
-  	}else if(this.spmode == "4" && this.subtotal > this.WalletAmount){
+  	}else if(this.spmode == "1" && this.payableAmount != 0){
 		this.other.presentToast(this.WalletMessage,'danger');
   		return true;
 	}
@@ -323,11 +341,10 @@ export class CheckoutPage implements OnInit {
 	    this.apis.buy(formdata).subscribe(res=>{    
 			console.log(this.spmode);	
 			this.buyNowData = res.body;	
-			if(this.spmode == "1" || this.spmode == "4"){
+			if(this.spmode == "1" || this.spmode == "2"){
 				this.router.navigate(['/menu/orderhistory/'+this.buyNowData.orderid],{replaceUrl:true});
 	    		this.other.presentToast("Order Placed Successfully !!",'success');
-			}else if(this.spmode == "3")
-			{
+			}else if(this.spmode == "3" || this.spmode == "4"){
 				const browser = this.iab.create(res.body.paymenturl, "_self", {
 					location: 'no',
 					clearcache: 'yes',

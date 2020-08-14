@@ -33,9 +33,11 @@ export class SinglecatitemsPage implements OnInit {
   selectedOption=0;
   listHidden=false;
   gridHidden=true;
+  showListIcon=true;
+  showGridIcon=false;
 
 	constructor(public navCtrl:NavController,private other:OtherService,public router:Router,private apis:ApiService,private modalController:ModalController) {
-    if(localStorage.getItem('userdata') != "undefined")
+    if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
     {
       this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
       if (this.CustomerLoginId === undefined){
@@ -116,29 +118,28 @@ export class SinglecatitemsPage implements OnInit {
 
   getItemswithFilter(filter,order){
     console.log(filter);
-    this.other.presentLoading().then(m=>{
-      this.items = [];
-      this.apis.getItemsWithFilter(this.subcatid,filter,order).subscribe(res=>{
-        console.log(res.body);
-        this.other.dismissLoading();
-        //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;
-        this.items = res.body.productlist;
-        for(let i=0;i<res.body.productlist.length;i++){
-          this.items[i].cartQuantity = 1;
+    this.items = [];
+    this.apis.getItemsWithFilter(this.subcatid,filter,order).subscribe(res=>{
+      console.log(res.body);
+      this.other.dismissLoading();
+      //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;
+      this.items = res.body.productlist;
+      for(let i=0;i<res.body.productlist.length;i++){
+        this.items[i].cartQuantity = 1;
+      }
+      if(!res.body.productlist.length){
+          this.other.setTotalItems(0);
         }
-        if(!res.body.productlist.length){
-            this.other.setTotalItems(0);
-          }
-      })
     })
   }
 
   getItems(){  	
 	
-  	this.apis.getItems(this.cid,null,null,this.CustomerLoginId).subscribe(res=>{
+  	this.apis.getItems(this.cid,this.subcatid).subscribe(res=>{
       console.log(res.body.productlist.length);
+      //this.other.dismissLoading();
       //this.items = [];
-      //this.ItemRateListMinMax = res.body.Data.ItemRateListMinMax;
+      this.ItemRateListMinMax = res.body.ItemRateListMinMax;
       this.items = res.body.productlist;
       console.log(this.items);
   		for(let i=0;i<res.body.productlist.length;i++){
@@ -174,11 +175,17 @@ export class SinglecatitemsPage implements OnInit {
   showGrid(){
     this.listHidden = true;
     this.gridHidden = false;
+
+    this.showListIcon = false;
+    this.showGridIcon = true;
   }
 
   showList(){
     this.listHidden = false;
     this.gridHidden = true;
+
+    this.showListIcon = true;
+    this.showGridIcon = false;
   }
 
 }

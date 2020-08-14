@@ -37,7 +37,14 @@
 		<tbody>
 			<tr *ngFor="let data of txndata;let i = index;">
 				<td>{{i+1}}</td>
-				<td [ngClass]="data.Type">{{data.cardname}}</td>
+				<td [ngClass]="data.Type">
+					{{data.cardname}}
+					<br>
+					<ion-button class="redBtn" style="height: 30px;
+						padding: 5px 0px;
+						font-size: 13px;
+						border-radius: 5px;">Activate this Card</ion-button>
+				</td>
 				<td>{{data.amount}}</td>
 				<td>{{data.createdon | date:'dd/MM/yyyy'}}</td>
 			</tr>

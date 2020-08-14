@@ -15,9 +15,9 @@ import { environment } from '../../environments/environment';
 })
 export class SignupPage implements OnInit {
 
-	model = { name: "", password: '', email: '' };
-	//otpres: boolean = false;
-	//otpverified: boolean = true;
+	model = { name: "", otp: '', mobile: '' };
+	otpres: boolean = false;
+	otpverified: boolean = false;
 	back: any;
 	WalletCard: any;
 	countries: any;
@@ -93,75 +93,76 @@ export class SignupPage implements OnInit {
 		})
 	}
 
-	// getOtp() {
-	// 	this.other.presentLoading().then(res => {
-	// 		this.apis.getOtp(this.model.mobile).subscribe(res => {
-	// 			if (res.body.Code === 1000) {
-	// 				this.other.dismissLoading();
-	// 				this.other.presentToast('OTP Sent !!', 'success');
-	// 				this.otpres = true;
-	// 			} else {
-	// 				this.other.dismissLoading();
-	// 				this.other.presentToast(res.body.Message, 'danger');
-	// 			}
-	// 		}, err => {
-	// 			this.other.dismissLoading();
-	// 			this.other.presentToast('Something went wrong !!', 'danger');
-	// 		})
-	// 	})
-	// }
-
-	// verifyOtp() {
-	// 	this.other.presentLoading().then(res => {
-	// 		this.apis.verifyOtp(this.model.otp, this.model.mobile, 1).subscribe(res => {
-	// 			if (res.body.Code === 1000) {
-	// 				this.other.dismissLoading();
-	// 				this.otpverified = true;
-	// 			} else {
-	// 				this.other.dismissLoading();
-	// 				this.other.presentToast(res.body.Message, 'danger');
-	// 			}
-	// 		}, err => {
-	// 			this.other.dismissLoading();
-	// 			this.other.presentToast('Something went wrong !!', 'danger');
-	// 		})
-	// 	})
-	// }
-
-	createuser() {
-		// let formdata = {"LoginId":this.model.mobile,"CustomerName":this.model.name,"Password":this.model.password,"OTP":this.model.otp};
-		this.other.presentLoading().then(res=>{
-			let formdata = { "email": this.model.email, "password": this.model.password, "name": this.model.name };
-			this.apis.signup(formdata).subscribe(res => {
+	getOtp() {
+		this.other.presentLoading().then(res => {
+			this.apis.registerOtp(this.model.name, this.model.mobile).subscribe(res => {
 				if (res.body.status === "true") {
 					this.other.dismissLoading();
-					// this.paymentData = res.body.Data;       
-					// var queryString = 'amount=' + this.paymentData.TXN_AMOUNT + '&order_id=' + this.paymentData.ORDER_ID + '&firstname=' + this.model.name + '&email=' + this.model.email + '&phone=' + this.model.mobile;
-					// const browser = this.iab.create(environment.payumoneyPage + '?' + queryString, "_self", {
-					// 	location: 'no',
-					// 	clearcache: 'yes',
-					// 	hardwareback: 'no',
-					// });
-					// browser.on('loadstart').subscribe((event) => {
-					// 	if (event.url == environment.payumoneySuccessPage) {
-					// 		this.paymentSuccess();
-					// 		browser.close();
-					// 	} else if (event.url == environment.payumoneyFailedPage) {
-					// 		this.paymentFailure();
-					// 		browser.close();
-					// 	}
-					// });
-					this.router.navigate(['/login'],{replaceUrl:true})
+					this.other.presentToast('OTP Sent !!', 'success');
+					this.otpres = true;
 				} else {
 					this.other.dismissLoading();
-					this.other.presentToast(res.body.message, 'danger');
+					this.other.presentToast(res.body.Message, 'danger');
 				}
 			}, err => {
 				this.other.dismissLoading();
 				this.other.presentToast('Something went wrong !!', 'danger');
-			});
-		});
+			})
+		})
 	}
+
+	verifyOtp() {
+		this.other.presentLoading().then(res => {
+			this.apis.registerVerifyOtp(this.model.otp, this.model.mobile).subscribe(res => {
+				if (res.body.status === "true") {
+					this.other.dismissLoading();
+					this.otpverified = true;
+					this.router.navigate(['/login'],{replaceUrl:true})
+				} else {
+					this.other.dismissLoading();
+					this.other.presentToast(res.body.Message, 'danger');
+				}
+			}, err => {
+				this.other.dismissLoading();
+				this.other.presentToast('Something went wrong !!', 'danger');
+			})
+		})
+	}
+
+	// createuser() {
+	// 	// let formdata = {"LoginId":this.model.mobile,"CustomerName":this.model.name,"Password":this.model.password,"OTP":this.model.otp};
+	// 	this.other.presentLoading().then(res=>{
+	// 		let formdata = { "email": this.model.email, "password": this.model.password, "name": this.model.name };
+	// 		this.apis.signup(formdata).subscribe(res => {
+	// 			if (res.body.status === "true") {
+	// 				this.other.dismissLoading();
+	// 				// this.paymentData = res.body.Data;       
+	// 				// var queryString = 'amount=' + this.paymentData.TXN_AMOUNT + '&order_id=' + this.paymentData.ORDER_ID + '&firstname=' + this.model.name + '&email=' + this.model.email + '&phone=' + this.model.mobile;
+	// 				// const browser = this.iab.create(environment.payumoneyPage + '?' + queryString, "_self", {
+	// 				// 	location: 'no',
+	// 				// 	clearcache: 'yes',
+	// 				// 	hardwareback: 'no',
+	// 				// });
+	// 				// browser.on('loadstart').subscribe((event) => {
+	// 				// 	if (event.url == environment.payumoneySuccessPage) {
+	// 				// 		this.paymentSuccess();
+	// 				// 		browser.close();
+	// 				// 	} else if (event.url == environment.payumoneyFailedPage) {
+	// 				// 		this.paymentFailure();
+	// 				// 		browser.close();
+	// 				// 	}
+	// 				// });
+	// 				this.router.navigate(['/login'],{replaceUrl:true})
+	// 			} else {
+	// 				this.other.dismissLoading();
+	// 				this.other.presentToast(res.body.message, 'danger');
+	// 			}
+	// 		}, err => {
+	// 			this.other.dismissLoading();
+	// 			this.other.presentToast('Something went wrong !!', 'danger');
+	// 		});
+	// 	});
+	// }
 
 	paymentSuccess() {
 		let formdata = {

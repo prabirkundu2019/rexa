@@ -12,10 +12,14 @@ export class SinglecatPage implements OnInit {
   catdata: any;
 	subcatdata:any;
 	catName:string;
-  	page:number = 0;
-  	pid:any;
-  	cart:boolean = false;
-  	cartCount = '';
+  page:number = 0;
+  pid:any;
+  cart:boolean = false;
+  cartCount = '';
+  listHidden=false;
+  gridHidden=true;
+  showListIcon=true;
+  showGridIcon=false;
 
   constructor(private apis:ApiService,public router:Router,private other:OtherService) {
     this.other.getcart().subscribe(res=>{
@@ -70,6 +74,22 @@ export class SinglecatPage implements OnInit {
     //     }
     //   }
   	})
+  }
+
+  showGrid(){
+    this.listHidden = true;
+    this.gridHidden = false;
+
+    this.showListIcon = false;
+    this.showGridIcon = true;
+  }
+
+  showList(){
+    this.listHidden = false;
+    this.gridHidden = true;
+
+    this.showListIcon = true;
+    this.showGridIcon = false;
   }
 
 }

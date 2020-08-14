@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { OtherService } from '../service/other.service';
-import { Platform, NavController } from '@ionic/angular';
+import { Platform, NavController, Events} from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +20,12 @@ export class ProfilePage implements OnInit {
     add:any;
     CustomerLoginId: "";
 
-  constructor(public navCtrl:NavController,private apis:ApiService,private other:OtherService,public router:Router) {
+  constructor(public navCtrl:NavController,private apis:ApiService,private other:OtherService,public router:Router, public events: Events) {
+    events.subscribe('user:created', (user, time) => {
+			// user and time are the same arguments passed in `events.publish(user, time)`
+      this.CustomerLoginId = user.id;
+      this.name = user.name;
+		});
     if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
 		{
 			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	

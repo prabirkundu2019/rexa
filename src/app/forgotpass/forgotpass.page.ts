@@ -51,7 +51,7 @@ export class ForgotpassPage implements OnInit {
 
   verifyOtp(){
     this.other.presentLoading().then(res=>{
-    	this.apis.verifyOtp(this.model.otp,this.model.mobile,2).subscribe(res=>{
+    	this.apis.verifyOtp(this.model.otp,this.model.mobile).subscribe(res=>{
         if(res.body.Code === 1000){
           this.other.dismissLoading();
           this.otpverified = true;

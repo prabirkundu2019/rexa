@@ -29,7 +29,7 @@
 						<p>PIN: {{address.zip}}</p>
 					</ion-col>
 					<ion-col size="3" class="change-add">
-						<ion-button routerLink="/menu/alladd" [queryParams]="{ from: 'checkout' }" style="height: 33px;border-radius: 5px;">Change</ion-button>
+						<ion-button routerLink="/menu/alladd" [queryParams]="{ from: 'checkout' }" style="height: 33px;border-radius: 5px;">Edit</ion-button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -43,13 +43,13 @@
                 	<ion-col size="3">
                     <img src="{{cart.productdetails.image}}" />
                     </ion-col>
-					<ion-col size="7">
+					<ion-col size="6">
                     {{cart.productdetails.product_name}}
                     <br /><br />
                     {{cart.quantity}} Qty - &#8377;{{cart.productdetails.display_price}}
                     </ion-col>
 					<!--<ion-col size="3">&#8377;{{cart.productdetails.display_price}} X {{cart.quantity}}</ion-col>-->
-					<ion-col size="2">
+					<ion-col size="3">
 						<p class="checkout-price">&#8377; {{cart.quantity * cart.productdetails.display_price | number:'1.0-2'}}</p>
 					</ion-col>
 				</ion-row>
@@ -74,21 +74,107 @@
 						<p class="checkout-price">{{othercharges?'+ &#8377; '+othercharges:'Free'}}</p>
 					</ion-col>
 				</ion-row>
+                <ion-row [hidden]="codHide">
+					<ion-col size="9">
+						COD Charge
+					</ion-col>
+					<ion-col size="3">
+						<p class="checkout-price">{{codCharge?'+ &#8377; '+codCharge:'Free'}}</p>
+					</ion-col>
+				</ion-row>
+                <ion-row>
+					<ion-col size="9">
+						Safety Charge
+					</ion-col>
+					<ion-col size="3">
+						<p class="checkout-price">&#8377; {{shippingcharge | number:'1.0-2'}}</p>
+					</ion-col>
+				</ion-row>
 				<hr>
 		    	<ion-row class="checkout-total">
 		    		<ion-col size="9">To Pay</ion-col>
 		    		<ion-col size="3">
-		    			<p class="checkout-price">&#8377; {{(othercharges+subtotal)-discount | number:'1.0-2'}}</p>
+		    			<p class="checkout-price">&#8377; {{ (final-discount) | number:'1.0-2'}}</p>
 		    		</ion-col>
 		    	</ion-row>
 				<hr>
 			</ion-grid>
 		</div>
 	</div>
+
+	
 	
 	<div class="wallet-details">
 		<div class="wallet-details-inner" style="border-radius: 0px;border-bottom: 7px solid #eee;">
 			<div class="ion-padding" style="padding: 0px;">
+				<div style="padding:0px;border-bottom: 7px solid #eee;    margin-top: -25px;">
+					<div class="checkout_title" style="padding: 0px 0px;">
+						<div style="display:flex">
+							<div style="width:100%;">						
+			
+									<ion-item>						  
+									  <ion-checkbox [(ngModel)]="cucumber" (ionChange)="updateCucumber()"></ion-checkbox>
+									  <ion-label style="overflow: initial;
+									  font-size: 14px;
+									  line-height: 20px;
+									  margin-left: 10px;
+									  margin-top: 29px;white-space: initial;">Express Delivery Charges<br>(With Applicable Charges: Rs 50)</ion-label>
+									</ion-item>				
+			
+							</div>
+						</div>
+							
+					</div> 		
+				</div>
+
+				<div style="padding: 10px;
+    border-bottom: 7px solid #eee;">
+					  <ion-label class="label1" style="font-weight: bold;">Add reward to support your delivery hero</ion-label>
+					  <p style="padding: 0px 10px;
+					  font-size: 12px;
+					  color: #666;">Your delivery hero risks his life everyday to deliver your items safely in these times of crisis</p>
+  					<ion-row>
+
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:10px;">+10</span>
+						</ion-col>
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:10px;">+50</span>
+						</ion-col>
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:10px;">+99</span>
+						</ion-col>
+  						<ion-col size="6" class="change-add" style="padding-left: 0px;">
+							<ion-input type="text" style="padding:0px !important;border:solid 1px #f3b9cb; border-radius: 5px;" class="input1" [(ngModel)]="couponCode" name="cpCode" id="cpCode" #cpCode="ngModel" (keypress)="onCouponCodeChange()" placeholder="Enter Amount"></ion-input>
+						</ion-col>
+						
+						
+					</ion-row>	
+				  </div>
+				  
+				  <div style="padding: 10px;
+    border-bottom: 7px solid #eee;">
+					  <ion-label class="label1" style="font-weight: bold;">Do you want to donate some amount ? </ion-label>
+					
+  					<ion-row>
+
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:9px;">+10</span>
+						</ion-col>
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:9px;">+50</span>
+						</ion-col>
+						<ion-col size="2" style="margin-top:12px;">
+							<span style="border:solid 1px #f3b9cb; border-radius: 5px;padding:9px;">+99</span>
+						</ion-col>
+  						<ion-col size="6" class="change-add" style="padding-left: 0px;">
+							<ion-input type="text" style="padding:0px !important;border:solid 1px #f3b9cb; border-radius: 5px;" class="input1" [(ngModel)]="couponCode" name="cpCode" id="cpCode" #cpCode="ngModel" (keypress)="onCouponCodeChange()" placeholder="Enter Amount"></ion-input>
+						</ion-col>
+						
+						
+					</ion-row>	
+  				</div>
+				
 				<div style="padding: 10px;
     border-bottom: 7px solid #eee;">
   					<ion-label class="label1">Apply Coupon(Offer)</ion-label>
@@ -110,9 +196,15 @@
                 <div style="padding:10px;">
 				<div class="checkout_title" style="padding: 0px 20px;">
                 	<div style="display:flex">
-                    	<div style="width:50%;"><img src="{{walleticondata}}" style="width:20px;" /> &nbsp; Wallet Balance</div>
-                        <div style="width:50%;text-align:right; color: #ec6626;">&#8377; {{WalletAmount}} </div>
-                    </div>
+                    	<div style="width:50%;"><img src="{{walleticondata}}" style="width:20px;" /> &nbsp; Rexa Wallet</div>
+						<div style="width:50%;text-align:right; color: #ec6626;">&#8377; {{WalletAmount}} </div>					
+					</div>
+					<div style="width:50%;margin-top: 17px;">
+						<ion-button (click)="addmoney()" class="redBtn" style="height: 30px;
+						padding: 5px 0px;
+						font-size: 13px;
+						border-radius: 5px;">Add Money to Wallet</ion-button>
+					</div>
                         
                 </div> 
                     <!--<div style="display: flex;margin-bottom: 13px;">
@@ -224,22 +316,33 @@
 	</div>
 
 	<div class="payment-opt">
-		<div class="payment-opt-inner" style="background-color: #fff;    border-radius:0px;">
-			<div class="ion-padding">
-				<div class="payment-options" style="margin-top: 25px;">
-				  	<div class="checkout_title pb-3">Payment Option</div>
+		<div class="payment-opt-inner" style="border-radius:0px;">
+			<div class="ion-padding" style="    padding: 0px; padding-top: 0px;padding-bottom:50px;">
+				<div class="payment-options" style="margin-top: 0px;">
+				  	<div class="checkout_title" style="padding-left:30px;">Payment Option</div>
 				  	<ion-radio-group [(ngModel)]="spmode">  	
-						<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of pmode;let i = index;">
-					    	<ion-radio [checked]="spmode==mode.id" class="add-radio" slot="start" id="saved" [value]="mode.id"></ion-radio>
+						<div class="in-flx" style="margin: 0px;margin-bottom:5px;width: 100%;padding: 15px 0px;padding-left:30px;
+    background-color: #ffff;font-weight: bold;" *ngFor="let mode of pmode;let i = index;">
+					    	<ion-radio (ionSelect)="setPmode(mode.id)" [checked]="spmode==mode.id" class="add-radio" slot="start" id="saved" [value]="mode.id"></ion-radio>
                             &nbsp;&nbsp; &nbsp;  <img src="{{mode.image}}" style="width:22px;" />
 					    	&nbsp;&nbsp;&nbsp; <ion-label class="add-radio-label" for="#saved" >{{mode.name}}</ion-label>
                             
-					    	<!-- <ion-img [src]="'/assets/images/'+mode.ShortName+'.png'"></ion-img> -->
+							<!-- <ion-img [src]="'/assets/images/'+mode.ShortName+'.png'"></ion-img> -->														
+
 					  	</div>
 					  	<div class="in-flx" style="margin: 5px;width: 100%" *ngIf="allowCashOnDelivery">
 					    	<ion-radio class="add-radio" slot="start" id="saved" value="COD"></ion-radio>
 					    	<ion-label class="add-radio-label" for="#saved" >Cash On Delivery</ion-label>
-					  	</div>
+						  </div>
+
+						  <div style="padding: 10px 50px; font-weight: normal;background-color: #fff;" [hidden]="codHide">
+							<img src="/assets/images/foldedhand.png" style="width:25px;display: inline-flex;">&nbsp;&nbsp;
+							<b style="font-size:20px;display: inline-flex;margin-left: 5px;">Please pay online</b>
+							<img src="/assets/images/purchase.png" style="width:24px;display: inline-flex;margin-left:10px;">
+								  <br>
+								<span style="margin-top:5px;display:flex;">To Ensure your & our delivery partners safety, COD has been disabled.</span>
+							  </div>
+						  
 					</ion-radio-group>
 				</div>
 			</div>
@@ -252,7 +355,7 @@
   	<ion-toolbar>
   		<div style="display: inline-flex;width: 100%; background-color: #ebebeb;">
 	    	<div class="fbtn white" style="padding: 8px;">
-	    		<div class="final_amt"> &#8377;{{subtotal | number:'1.0-2'}}</div>
+	    		<div class="final_amt"> &#8377;{{ (final-discount) | number:'1.0-2'}}</div>
 	      		<div class="toatl_save">Saved &#8377;{{discount | number:'1.0-2'}}</div>
 	    	</div>
 	    	<ion-button class="fbtn orange" (click)="buy()">Place order</ion-button>

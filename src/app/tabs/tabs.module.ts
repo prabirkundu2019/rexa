@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path:'tab4',
-        loadChildren:()=>import('./tab4/tab4.module').then(m=> m.Tab4PageModule)
+        loadChildren:()=>import('../makemoney/makemoney.module').then(m=> m.MakemoneyPageModule)
       },
       {
         path:'profile',

@@ -69,7 +69,7 @@ export class Tab1Page implements OnInit {
   }
 
   getItems(){
-    this.apis.getItems(0,'IsMobile=1',null,JSON.parse(localStorage.getItem('userdata')).CustomerLoginId,1,20).subscribe(res=>{
+    this.apis.getItems(0,'IsMobile=1').subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       this.newitems = [];
       this.page = 2;
@@ -96,7 +96,7 @@ export class Tab1Page implements OnInit {
   }
 
   loadData(event) {
-  	this.apis.getItems(0,'IsMobile=1',null,JSON.parse(localStorage.getItem('userdata')).CustomerLoginId,this.page,20).subscribe(res=>{
+  	this.apis.getItems(0,'IsMobile=1').subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       event.target.complete();
       this.page += 1;
