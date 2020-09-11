@@ -1,82 +1,62 @@
 <ion-header>
-  <ion-toolbar class="header">
-  	<ion-buttons slot="start">
-	    <!-- <ion-menu-button></ion-menu-button> -->
-	    <ion-back-button></ion-back-button>
-	  </ion-buttons>
-    <ion-title>
-    	<div class="header_logo">
-        <div>Milk Topup</div>
-      </div>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-	<!--<ion-grid>
-		<ion-row>
-			<ion-col size="12">
-				<ion-label class="label1">Select Brand</ion-label>
-				<ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.brand" id="brand" name="brand" #brand="ngModel" class="input1" interface="action-sheet" placeholder="Select Brand" style="padding: 15px 10px;" (ionChange)="getItems(model.brand)">
-		      <ion-select-option [value]="data.Id" *ngFor="let data of brands">{{data.Name}}</ion-select-option>
-		    </ion-select>
-			</ion-col>
-			<ion-col size="12">
-				<ion-label class="label1">Select Item</ion-label>
-				<ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="model.item" id="item" name="item" #item="ngModel" class="input1" interface="action-sheet" placeholder="Select Item" style="padding: 15px 10px;" (ionChange)="getItemRate(model.item)">
-		      <ion-select-option [value]="data.ItemId" *ngFor="let data of items?.AllItemsCategoryWiseList">{{data.ItemName}}</ion-select-option>
-				</ion-select>
-			</ion-col>
-			<p *ngIf="model.item">MRP: &#8377; {{Mrp}}</p>
-			<ion-col size="12">
-				<ion-label class="label1">Qyantity</ion-label>
-				<ion-input type="number" [(ngModel)]="model.qty" name="mobile" required id="mobile" #mobile="ngModel" class="input1"></ion-input>
-			</ion-col>
-			<ion-col size="12">
-				<ion-label class="label1">From Date</ion-label>
-				<ion-datetime class="input1" style="padding-left: 10px;width: 100%;" placeholder="Enter From Date" displayFormat="DD/MM/YYYY" max="2040" [(ngModel)]="model.from" name="from" id="from" #from="ngModel"></ion-datetime>
-			</ion-col>
-			<ion-col size="12">
-				<ion-label class="label1">To Date</ion-label>
-				<ion-datetime class="input1" style="padding-left: 10px;width: 100%;" placeholder="Enter From Date" displayFormat="DD/MM/YYYY" max="2040" [(ngModel)]="model.to" name="to" id="to" #to="ngModel"></ion-datetime>
-			</ion-col>
-			<ion-col size="12">
-				<div>
-					<div style="display: flex;align-items: center;">
-			    	<ion-checkbox style="margin: 10px !important;" #checkbox name="isAMC" slot="start" [(ngModel)]="model.isWallet"></ion-checkbox>
-			    	<ion-label style="margin: 10px !important;">Rexa Wallet</ion-label>
-			    </div>
-		    	<br>
-		    	<p *ngIf="model.isWallet" class="checkout_title">Wallet Detail</p>
-				  <div *ngIf="model.isWallet" style="display: flex;margin-bottom: 13px;">
-				  	<div>
-				  		{{walletname}}<br>
-				  		{{walletno}}
-				  	</div>
-				  	<div class="checkout_title" style="margin-left: auto;font-size: 20px;">
-				  		&#8377; {{walletamt}}  		
-				  	</div>
-				  </div>
-					<ion-label *ngIf="model.isWallet" class="label1">Enter the amount to redeem from wallet</ion-label>
-					<ion-input *ngIf="model.isWallet" type="tel" style="height: 34px;" (keypress)="amtrestriction($event)" class="input1" [(ngModel)]="WalletAmount" name="uname" id="uname" #uname="ngModel" placeholder="Amount to redeem from wallet"></ion-input>
-				</div>
-				<div class="payment-options">
-					<div class="checkout_title pb-3">Payment Option</div>
-					<ion-radio-group [(ngModel)]="model.spmode">
-						<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of pmode;let i = index;">
-					    <ion-radio [checked]="i==0" class="add-radio" slot="start" id="saved" [value]="mode.Id"></ion-radio>
-					    <ion-label class="add-radio-label" for="#saved">{{mode.Name}}</ion-label>
-					  </div>
-				  </ion-radio-group>
-				</div>
-			</ion-col>
-		</ion-row>
-	</ion-grid>-->
-</ion-content>
-<!--<ion-footer>
-  <ion-toolbar>
-  	<div style="display: inline-flex;width: 100%;">
-	    <ion-button class="fbtn orange" (click)="save()" style="width:100%; border-radius: 30px 30px 0px 0px;">Save</ion-button>
+	<ion-toolbar class="header">
+		<ion-buttons slot="start">
+			<!-- <ion-menu-button></ion-menu-button> -->
+		  <ion-back-button></ion-back-button>
+		</ion-buttons>
+	  <ion-title>
+		  <div class="header_logo">
+		  <div>Rexa Wallet</div>
+		</div>
+	  </ion-title>
+	  <ion-buttons slot="end">
+		  <!--<ion-button (click)="presentTopupModal()" style="text-transform: capitalize;">Topup Wallet</ion-button>-->
+		  <!--<ion-button routerLink="/menu/topup/add">Topup Wallet</ion-button>
+		  <ion-button routerLink="/menu/wallet-upgrade/add">Rexa Upgrade Card</ion-button>-->
+		</ion-buttons>
+	</ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="home">
+	  <div class="col displayhead">
+		  Wallet : Rexa<br>
+		  <span class="ng-star-inserted"> Balance : &#8377; {{walletdata.bal}}</span><br/>
+		  <ion-button class="left" fill="clear" size="small" routerLink="/menu/topup/add" style="background : #ec2664;">Topup Wallet</ion-button>
+		  <ion-button class="right" fill="clear" size="small" routerLink="/menu/card-category">Rexa Upgrade Card</ion-button>
 	  </div>
-  </ion-toolbar>
-</ion-footer>-->
+	  <h3 style="text-align: center;">Transaction History</h3>
+	  <table style="width: 100%">
+		  <thead style="background: #f0f8ff;">
+			  <tr>
+				  <!-- <th>SNo.</th> -->
+				  <th>Name</th>
+				  <th>Amount</th>
+				  <th>Date</th>
+			  </tr>
+		  </thead>
+		  <tbody>
+			  <tr *ngFor="let data of txndata;let i = index;">
+				  <!-- <td>{{i+1}}</td> -->
+				  <td [ngClass]="data.Type">
+					  {{data.cardname}}
+					  <br>
+					  <ion-button class="redBtn" 
+						  (click)="activateCard(data.id)"
+						  [hidden]="data.active=='true'"
+						  style="height: 30px;
+						  padding: 5px 0px;
+						  font-size: 13px;
+						  border-radius: 5px;"
+					  >Activate this Card</ion-button>
+					  <br>
+					  <span style="width: 100%;text-align: center;border: 1px dashed #34c11b;padding: 5px 10px;
+					  color: #289a13;" [hidden]="data.active=='false'">Card Activated</span>
+					  <br><br>
+					  <span *ngIf="data.topupname != ''">{{ data.topupname }}</span>
+				  </td>
+				  <td>&#8377;{{data.amount}}</td>
+				  <td>{{data.createdon | date:'dd/MM/yyyy'}}</td>
+			  </tr>
+		  </tbody>
+	  </table>
+  </ion-content>  

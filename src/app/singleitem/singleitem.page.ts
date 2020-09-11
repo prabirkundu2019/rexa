@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { ImageviewerPage } from '../imageviewer/imageviewer.page';
 import { OtherService } from '../service/other.service';
 import { IncdecPage } from '../incdec/incdec.page';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-singleitem',
@@ -26,18 +27,27 @@ export class SingleitemPage implements OnInit {
   totalsaleprice = 0;
   cart:boolean = false;
   cartCount = '';
-  totalmrpprice = 0;
+  totalmrpprice:any;
   refresh:any;
   CustomerLoginId='';
   pincode="";
   enquiryMsg=0;
   sliders:any=[];
+  attribute_list:any=[];
   shortDescription:boolean=false;
   longDescription:boolean=true;
   availableMsg:boolean=true;
   nonAvailableMsg:boolean=true;
+  isWishlist:boolean=false;
+  isNotWishlist:boolean=true;
+  message: "";
+  imageForSharing: "";
+  variant: "";
+  variantName: "";
+  attribute_count: 0;
+  attributePrice:any;
 
-  constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService) {
+  constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService,private socialSharing: SocialSharing) {
     if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
     {
       this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
@@ -78,6 +88,7 @@ export class SingleitemPage implements OnInit {
       this.getItemDetail(url[url.length-2],url[url.length-1])
     }
   }
+  
 
   productDetails(data){
     this.router.navigate(['/menu/singleitem/'+data.product_slug+'/'+data.catid+'/'+data.id],{replaceUrl:true})
@@ -87,12 +98,23 @@ export class SingleitemPage implements OnInit {
   }
 
   getItemDetail(cid,id){
-  	this.apis.getItemDetail(cid,id).subscribe(res=>{
+  	this.apis.getItemDetail(cid,id,this.CustomerLoginId).subscribe(res=>{
+      //console.log(res.body);
       this.data = res.body.productdetails;
+      this.totalmrpprice = res.body.productdetails.display_price;
+      this.attribute_list = res.body.attribute_list;
+      this.attribute_count = res.body.attribute_count;
       this.sliders = res.body.relatedproductlist;
       this.data.mrp_price = res.body.productdetails.mrp_price;
       this.activeimage.url = res.body.productdetails.image;
-      console.log(this.data);
+      if(res.body.wishlist_status == "true")
+      {
+        this.isWishlist = true;
+        this.isNotWishlist = false;
+      }else{
+        this.isWishlist = false;
+        this.isNotWishlist = true;
+      }
       // this.data.selected = this.data.ItemRateList[0];
       // this.data.name = this.data.ItemDetails;
       // this.activeimage.url = this.data.ItemColorwiseImages[0].FilepathMedium;
@@ -154,7 +176,7 @@ export class SingleitemPage implements OnInit {
   }
 
   addToCart(item){  	
-    this.apis.addToCart(this.CustomerLoginId,item.id,1).subscribe(res=>{
+    this.apis.addToCart(this.CustomerLoginId,item.id,this.totalmrpprice,this.variantName,1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         this.other.presentToast('Item added to cart','success');
@@ -165,7 +187,7 @@ export class SingleitemPage implements OnInit {
   }
 
   buyNow(item){  	
-    this.apis.addToCart(this.CustomerLoginId,item.id,1).subscribe(res=>{
+    this.apis.addToCart(this.CustomerLoginId,item.id,this.totalmrpprice,this.variantName,1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         localStorage.setItem('cartcount',res.body.cartcount);
@@ -203,6 +225,40 @@ export class SingleitemPage implements OnInit {
   readMore(){
     this.shortDescription = true;
     this.longDescription = false;
+  }
+
+  addToWishlist(product_id){
+    this.apis.addToWishList(this.CustomerLoginId,product_id).subscribe(res=>{
+      this.isWishlist = true;
+      this.isNotWishlist = false;
+      this.other.presentToast('Product added to wishlist','success');
+    })
+  }
+
+  shareviaWhatsapp(){
+		this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
+	}
+	shareviaFacebook(){
+		this.socialSharing.shareViaFacebook(null,this.activeimage.url,null)
+	}
+	shareviaTwitter(){
+		this.socialSharing.shareViaTwitter(this.data.product_name,this.activeimage.url,this.data.productlink)
+  }
+  
+  setVariant(){
+    //console.log(this.data.mrp_price);
+    var attributeList = this.attribute_list;
+    for(var i=0; i< attributeList.length; i++)
+    {
+      console.log(attributeList[i].price);
+      if(this.variant == attributeList[i].id)
+      {
+        this.variantName = attributeList[i].name;
+        this.attributePrice = attributeList[i].price;
+        this.totalmrpprice = Number(attributeList[i].price);
+      }
+      console.log(this.totalmrpprice);
+    }
   }
 
 }

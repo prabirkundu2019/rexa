@@ -14,14 +14,17 @@ const routes: Routes = [
   { path: 'mainwallet', loadChildren: './mainwallet/mainwallet.module#MainwalletPageModule' },
   { path: 'milktopup', loadChildren: './milktopup/milktopup.module#MilktopupPageModule' },
   { path: 'wallet-upgrade', loadChildren: './wallet-upgrade/wallet-upgrade.module#WalletUpgradePageModule' },
-  { path: 'offer', loadChildren: './offer/offer.module#OfferPageModule' },
+  //{ path: 'offer', loadChildren: './offer/offer.module#OfferPageModule' },
   { path: 'referral', loadChildren: './referral/referral.module#ReferralPageModule' },
   { path: 'mainnotification', loadChildren: './mainnotification/mainnotification.module#MainnotificationPageModule' },
   { path: 'legel/:type', loadChildren: './legel/legel.module#LegelPageModule' },
   { path: 'orderlist', loadChildren: './orderlist/orderlist.module#OrderlistPageModule' },
   { path: 'card-detail', loadChildren: './card-detail/card-detail.module#CardDetailPageModule' },
   { path: 'seller/:id', loadChildren: './seller/seller.module#SellerPageModule' },
-  { path: 'otp', loadChildren: './otp/otp.module#OtpPageModule' },  { path: 'makemoney', loadChildren: './makemoney/makemoney.module#MakemoneyPageModule' }
+  { path: 'otp', loadChildren: './otp/otp.module#OtpPageModule' },
+  { path: 'makemoney', loadChildren: './makemoney/makemoney.module#MakemoneyPageModule' },
+  { path: 'money', loadChildren: './money/money.module#MoneyPageModule' },
+  { path: 'card-category', loadChildren: './card-category/card-category.module#CardCategoryPageModule' }
 
 
 

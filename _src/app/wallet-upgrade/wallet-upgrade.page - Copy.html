@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>Rexa Upgrade Card</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="d-flex login_page flex-column align-items-center justify-content-center ">	  
+	  <div class="checkout_form_container">
+	  	<div class="col" style="font-size: medium;font-weight: bold;background: aliceblue;padding: 10px;"> Wallet : {{userData.WalletCardName}}<br>
+		<span class="ng-star-inserted"> Balance : &#8377; {{userData.WalletBalance}}</span>
+	</div>
+	    <form id="checkout_form" class="checkout_form" #loginForm="ngForm">
+	    	<ion-grid>
+	    		<ion-row>	    			
+	    			<ion-col size="12">
+						<ion-label class="label1">Wallet Card Type</ion-label>
+						<ion-select  [(ngModel)]="model.WalletCardId" id="WalletCardId" name="WalletCardId" #WalletCardId="ngModel" class="input1" interface="action-sheet" placeholder="Select Wallet Card Type" style="padding: 15px 10px;" (ionChange)="WalletCardChange(model.WalletCardId)">
+					      <ion-select-option [value]="data.Id" *ngFor="let data of WalletCard">{{data.Name}}</ion-select-option>
+					    </ion-select>
+
+					    <ion-label class="label1">Wallet Card Amount</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.price" autocapitalize name="price" id="price" #price="ngModel" class="input1" readonly></ion-input>
+
+	  					<ion-label class="label1">Additional Amount</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.extra" autocapitalize name="extra" id="extra" #extra="ngModel" class="input1" readonly></ion-input>
+
+	  					<ion-label class="label1">Wallet Card No</ion-label>
+	  					<ion-input type="text" [(ngModel)]="model.WalletCardNo" name="WalletCardNo" id="WalletCardNo" #WalletCardNo="ngModel" class="input1"></ion-input>
+  						
+  						<ion-checkbox [(ngModel)]="model.isWalletSelect" name="isWalletSelect" id="isWalletSelect" #isWalletSelect="ngModel" (click)="setCheckbox($event)"></ion-checkbox>
+				        <ion-label class="label1"> Add Amount From Wallet</ion-label>
+          				<br/>        				
+      					<ion-label class="label1">Enter the Amount to Redeem</ion-label>
+      					<ion-input type="number" [(ngModel)]="model.amountToRedeem" name="amountToRedeemName" id="amountToRedeem" #amountToRedeem="ngModel" class="input1" [disabled]="!model.isWalletSelect" (keyup)="checkValid()"></ion-input>	
+	  					<ion-radio-group [(ngModel)]="model.spmode" name="model.spmode">
+	  						<ion-label class="label1">Payment Option - 
+	  							<span *ngIf="model.price - model.amountToRedeem">
+					              Rest
+					            </span>
+					            Amount To Pay :
+					            {{ model.price - model.amountToRedeem }}
+					            <span>Rs</span>
+	  						</ion-label>
+							<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of pmode;let i = index;">
+					    		<ion-radio [checked]="i==0" class="add-radio" slot="start" id="saved" [value]="mode.Id"></ion-radio>
+					    		<ion-label class="add-radio-label" for="#saved">{{mode.Name}}</ion-label> <!-- (click)="setPmode(mode.Name)"-->
+					    		<!-- <ion-img style="width: 21px;margin-left: 10px;" [src]="'/assets/images/'+mode.ShortName+'.png'" (click)="setPmode(mode.Name)"></ion-img> -->
+								  
+							</div>
+  						</ion-radio-group> 
+	    			</ion-col>	  
+
+	    			 			
+
+	    			<ion-col size="12">
+	    				<button class="ion-button1" (click)="update()" expand="full" fill="outline" [disabled]="!(model.WalletCardId && model.WalletCardNo)">Upgrade Wallet</button>
+	    			</ion-col>
+	    		</ion-row>
+	    	</ion-grid>
+	    </form>	    
+	  </div>
+	</div>
+</ion-content>
+

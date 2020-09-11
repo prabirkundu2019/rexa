@@ -1,0 +1,161 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+      	<div>Order Detail (#{{order?.orderid}})</div>
+    	</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<div class="checkout_title">Items</div>
+	<ion-grid>
+		<ion-row *ngFor="let data of order?.productdetails">
+			<ion-col size="2">
+				<ion-img [src]="data.image" style="width: 50px;height: 50px;"></ion-img>
+			</ion-col>
+			<ion-col size="6">
+				<div class="product_title">
+          <b class="font-weight-bold">{{data.product_name | titlecase}}</b>
+  			</div>
+  			<!--<p style="margin: 0px;color: #4a4a4a;">
+           {{data.Status}}
+        	</p>-->
+			</ion-col>
+			<!--<ion-col size="4" style="text-align: right;">
+        	<ion-button color="cprimary" class='track' fill="outline" [routerLink]='["/menu/orderitemdetal/",data.id,data.orderid,data.RateSetupID,replacespace(data.product_sku),data.CategoryID,data.ItemID]'>View Detail</ion-button>
+			</ion-col>-->
+		</ion-row>
+	</ion-grid>
+	<div class="checkout_title">Billing Details</div>
+	<ion-grid>
+  	<ion-row *ngFor="let cart of order?.productdetails">
+  		<ion-col size="6">
+  			{{cart.product_sku}}
+  		</ion-col>
+  		<ion-col size="3">
+  			{{ cart.quantity }}
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{ cart.subtotal | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<hr>
+  	<ion-row>
+  		<ion-col size="9">
+  			Sub Total
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.totalsub | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row *ngIf="cod != '0'">
+  		<ion-col size="9">
+  			COD Charge
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.cod | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row *ngIf="delivery != '0'">
+  		<ion-col size="9">
+  			Shipping Charge
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.delivery | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row class="bill-discount" *ngIf="order?.ccvalue != ''">
+  		<ion-col size="9">
+  			Coupon Discount
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">- &#8377; {{order?.ccvalue | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row class="checkout-total">
+  		<ion-col size="9">
+  			Total Price
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.total_price | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<!--<ion-row class="bill-discount" *ngIf="order?.BuyNowMainOrderList[0].Discount">
+  		<ion-col size="9">
+  			Discount
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">- &#8377; {{order?.BuyNowMainOrderList[0].Discount | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<ion-row>
+  		<ion-col size="9">
+  			Other Charges <span class="other-charges">(Shipping, Express, Gifting, etc ..)</span>
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">+ &#8377; {{order?.BuyNowOrderItemDetailsList[0].OtherCharge | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<ion-row *ngIf="order?.BuyNowMainOrderList[0].DonationAmount">
+  		<ion-col size="9">
+  			Donation Amount 
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">+ &#8377; {{order?.BuyNowMainOrderList[0].DonationAmount | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<ion-row *ngIf="order?.BuyNowMainOrderList[0].SafetyAmount">
+  		<ion-col size="9">
+  			Safety Amount 
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">+ &#8377; {{order?.BuyNowMainOrderList[0].SafetyAmount | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<ion-row *ngIf="order?.BuyNowMainOrderList[0].TipAmount">
+  		<ion-col size="9">
+  			Tip Amount 
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">+ &#8377; {{order?.BuyNowMainOrderList[0].TipAmount | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+  	<hr>
+  	<ion-row class="checkout-total">
+  		<ion-col size="9">
+  			Total
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{this.total | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>-->
+  	<hr>
+  </ion-grid>
+	<div class="checkout_title">Delivery Address</div>
+	<div class="saved-address" style="margin: 10px 10px 20px; border-bottom: solid 1px #eee; padding-bottom: 10px;">
+		<!--<p class="add-name">{{order?.BuyNowMainOrderList[0].AddressType == "Other"?order?.BuyNowMainOrderList[0].DescriptionForOther:order?.BuyNowMainOrderList[0].AddressType | titlecase}}</p>-->
+		<p>{{order?.address}}</p>
+	  <p>{{order?.city}}, {{order?.state}}</p>
+	  <!--<p>PIN: {{order?.BuyNowMainOrderList[0].PinCode}}</p>-->
+	</div>
+	<div class="checkout_title">Mode of payment</div>
+	<div class="saved-address" style="margin-left: 10px;">
+	  <p style="display: inline-flex;">{{order?.payment_mode}} <ion-img style="width: 17px;margin-left: 10px;" [src]="'/assets/images/COD.png'"></ion-img></p>
+	</div>
+	<p class="note">NOTE: Charges may apply in the case of return or order cancelation.</p>
+  	<!--<div style="text-align: center;margin:20px;" *ngIf="open && order?.BuyNowMainOrderList[0].Status == 'Approved' && order.BuyNowMainOrderList[0].CanCancel">
+    <ion-button color="cprimary" style="width:45%;height: 44px;" fill="outline" (click)="cancelOrder()">Cancel Order</ion-button>
+  </div>-->
+
+</ion-content>
+
+<!--<ion-footer>
+  <ion-toolbar>
+    <ion-button color="cprimary" style="width:100%" class="fbtn orange">Track Order</ion-button>
+  </ion-toolbar>
+</ion-footer>-->

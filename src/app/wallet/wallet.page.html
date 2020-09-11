@@ -6,7 +6,7 @@
 	  </ion-buttons>
     <ion-title>
     	<div class="header_logo">
-        <div>Rexa Wallet</div>
+        <div>Wallet</div>
       </div>
     </ion-title>
     <ion-buttons slot="end">
@@ -20,33 +20,29 @@
 <ion-content class="home">
 	<div class="col displayhead">
 		Wallet : Rexa<br>
-		<span class="ng-star-inserted"> Balance : &#8377; {{walletdata.bal}}</span><br/>
+		<!-- <span class="ng-star-inserted"> Balance : &#8377; {{walletdata.bal}}</span><br/> -->
 		<ion-button class="left" fill="clear" size="small" routerLink="/menu/topup/add" style="background : #ec2664;">Topup Wallet</ion-button>
-		<ion-button class="right" fill="clear" size="small" routerLink="/menu/wallet-upgrade/add">Rexa Upgrade Card</ion-button>
+		<ion-button class="right" fill="clear" size="small" routerLink="/menu/card-category">Rexa Upgrade Card</ion-button>
 	</div>
 	<h3 style="text-align: center;">Transaction History</h3>
 	<table style="width: 100%">
 		<thead style="background: #f0f8ff;">
 			<tr>
-				<th>SNo.</th>
-				<th>Name</th>
-				<th>Amount</th>
-				<th>Date</th>
+				<!-- <th>Sl No</th> -->
+				<th>Spent On.</th>
+				<th>Order ID</th>
+				<th>Card</th>
+				<th>Amout</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let data of txndata;let i = index;">
-				<td>{{i+1}}</td>
-				<td [ngClass]="data.Type">
-					{{data.cardname}}
-					<br>
-					<ion-button class="redBtn" style="height: 30px;
-						padding: 5px 0px;
-						font-size: 13px;
-						border-radius: 5px;">Activate this Card</ion-button>
-				</td>
-				<td>{{data.amount}}</td>
-				<td>{{data.createdon | date:'dd/MM/yyyy'}}</td>
+				<!-- <td>{{i+1}}</td> -->
+				<!-- <td>{{ data.spenton | date:'dd/MM/yyyy' }}</td> -->
+				<td>{{ data.spenton }}</td>
+				<td>{{data.orderid}}</td>
+				<td>{{data.cardname}}</td>
+				<td>&#8377;{{data.amount}}</td>
 			</tr>
 		</tbody>
 	</table>

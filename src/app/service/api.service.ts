@@ -37,8 +37,8 @@ export class ApiService {
   	return this.http.post<any>(environment.baseurl1+'/loginverifyotp',formdata,{observe:'response'});
   }
 
-  registerOtp(name, mobile):Observable<HttpResponse<any>>{
-    let formdata = {'fullname':name, 'mobile':mobile}
+  registerOtp(name, mobile, reference_code):Observable<HttpResponse<any>>{
+    let formdata = {'fullname':name, 'mobile':mobile, 'reference_code':reference_code}
   	return this.http.post<any>(environment.baseurl1+'/registersms',formdata,{observe:'response'});
   }
 
@@ -75,8 +75,22 @@ export class ApiService {
   //   return this.http.get<any>(environment.baseurl1+'/SP_FrontendAllItems?CustomerLoginId='+uid+'&CategoryId='+cid+'&'+filter+'&'+order+'&Page='+page+'&Size='+size,{observe:'response'});
   // }
 
-  getItemDetail(cid,id):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/productsingle/'+id,{observe:'response'});
+  getItemDetail(cid,id,userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/productsingle/'+id+'?userid='+userid,{observe:'response'});
+  }
+
+  getWishlistItems(userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/wishlist?userid='+userid,{observe:'response'});
+  }
+
+  addToWishList(userid, productid):Observable<HttpResponse<any>>{
+    let formdata = {"userid": userid, "productid":productid}
+    return this.http.post<any>(environment.baseurl1+'/addwishlist',formdata,{observe:'response'});
+  }
+
+  deleteFromWishList(productid):Observable<HttpResponse<any>>{
+    let formdata = {"wid":productid}
+    return this.http.post<any>(environment.baseurl1+'/removewishlist',formdata,{observe:'response'});
   }
 
   sendEnquiry(userid, productid):Observable<HttpResponse<any>>{
@@ -117,8 +131,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/setting/CommonMaster2?CommonCode=103&CommonId1='+sid,{observe:'response'});
   }
 
-  getPaymentMethods():Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/paymentmethodlist',{observe:'response'}); 
+  getPaymentMethods(userId):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/paymentmethodlist?userid='+userId,{observe:'response'}); 
   }
 
   getCartItems(userId):Observable<HttpResponse<any>>{
@@ -129,8 +143,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/getcartWithDetails?IsWishingItem=false',{observe:'response'}); 
   }
 
-  addToCart(user_id, productId, quantity):Observable<HttpResponse<any>>{
-    let formdata = {"userid":user_id,"productid":productId,"quantity":quantity,"action":"add"};
+  addToCart(user_id, productId, price, attribute="", quantity):Observable<HttpResponse<any>>{
+    let formdata = {"userid":user_id,"productid":productId,"quantity":quantity,"price":price, "size": attribute, "action":"add"};
     return this.http.post<any>(environment.baseurl1+'/cart',formdata,{observe:'response'}); 
   }
 
@@ -153,12 +167,20 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/category',{observe:'response'});
   }
 
+  makeMoney(userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/makemoney/'+userid,{observe:'response'});
+  }
+
   getWalletBalance(id):Observable<HttpResponse<any>>{
     return this.http.get<any>(environment.baseurl1+'/walletbalance/'+id,{observe:'response'});
   }
+  
+  getWalletCardCategory():Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/cardcategory',{observe:'response'}); 
+  }
 
-  getWalletCards():Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/card',{observe:'response'}); 
+  getWalletCards(cardId):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/cardcategory/'+cardId,{observe:'response'}); 
   }
 
   getWalletCardDetails(id):Observable<HttpResponse<any>>{
@@ -258,9 +280,17 @@ export class ApiService {
   getPriceRange():Observable<HttpResponse<any>>{
     return this.http.get<any>(environment.baseurl1+'/SP_ItemChargeTransaction',{observe:'response'}); 
   }
+  
+  wallettransaction(userId):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/wallettransaction/'+userId,{observe:'response'}); 
+  }
 
   Txnhistory(id):Observable<HttpResponse<any>>{
     return this.http.get<any>(environment.baseurl1+'/wallethistory/'+id,{observe:'response'}); 
+  }
+
+  activateCard(id, userid):Observable<HttpResponse<any>>{
+    return this.http.post<any>(environment.baseurl1+'/activatecard/'+id+'/'+userid,"",{observe:'response'});
   }
 
   WalletCardType():Observable<HttpResponse<any>>{
@@ -276,7 +306,7 @@ export class ApiService {
   }
 
   walletTopup(formdata):Observable<HttpResponse<any>>{
-    return this.http.post<any>(environment.baseurl1+'/common/Customer/WalletTopupByAdmin',formdata,{observe:'response'});
+    return this.http.post<any>(environment.baseurl1+'/topupwallet',formdata,{observe:'response'});
   }
 
   walletTopupPayment(formdata):Observable<HttpResponse<any>>{

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-button (click)="modal.dismiss()">
+		    <ion-icon name="arrow-back" style="font-size: 22px;"></ion-icon>
+			</ion-button>
+	  </ion-buttons>
+    <ion-searchbar animated class="searchbar" autofocus="true" placeholder="Search by item name or category" (ionChange)="doSearch()" clearIcon="close" #searchbar></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<div class="search" *ngFor="let data of searchdata">
+		<p class="main" (click)="gotoSpecefic(data.Type,data.Id,data.ParentId,data.Name)">{{data.product_sku | titlecase}}</p>
+		<p class="sub" *ngIf="data.ParentId">in {{data.ParentCategoryName | titlecase}}</p>
+	</div>
+	<div *ngIf="loading">
+		<ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+		<ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+	</div>
+	<div *ngIf="searchdata?.length == 0 && searchbar.value && !loading" style="text-align: center">
+		<div class="empty-cart">
+	    <ion-img src="/assets/images/nodata.png"></ion-img>
+	    <h4>No Results Found !!</h4>
+	    <div class="text">Explore our ever growing selection of products and exciting new offers today!</div>
+	  </div>
+	</div>
+</ion-content>

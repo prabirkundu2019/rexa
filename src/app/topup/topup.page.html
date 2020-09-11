@@ -9,6 +9,10 @@
 
 <ion-content class="ion-padding editprof">
 	<form id="checkout_form" class="checkout_form" #PForm="ngForm">
+		<ion-label *ngIf="!model.topupid" class="label1">Enter Amount to Topup</ion-label>
+		<ion-input *ngIf="!model.topupid" type="tel" class="input1" [(ngModel)]="model.amt" name="amt" id="amt" #amt="ngModel" placeholder="Enter Amount to Topup"></ion-input>
+	</form>
+	<!-- <form id="checkout_form" class="checkout_form" #PForm="ngForm">
 		<ion-label class="label1">Assigned Wallet</ion-label>
 		<ion-input type="text" class="input1" [(ngModel)]="model.wallet" name="wallet" id="wallet" #wallet="ngModel" placeholder="Name" disabled></ion-input>
 		<ion-label class="label1">Topup Amount</ion-label>
@@ -24,11 +28,11 @@
 	<ion-radio-group [(ngModel)]="model.spmode" name="spmode">
 		<div class="in-flx" style="margin: 5px;width: 100%" *ngFor="let mode of pmode;let i = index;">
 	    <ion-radio [checked]="i==0" class="add-radio" slot="start" id="saved" [value]="mode.Id"></ion-radio>
-	    <ion-label class="add-radio-label" for="#saved" (click)="setPmode(mode.Name)">{{mode.Name}}</ion-label> <!-- -->
-	    <!-- <ion-img style="width: 21px;margin-left: 10px;" [src]="'/assets/images/'+mode.ShortName+'.png'" (click)="setPmode(mode.Name)"></ion-img> -->
+	    <ion-label class="add-radio-label" for="#saved" (click)="setPmode(mode.Name)">{{mode.Name}}</ion-label> 
+	    <!-- <ion-img style="width: 21px;margin-left: 10px;" [src]="'/assets/images/'+mode.ShortName+'.png'" (click)="setPmode(mode.Name)"></ion-img>
 	  </div>
   </ion-radio-group>
-	</form>
+	</form> -->
 </ion-content>
 
 <ion-footer>

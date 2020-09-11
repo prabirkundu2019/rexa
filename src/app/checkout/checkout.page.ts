@@ -4,6 +4,7 @@ import { ApiService } from '../service/api.service';
 import { OtherService } from '../service/other.service';
 import { Router } from '@angular/router';
 import { WindowRef } from './winref';
+
 import * as $ from "jquery";
 declare var paytm : any;
 // import { payumoney } from 'com.payumoney.sdkui.cordova';
@@ -24,6 +25,7 @@ export class CheckoutPage implements OnInit {
 	cities:any;
 	modal = {cntry:"",state:"",city:''};
 	pmode:any;
+	rexaCardHide = true;
 	data:any;
 	cartdata:any;
 	address:any;
@@ -31,11 +33,16 @@ export class CheckoutPage implements OnInit {
 	total:number = 0;
 	othercharges:number = 0;
 	codCharge:number = 0;
+	expressshipcharge:number = 0;
+	express:number = 0;
+	expressCharge:number = 0;
 	codHide = true;
+	savedvalue:number = 0;
 	final:number = 0;
 	totalsum:number = 0;
 	discount:number = 0;
 	shippingcharge:number = 0;
+	safetycharge:number = 0;
 	pricerange:any;
 	buyNowData:any;
 	walletamt:any;
@@ -45,8 +52,10 @@ export class CheckoutPage implements OnInit {
 	WalletAmount:any = 0;
 	payableAmount:any = 0;
 	donateAmount:any = 0;
+	donateTextAmount:any = 0;
 	safetyAmount:any = 0;
 	tipAmount:any = 0;
+	tipTextAmount:any = 0;
 	isDonation = true;
     isSafetyAmount = true;
     isTipAmount = true;
@@ -58,10 +67,13 @@ export class CheckoutPage implements OnInit {
 	couponCodeError = false;
 	couponCodeSucces = '';
 	allowCashOnDelivery = false;
+	expressDeliveryHide = true;
 	CustomerLoginId: "";
 	marker: '';
 	cartcountdata : "";
 	walleticondata: "";
+	message: "";
+	imageForSharing: "";
 
   constructor(private apis:ApiService, private other:OtherService,public router:Router,private winRef:WindowRef,private iab: InAppBrowser) {
 	if(localStorage.getItem('userdata') != "undefined")
@@ -82,6 +94,7 @@ export class CheckoutPage implements OnInit {
 		this.getPaymentMethods();
 		this.getPriceRange();
 		this.getProfileData();
+		this.totalPrice();
 		//this.getCouponList();
 	}
 
@@ -167,6 +180,9 @@ export class CheckoutPage implements OnInit {
 	  this.discount = 0;
 	  this.subtotal = res.body.tsum;
 	  this.shippingcharge = res.body.shipcharge;
+	  this.safetycharge = res.body.safetycharge;
+	  this.expressshipcharge = res.body.expressshipcharge;
+	  this.savedvalue = res.body.savedvalue;
 	  this.final = res.body.totalsum;
 	  this.totalsum = res.body.totalsum;
 	  this.othercharges = 0;
@@ -211,8 +227,16 @@ export class CheckoutPage implements OnInit {
 //   }
 
   getPaymentMethods(){
-  	this.apis.getPaymentMethods().subscribe(res=>{
-  		this.pmode = res.body.pmlist;
+  	this.apis.getPaymentMethods(this.CustomerLoginId).subscribe(res=>{
+		this.pmode = res.body.pmlist;
+		for(var i = 0; i<this.pmode.length; i++)
+		{
+			if(this.pmode[i].id == 1)
+			{
+				this.rexaCardHide = false;
+				break;
+			}
+		}
   	})
   }
 
@@ -272,17 +296,11 @@ export class CheckoutPage implements OnInit {
     	});
     }  	
   }
+  
 
-  setPmode(type){
-	if(type == 2)
-	{
-		this.codHide = false;
-		this.final = this.totalsum + Number(this.codCharge);
-	}else{
-		this.codHide = true;
-		this.final = this.totalsum;
-	}
-  	this.spmode = type;  	
+  addmoney()
+  {
+	this.router.navigate(['/menu/topup/add']); 
   }
 
   buy(){   	
@@ -292,8 +310,8 @@ export class CheckoutPage implements OnInit {
   	{
   		this.other.presentToast("Your Cart is Empty!",'danger');
   		return true;	
-  	}else if(this.spmode == "1" && this.payableAmount != 0){
-		this.other.presentToast(this.WalletMessage,'danger');
+  	}else if(this.spmode == "1" && this.final > this.WalletAmount){
+		this.other.presentToast("You have insufficient balance. Please add "+(this.final- this.WalletAmount),'danger');
   		return true;
 	}
 	
@@ -302,8 +320,9 @@ export class CheckoutPage implements OnInit {
 		let formdata = {
 			userid: this.CustomerLoginId,
 			payment_type: this.spmode,
-			address_id: 1,
-			couponcode: this.couponCode
+			address_id: this.address.id,
+			couponcode: this.couponCode,
+			totalamount: this.final
 		} 
 		console.log(formdata);
 	  	// let formdata1 = {
@@ -350,6 +369,7 @@ export class CheckoutPage implements OnInit {
 					clearcache: 'yes',
 					hardwareback: 'no',
 				});
+				console.log(browser);
 				browser.on('loadstart').subscribe((event) => {		
 					if (event.url == res.body.success_paymenturl) {		  		
 						this.paymentSuccess(res.body.orderid);
@@ -438,6 +458,31 @@ export class CheckoutPage implements OnInit {
     // });
   }
 
+  setPmode(type){
+	if(type == 2)
+	{
+		this.codHide = false;		
+	}else{
+		this.codHide = true;
+	}
+	this.final = this.totalPrice();
+  	this.spmode = type;  	
+  }
+
+  totalPrice(){
+	if(this.expressDeliveryHide == false){
+		this.expressCharge = this.expressshipcharge;
+	}else{
+		this.expressCharge = 0;
+	}
+	if(this.codHide == false)
+	{
+		return this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.expressCharge) + Number(this.codCharge) + Number(this.donateAmount) + Number(this.tipAmount);
+	}else{
+		return this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.expressCharge) + Number(this.donateAmount) + Number(this.tipAmount);
+	}
+  }
+
   getPriceRange(){
     this.apis.getPriceRange().subscribe(res=>{
       //this.other.isValidToken(res.body.Message);
@@ -453,4 +498,42 @@ export class CheckoutPage implements OnInit {
     })
   }
 
+  updateExpress(e)
+  {
+	if(e.target.checked == true)
+	{		
+		this.expressDeliveryHide = false;
+	}else{
+		this.expressDeliveryHide = true;
+	}
+	this.final = this.totalPrice();
+  }
+
+  addDonate(value)
+  {
+	this.final = (this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.codCharge) + Number(this.expressshipcharge) + Number(this.tipAmount)) - + Number(this.donateAmount);
+	this.donateAmount = value;
+	this.final = this.totalPrice();
+  }
+
+  onDonationChange()
+  {
+	this.final = (this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.codCharge) + Number(this.expressshipcharge) + Number(this.tipAmount)) - + Number(this.donateAmount);
+	this.donateAmount = this.donateTextAmount;
+	this.final = this.totalPrice();
+  }
+
+  addDeliveryTip(value)
+  {
+	this.final = (this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.codCharge) + Number(this.expressshipcharge) + Number(this.donateAmount)) - + Number(this.tipAmount);
+	this.tipAmount = value;
+	this.final = this.totalPrice();
+  }
+
+  onDeliveryTipChange()
+  {
+	this.final = (this.subtotal + Number(this.shippingcharge) + Number(this.safetycharge) + Number(this.codCharge) + Number(this.expressshipcharge) + Number(this.donateAmount)) - + Number(this.tipAmount);
+	this.tipAmount = this.tipTextAmount;
+	this.final = this.totalPrice();
+  }
 }

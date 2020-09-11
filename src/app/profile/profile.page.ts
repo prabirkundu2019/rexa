@@ -65,7 +65,8 @@ export class ProfilePage implements OnInit {
     this.apis.getProfileData(this.CustomerLoginId).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       //this.image = res.body.Data[0].Img;
-      localStorage.setItem('userdata',JSON.stringify(res.body.udetails))
+      localStorage.setItem('userdata',JSON.stringify(res.body.udetails));
+      this.image = res.body.udetails.image;
       this.name = res.body.udetails.name;
       this.no = res.body.udetails.mobile;
     })

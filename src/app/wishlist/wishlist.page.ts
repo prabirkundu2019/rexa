@@ -45,14 +45,14 @@ export class WishlistPage implements OnInit {
   }
 
   getWishlistItems(){
-  	this.apis.getWalletCards().subscribe(res=>{
+  	this.apis.getWishlistItems(this.CustomerLoginId).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
-  		this.wishListItems = res.body.Data;
+  		this.wishListItems = res.body.wishlist;
   		this.totalsaleprice = 0;
 			this.totalmrpprice = 0;
   		for(let i=0;i<this.wishListItems.length;i++){
-  			this.wishListItems[i].totalsaleprice = this.wishListItems[i].Qty*this.wishListItems[i].SaleRate;
-  			this.wishListItems[i].totalmrpprice = this.wishListItems[i].Qty*this.wishListItems[i].MrpRate;
+  			this.wishListItems[i].totalsaleprice = this.wishListItems[i].display_price;
+  			this.wishListItems[i].totalmrpprice = this.wishListItems[i].mrp_price;
   			this.totalsaleprice += this.wishListItems[i].totalsaleprice
   			this.totalmrpprice += this.wishListItems[i].totalmrpprice
   		}
@@ -92,25 +92,26 @@ export class WishlistPage implements OnInit {
   	})
   }
 
-  // deletesingleItem(id,cid){
-  // 	this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
-  //     this.other.isValidToken(res.body.Message);
-  // 		if(res.body.Code === 1000){
-  // 			this.other.presentToast('Item deleted !!','success');
-	// 			this.other.dorefresh();
-  // 		}
-  // 	})
-  // }
+  deletesingleItem(id){
+  	this.apis.deleteFromWishList(id).subscribe(res=>{
+      this.other.isValidToken(res.body.Message);
+  		if(res.body.status === "true"){
+  			this.other.presentToast('Item deleted !!','success');
+				this.other.dorefresh();
+  		}
+  	})
+  }
 
-  // moveToCart(id,cid){
-  //   this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{
-  //     this.other.isValidToken(res.body.Message);
-  //     if(res.body.Code === 1000){
-  //       this.other.presentToast('Item added to cart','success');
-  //       this.other.dorefresh();
-  //     }
-  //   })
-  // }
+  moveToCart(id,cid){
+    this.apis.addToCart(this.CustomerLoginId,id,'','',1).subscribe(res=>{
+      this.other.isValidToken(res.body.Message);
+      if(res.body.userid === this.CustomerLoginId){
+        this.other.presentToast('Item added to cart','success');
+        localStorage.setItem('cartcount',res.body.cartcount);
+        this.other.dorefresh();
+      }
+    })
+  }
 
   // moveAllToCart(){
   //   this.apis.emptyCart(this.CustomerLoginId).subscribe(res=>{

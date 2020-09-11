@@ -55,20 +55,20 @@ export class CartPage implements OnInit {
 
   getCartItems(){
   	this.apis.getCartItems(this.CustomerLoginId).subscribe(res=>{
+		console.log(res.body);
 		if(res.body.status != "false")
 		{
 			this.cartItems = res.body.cartdetails;
 			this.totalsaleprice = res.body.totalsum;
 			// this.other.isValidToken(res.body.Message);
-			// this.cartItems = res.body.Data;
-			// this.totalsaleprice = 0;
-			// 	this.totalmrpprice = 0;
-			// for(let i=0;i<this.cartItems.length;i++){
-			// 	this.cartItems[i].totalsaleprice = this.cartItems[i].Qty*this.cartItems[i].SaleRate;
-			// 	this.cartItems[i].totalmrpprice = this.cartItems[i].Qty*this.cartItems[i].MrpRate;
-			// 	this.totalsaleprice += this.cartItems[i].totalsaleprice
-			// 	this.totalmrpprice += this.cartItems[i].totalmrpprice
-			// }
+			this.totalsaleprice = 0;
+			this.totalmrpprice = 0;
+			for(let i=0;i<this.cartItems.length;i++){
+				this.cartItems[i].totalsaleprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.display_price;
+				this.cartItems[i].totalmrpprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.mrp_price;
+				this.totalsaleprice += this.cartItems[i].totalsaleprice
+				this.totalmrpprice += this.cartItems[i].totalmrpprice
+			}
 		}else{
 			this.cartItems = [];
 			//this.router.navigate(['/menu/tabs/tab2'],{replaceUrl:true});
@@ -88,11 +88,12 @@ export class CartPage implements OnInit {
 
   updateCartItem(i,id,qty){
   	this.apis.updateCartItem(this.CustomerLoginId,id,qty).subscribe(res=>{
+	  console.group(res.body);
       this.other.isValidToken(res.body.Message);
-  		if(res.body.Code === 1000){
-  			this.cartItems[i].loading = false;
-  			this.getCartItems();
-  		}
+		if(res.body.status === "true"){
+			//this.cartItems[i].loading = false;
+			this.getCartItems();
+		}
   	})
   }
 

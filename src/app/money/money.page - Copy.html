@@ -1,0 +1,17 @@
+<ion-content>
+	<div *ngIf="status==1">
+		<p>You need to have atleast 1 active Rexa Wallet Card to Make Money via Referral
+aar Buy Card button</p>
+		<button class="fbtn" style="background:#fff; color:#000;" (click)="goToCards()">All Cards</button>
+    </div>
+    <div *ngIf="status==2">
+		<p>You have bought Rexa Card
+ Please go to My Wallet and activate your card to start Making Money via Referral</p>
+ 		<button class="fbtn" style="background:#fff; color:#000;" (click)="goToWallet()">My Wallet</button>
+ 	</div>
+    <div *ngIf="status==3">
+ 		<p>Below is your referral code. Copy and share with your friends and get cashback
+er niche referral code ta dekhabe</p>
+		<p>{{ referenceCode }}</p>
+	</div>
+</ion-content>

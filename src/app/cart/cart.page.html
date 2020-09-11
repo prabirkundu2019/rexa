@@ -39,15 +39,16 @@
   	<ion-row *ngFor="let data of cartItems;let i=index">
   		<ion-col size="4" routerLink="/menu/singleitem">
   			<ion-img [src]="data.productdetails.image?data.productdetails.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
-        <div class="offper" *ngIf="data.PercentageOff"><span>{{data.PercentageOff | number:'1.0-0'}}%</span><br>off</div>
+        <!--<div class="offper" *ngIf="data.productdetails.discount != '0% OFF'"><span>{{data.PercentageOff | number:'1.0-0'}}%</span><br>off</div>-->
   		</ion-col>
   		<ion-col size="8">
   			<div class="product_title">
           <b class="font-weight-bold" style="display: flex;width: 153px;font-size: 15px;">{{data.productdetails.pname | titlecase}}</b>
           <div class="product_price" style="padding-top: 10px;
     font-size: 20px;
-    margin-top: 5px;">&#8377; {{data.productdetails.display_price}}<span class="mrp_tag">&#8377; {{data.productdetails.mrp_price}}</span>
-    	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;">19% OFF</span>   
+    margin-top: 5px;">&#8377; {{data.productdetails.display_price}}
+    	 <span class="mrp_tag" *ngIf="data.productdetails.discount!='0% OFF'">&#8377; {{data.productdetails.mrp_price}}</span>
+    	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;" *ngIf="data.productdetails.discount!='0% OFF'">{{data.productdetails.discount}}</span>  
     </div>
           <ion-button class="del" (click)="deletesingleItem(data.productdetails.id)" style="margin-top: -90px;">
             <ion-icon name="trash"></ion-icon>
@@ -64,13 +65,13 @@
           </b>-->
           <div class="qty mt-1 in-flx" style="">
             <span class="minus bg-dark" (click)="dec(i)">-</span>
-            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [value]="data.quantity" style="width: 40px;
+            <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [value]="data.quantity" style="width: 50px;
     text-align: center;
     --padding-start: 6px;
     font-size: 18px;
     margin-top: -5px;
     margin-left: 0px;"></ion-input>
-            <span class="plus bg-dark" (click)="inc(i)" style="margin-left: -10px;">+</span>
+            <span class="plus bg-dark" (click)="inc(i)" style="margin-left: 0px;">+</span>
           </div>
         </div>
   		</ion-col>
@@ -97,7 +98,7 @@
   <ion-toolbar>
   	<div style="display: inline-flex;width: 100%;">
 	    <div class="fbtn white">
-	    	<div class="final_amt"> &#8377;{{totalsaleprice + samedayPrice | number:'1.0-2'}}</div>
+	    	<div class="final_amt"> &#8377;{{totalsaleprice | number:'1.0-2'}}</div>
 	      <div class="toatl_save">Saved &#8377;{{totalmrpprice - totalsaleprice | number:'1.0-2'}}</div>
 	    </div>
 	    <ion-button class="fbtn orange" routerLink="/menu/checkout">checkout</ion-button>

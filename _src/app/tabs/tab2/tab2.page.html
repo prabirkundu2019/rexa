@@ -1,0 +1,134 @@
+<ion-header  >
+  <ion-toolbar class="header">
+	<div style="display:flex;">
+		<ion-buttons slot="start">
+	    	<ion-menu-button></ion-menu-button>
+	  	</ion-buttons>
+    	<ion-title>
+    		<div class="header_logo">
+       		<div>Rexa<span class="partheading">planet</span><br/><span class="tagline">Bachat Wala SuperMarket</span></div>
+
+      		</div>
+		</ion-title>		
+    	
+    	<ion-buttons slot="end">
+	    	<ion-button (click)="openwallet()" *ngIf="this.CustomerLoginId"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
+            <ion-button *ngIf="!this.CustomerLoginId" routerLink="/login"><ion-img style="width: 18px;height: 18px;" src="assets/images/wallet.png"></ion-img></ion-button>
+	    	<ion-button routerLink="/menu/cart">
+	    		<ion-icon name="cart"></ion-icon>
+      			<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+			</ion-button>
+            
+			<ion-button routerLink="/menu/profile" *ngIf="this.CustomerLoginId">
+				<ion-icon name="notifications"></ion-icon>
+			</ion-button>
+            <ion-button routerLink="/login" *ngIf="!this.CustomerLoginId">
+				<ion-icon name="notifications"></ion-icon>
+			</ion-button> 
+            
+            <!-- <ion-button routerLink="/menu/money" *ngIf="this.CustomerLoginId">
+				<ion-icon name="cash"></ion-icon>
+			</ion-button>
+            <ion-button routerLink="/login" *ngIf="!this.CustomerLoginId">
+				<ion-icon name="cash"></ion-icon>
+			</ion-button>   -->
+
+
+			<!-- <ion-button routerLink="/menu/wishlist"><ion-icon name="heart-empty"></ion-icon></ion-button> -->
+			<!-- <ion-button routerLink="/login" *ngIf="!this.CustomerLoginId">
+				<ion-icon name="person"></ion-icon>
+			</ion-button>
+
+			<ion-button routerLink="/menu/profile" *ngIf="this.CustomerLoginId">
+				<ion-icon name="person"></ion-icon>
+			</ion-button> -->
+
+		</ion-buttons>
+	</div>
+
+	<div class="search-box">	
+		<div style="background-color:red;" (click)="openCard()">
+			<ion-img routerLink="/offer" class="offerimg" src="assets/images/offer1.jpeg"></ion-img>
+		</div>
+		<ion-input type="text" class="input1"  placeholder="Search"></ion-input>
+		<button class="search-icn" (click)="opensearch()"><ion-icon name="search"></ion-icon></button>
+	</div>
+		 
+		</ion-toolbar>
+		
+</ion-header>
+
+<ion-content class="home">
+	<div>
+
+		<ion-slides pager="true" [options]="slideOpts" #slider (ionSlidesDidLoad)="slider.startAutoplay()" class="coupons">
+			 <ng-container *ngFor="let data of coupon">
+				<ion-slide>                  
+                    <ion-img src="{{data.picture}}"></ion-img>
+                    <div style="display: inline;padding: 0px 10px;">
+                        <p>{{data.code_desc}}</p>
+                        <p><b>Use Code: {{data.code}}</b></p>
+                    </div>
+                </ion-slide>
+            </ng-container>
+		</ion-slides>
+
+		<ion-slides class="banners" pager="true" [options]="slideOpts2" #slider2 (ionSlidesDidLoad)="slider2.startAutoplay()">
+			<ng-container *ngFor="let data of banner;let i=index">
+				<ion-slide  style="">
+					<ion-img src="{{data.image}}" style=""></ion-img> 			
+				</ion-slide>
+			</ng-container>
+		</ion-slides>
+	</div>
+
+<!--	<div *ngIf="!newitems">
+		<div>
+			<ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
+		</div>
+		<ion-grid>
+			<ion-row>
+				<ion-col size="6" *ngFor="let data of ' '.repeat(4).split('')">
+					<ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+		<ion-grid>
+			<ion-row *ngFor="let data of ' '.repeat(10).split('')">
+				<ion-col size="4">
+					<ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+				</ion-col>
+				<ion-col size="8">
+					<ion-skeleton-text animated style="width: 0%;"></ion-skeleton-text>
+					<ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+					<ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+					<ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+					<ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+					<ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>-->
+
+
+
+	<ion-grid>
+  	<ion-row>
+  		<ion-col size='6' *ngFor="let cat of catData?.catlist" [routerLink]="['/menu/singlecat',replacespace(cat.catname),cat.id]">
+  			<div class="box">
+          <div class="box_image"><ion-img [src]="cat.image?cat.image:'assets/images/box_1.jpg'" alt="" style="height: 123px;"></ion-img></div>
+          <div class="box_title trans_200" style="text-align: center;"><a href="categories.html">{{cat.catname}}</a></div>
+        </div>
+  		</ion-col>
+  	</ion-row>  		
+  	<!--<ion-infinite-scroll threshold="100px" *ngIf="catData && catData.TotalRowsList[0].RemainingRecords" (ionInfinite)="loadData($event)">
+	    <ion-infinite-scroll-content
+	      loadingSpinner="bubbles"
+	      loadingText="Loading more data...">
+	    </ion-infinite-scroll-content>
+	  </ion-infinite-scroll>-->
+  </ion-grid>
+	<div class="card_image" [routerLink]="['/menu/singlecat/Rexa_Digital_Planet/21']"><ion-img src="assets/images/card.jpg" alt="" style="width:100%;"></ion-img></div>
+	<!--<br>
+	<div class="card_image"><ion-img src="assets/images/offer2.jpeg" alt="" style="width:100%; max-height: 120px; "></ion-img></div>-->
+</ion-content>

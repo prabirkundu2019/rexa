@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar class="header">
   	<ion-buttons slot="start">
-	    <!--<ion-back-button></ion-back-button>-->
-	    <ion-menu-button></ion-menu-button>
+	    <!-- <ion-back-button></ion-back-button>
+      <ion-menu-button></ion-menu-button> -->
+      <ion-back-button defaultHref="menu/tabs/tab2"></ion-back-button>
 	  </ion-buttons>
     <ion-title>
     	<div class="header_logo">
@@ -43,40 +44,44 @@
   </ion-grid>
   <ion-toolbar *ngIf="wishListItems?.length" style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
     <ion-label style="float: left;padding: 10px;">{{wishListItems?.length}} Items</ion-label>
-    <ion-button (click)="presentEmptyCartAlert()" class="del" style="margin-right: 10px;">
+    <!--<ion-button (click)="presentEmptyCartAlert()" class="del" style="margin-right: 10px;">
       <span style="text-transform: none;color: #5d5d5d;margin-right: 10px;font-weight: normal;">Empty Wishlist</span>
       <ion-icon name="trash"></ion-icon>
-    </ion-button>
+    </ion-button>-->
   </ion-toolbar>
   <ion-grid class="newitem">
     <ion-row *ngFor="let data of wishListItems;let i=index">
-      <ion-col size="4" [routerLink]="['/menu/singleitem']">
-        <ion-img [src]="data.ImagePath?data.ImagePath:'assets/images/product_1.jpg'" alt="" style="height: 100%;"></ion-img>
-        <div class="offper" *ngIf="data.PercentageOff"><span>{{data.PercentageOff | number:'1.0-0'}}%</span><br>off</div>
+      <ion-col size="3" [routerLink]="['/menu/singleitem']">
+        <ion-img [src]="data.main_image_300?data.main_image_300:'assets/images/product_1.jpg'" alt="" style="height: 100%;"></ion-img>
+        <!--<div class="offper" *ngIf="data.discount!=0"><span>{{data.discount | number:'1.0-0'}}%</span><br>off</div>-->
       </ion-col>
-      <ion-col size="8">
+      <ion-col size="9">
         <div class="product_title">
-          <b class="font-weight-bold">{{data.ItemName | titlecase}}</b>
-          <ion-button class="del" (click)="deletesingleItem(data.ItemId,data.Id)">
+          {{data.product_name | titlecase}}
+          <ion-button class="del" (click)="deletesingleItem(data.id)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </div>
-        <div>
+
+
+        <!-- <div>
           <p style="margin: 0px;color: #4a4a4a;">
               {{data.ItemRangeFrom}}<span *ngIf="data.ItemRangeTo != data.ItemRangeFrom">-</span>{{data.ItemRangeTo != data.ItemRangeFrom?data.ItemRangeTo:''}} {{data.UnitName | titlecase}} &#8377;{{data.SaleRate}}
           </p>
-        </div>
-        <div class="qty mt-1 in-flx" style="margin: 9px 0 0 auto;">
+        </div> -->
+
+
+        <!--<div class="qty mt-1 in-flx" style="margin: 9px 0 0 auto;">
           <span class="minus bg-dark" (click)="dec(i)">-</span>
           <ion-input type="number" class="count" [ngClass]="{'m-loader':data.loading}" readonly name="qty" [min]="data.RangeFrom?data.RangeFrom:'1'" [max]="data.RangeUpto == data.RangeFrom?'100':data.RangeUpto" [value]="data.Qty"></ion-input>
           <span class="plus bg-dark" (click)="inc(i)">+</span>
-        </div>
+        </div>-->
         <div class="in-flx" style="width: 100%;">
           <b style="margin: auto 0;font-size: 19px;" class=" font-weight-bold  txt-primary margin-left-xs pl-2">
             &#8377; {{data.totalsaleprice}}
           </b>
           <div class="qty mt-1 in-flx" style="margin: 0 0 0 auto;">
-            <ion-button color="cprimary" fill="outline" (click)="moveToCart(data.ItemId,data.Id)">add to cart</ion-button>
+            <ion-button color="cprimary" fill="outline" (click)="moveToCart(data.productid)">add to cart</ion-button>
           </div>
         </div>
       </ion-col>
@@ -84,7 +89,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer *ngIf="wishListItems?.length">
+<!--<ion-footer *ngIf="wishListItems?.length">
   <ion-toolbar>
   	<div style="display: inline-flex;width: 100%;">
 	    <div class="fbtn white" style="padding: 8px;">
@@ -94,4 +99,4 @@
 	    <ion-button class="fbtn orange" (click)="moveAllToCart()">add all to cart</ion-button>
 	  </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer>-->

@@ -36,7 +36,7 @@ export class IncdecPage implements OnInit {
   addToCart(input){
     this.other.presentLoading().then(m=>{
       if(this.to == 'cart'){
-        this.apis.addToCart(0,this.data,input.value).subscribe(res=>{
+        this.apis.addToCart(0,this.data,input.value,'','').subscribe(res=>{
           this.other.dismissLoading();
           this.other.isValidToken(res.body.Message);
           if(res.body.Code == 1000){

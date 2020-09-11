@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button defaultHref="menu/tabs/tab2"></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Cards Categories</div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button><!--<ion-icon name="search"></ion-icon>--></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	    <ion-button routerLink="menu/wishlist"><ion-icon name="list"></ion-icon></ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid class="newitem" *ngIf="cardlists">
+  	  <ion-row *ngFor="let card of cardlists; let i = index">
+  		<ion-col size="12" [routerLink]="['/menu/wallet-upgrade',card.id]">
+        <ion-img [src]="card.image?card.image:'assets/images/product_1.jpg'" alt="" style="width:100%;border-radius:10px;"></ion-img>
+        <Br>
+          <a>{{ card.catname }}</a>
+  		</ion-col>
+  		<!-- <ion-col size="8">
+  			<div class="product_title">
+  				<a>{{ card.catname }}</a>
+  			</div>
+        <div class="product_button ml-auto mr-auto trans_200">
+          <ion-button *ngIf="this.CustomerLoginId" [routerLink]="['/menu/wallet-upgrade',card.id]">Deatils</ion-button>
+        </div>
+  		</ion-col> -->
+  	</ion-row>
+  </ion-grid>
+  <div class="empty-cart" *ngIf="cardlists?.length == 0">
+    <ion-img src="/assets/images/nodata.png"></ion-img>
+    <h4>No Results Found !!</h4>
+    <div class="text">Explore our ever growing selection of products and exciting new offers today!</div>
+  </div>
+  <ion-grid *ngIf="!cardlists">
+    <ion-row *ngFor="let data of ' '.repeat(10).split('')">
+      <ion-col size="4">
+        <ion-skeleton-text animated style="width: 100%;height: 80px;"></ion-skeleton-text>
+      </ion-col>
+      <ion-col size="8">
+        <ion-skeleton-text animated style="width: 0%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

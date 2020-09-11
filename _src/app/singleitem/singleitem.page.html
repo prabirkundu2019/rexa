@@ -1,0 +1,266 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-back-button></ion-back-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>{{replaceunserscore(itemName) | titlecase}}</div>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+	    <ion-button><!--<ion-icon name="search"></ion-icon>--></ion-button>
+	    <ion-button routerLink="/menu/cart">
+	    	<ion-icon name="cart"></ion-icon>
+      	<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
+	    </ion-button>
+	    <ion-button routerLink="/menu/wishlist">
+        <ion-icon name="heart-empty"></ion-icon>
+      </ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<!--ion-padding-->
+<ion-content class="">
+  <div *ngIf="data">
+  	
+    <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
+    <div style="padding:15px;-webkit-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
+box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
+    <div class="product_content">
+      <div class="product_title" style="margin-bottom: 10px;"><a>{{data.product_name | titlecase}}</a></div>
+      <span style="font-size:20px; font-weight: bold;">&#8377; {{data.display_price}}</span> &nbsp; 
+      <span *ngIf="data.discount!=0"  class="mrp_tag" style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;">&#8377; {{data.mrp_price}}</span> &nbsp;&nbsp; 
+      <span *ngIf="data.discount!=0" style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ data.discount }}% OFF</span>
+      <div style="display:flex;">
+            <div style="padding-top: 10px;width:90%;">
+              Sold By <span style="color:#ec2664;" routerLink="/seller/{{ data.seller_id }}">{{data.storename}}</span>
+            </div>      
+            <div style="padding-top: 10px;width:10%;display:inline-flex;" [hidden]="isWishlist">             
+                <ion-icon name="heart-empty" style="font-size:26px;" (click)="addToWishlist(data.id)"></ion-icon>             
+            </div>
+            <div style="padding-top:10px;width:10%;display:inline-flex;" [hidden]="isNotWishlist">             
+                <ion-icon name="heart" style="font-size:26px; color:#ec2664;"></ion-icon>             
+            </div>
+            <div style="padding-top:10px;width:10%;display:inline-flex;" (click)="shareviaWhatsapp()">             
+                <ion-icon name="logo-whatsapp" style="font-size:26px; color:#ec2664;"></ion-icon>             
+            </div>
+            <!-- <div style="padding-top:10px;width:10%;display:inline-flex;" (click)="shareviaFacebook()">             
+                <ion-icon name="logo-facebook" style="font-size:26px; color:#ec2664;"></ion-icon>             
+            </div> -->
+            <div style="padding-top:10px;width:10%;display:inline-flex;" (click)="shareviaTwitter()">             
+                <ion-icon name="logo-twitter" style="font-size:26px; color:#ec2664;"></ion-icon>             
+            </div>
+       </div>
+
+      <!--<div class="product_price" style="padding-top: 0px;
+    font-size: 22px;
+   
+    margin-top: 20px;">
+      <span style="float: left;
+    width: 56%;
+    color: #fff;
+    padding: 8px 0px;
+    margin-top: 0px;
+    color: #3c763d;
+    border-top: 2px solid #ec2664;
+    color: #ec2664;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;">Buy Online</span>
+     <span style="float: left;width: 50%;border-radius: 5px;color: #fff;padding: 8px 13px;margin-top: 6px;color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;" *ngIf="enquiryMsg==1">Enquiry Sent</span>
+     <ion-button (click)="sendEnquiry(data.id)" color="cprimary" fill="outline" style="margin-top: 0px;
+    width: 150px;
+    float: right;
+    padding: 0px;
+    margin: 0px;">Send Enquiry</ion-button>
+     <br /><br />
+    &#8377; {{data.display_price}}<span class="mrp_tag">&#8377; {{data.mrp_price}}</span>
+    	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ data.discount }}% OFF</span>   
+        
+    </div>-->
+    <ion-grid>
+      <ion-row style="margin-top:20px;">
+        <ion-col size='6' style="padding: 0px;">
+                     <span style="
+            padding: 8px 0px;
+    margin-top: 0px;
+    border-top: 2px solid #ec2664;
+    color: #ec2664;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+    float: left;
+    border-right: 2px solid #ec2664;">Buy Online</span>
+        </ion-col>
+        <ion-col size='6' (click)="sendEnquiry(data.id)" style="padding: 0px;">
+                     <span style="padding: 8px 0px;
+    margin-top: 0px;
+    border-bottom: 2px solid #ec2664;
+    color: #ec2664;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+    float: left;
+    width: 100%;cursor:pointer;">Send Enquiry</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+      <!--<div class="inclusive">Inc. of all taxes</div>-->
+    </div>
+    
+    <ion-toolbar style="text-align: center;--min-height: 30px;border-bottom: 1px solid #eaeaea;border-top: 5px solid #eee;margin-top: 20px;">
+    <ion-item lines="none" style="min-height: 12px;max-height: 48px;font-size: 12px;">
+	    <!--<ion-label>Is Same Day Delivery (With Applicable Charges: 50 Rs.)</ion-label>-->
+         <ion-img src="../assets/images/locator.png" style="width:17px;"></ion-img>
+        <ion-input type="tel" class="" placeholder="Enter Picode" [(ngModel)]="pincode" style="margin-left:5px;"></ion-input>
+	    <ion-button (click)="pincodeCheck()" color="cprimary" fill="outline" style="margin-top: 6px; width: 72px;">Check</ion-button>
+	  </ion-item>
+       
+       <span style="float: left;width: 100%;border-radius: 5px;color: #fff;padding: 8px 13px;margin-top: 10px;color: #3c763d;background-color: #dff0d8;border: 1px solid #b8d69f;text-align: left;" [hidden]="availableMsg">Delivery Available!</span>
+       
+        <span style="float: left;width: 100%;border-radius: 3px;color: #fff;padding: 8px 13px;margin-top: 10px;color: #ec2664;background-color: #fde0e8;border: 1px solid #f1bbcc;text-align: left;" [hidden]="nonAvailableMsg">Sorry, Delivery UnAvailable!</span>
+       
+  </ion-toolbar>
+   <p style="margin-top:20px;font-weight: bold;
+    border-top: 1px solid #e8e8e8;
+    padding-top: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 10px;font-size: 17px;">
+    	Description        
+    </p>
+     <p style="margin-top: 20px;" [hidden]="shortDescription" [innerHtml]="data.product_description | slice:0:400"></p>
+     <p style="margin-top: 20px;" [hidden]="longDescription" [innerHtml]="data.product_description"></p>
+     <a href="javascript:void(0)" [hidden]="shortDescription" (click)="readMore()"> Read More</a>
+     <p style="margin-top:20px;font-weight: bold;
+    border-top: 1px solid #e8e8e8;
+    padding-top: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 10px;font-size: 17px;">
+    	Specification        
+    </p>
+    <p style="border-bottom:1px solid #eee;display:flex;margin: 0px;padding-bottom: 6px;padding-top: 6px;" *ngIf="data.brand_name">
+		<span style="width:40%;color: #999;">
+        	Brand
+        </span>
+        <span style="width:50%;">
+        	{{ data.brand_name }}
+        </span>
+    </p>
+    <p style="border-bottom:1px solid #eee;display:flex;margin: 0px;padding-bottom: 6px;padding-top: 6px;" *ngIf="data.product_type">
+		<span style="width:40%;color: #999;">
+        	Product Type
+        </span>
+        <span style="width:50%;">
+        	{{ data.product_type }}
+        </span>
+    </p>   
+    
+    </div>
+    
+    <div style="padding:10px;margin-top:0px;">
+    	
+        <p style="margin-top:20px;font-weight: bold;   
+    padding-top: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 10px;font-size: 17px;">
+            Similar Product        
+        </p>	
+           
+    </div>
+    <div *ngIf="data">
+      <owl-carousel
+       	[options]="{items: 3, dots: false, navigation: false}"
+       	[items]="sliders"
+       	[carouselClasses]="['owl-theme', 'row', 'sliding']">
+       	<div class="item" *ngFor="let data1 of sliders;let i = index" class="carousel-img" (click)="productDetails(data1)">
+    		<ion-img style="height: 100px;" [src]="data1.image"></ion-img>
+            <p style="text-align:center;">{{ data1.product_name | slice:0:20 }}....</p>
+       	</div>
+      </owl-carousel>
+    </div>
+    <!--<div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+      <ion-button (click)=addToCart(data)>Add To Cart</ion-button>
+    </div>
+    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+      <ion-button (click)=buyNow(data)>Buy Now</ion-button>
+    </div>-->
+  	<hr>
+   	<!--<div class="form-group pt-2" style="margin-top: 10px;" *ngIf="data?.selected">
+    	<ion-select [interfaceOptions]="customPopoverOptions" class="form-control" interface="popover" placeholder="Select Range" (ionChange)="selectRange($event)">
+        <ion-select-option *ngFor="let price of data?.ItemRateList;let i=index" [selected]="data.selected.RateDateSetupId==price.RateDateSetupId" [value]="price">{{price.RangeFrom}}<span *ngIf="price.RangeUpto != price.RangeFrom">-</span>{{price.RangeUpto != price.RangeFrom?price.RangeUpto:''}} {{price.UnitName | titlecase}} &#8377;{{price.SaleRate}}</ion-select-option>
+      </ion-select>
+    </div>
+  	<hr>
+  	<ion-segment [ngClass]="{'hide':!aboutdata}" style="overflow: auto;justify-content: start;" (ionChange)="segmentChanged($event)" [value]="aboutdata[0]?.head.CategoryName" #segment>
+      <ion-segment-button [value]="data.head.CategoryName" *ngFor="let data of aboutdata">
+        <ion-label>{{data.head.CategoryName}}</ion-label>
+      </ion-segment-button>
+  	</ion-segment>
+  	<div class="about" [ngClass]="{'hide':segment.value != data.head.CategoryName}" *ngFor="let data of aboutdata">
+      <p *ngIf="data.head.Name">{{data.head.Name}}</p>
+      <table class="table" *ngIf="data.subhead.length">
+        <tbody>
+          <tr *ngFor="let subdata of data.subhead">
+            <th scope="row">{{subdata.CategoryName}}</th>
+            <td class="subhead-data">{{subdata.Name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>-->
+  </div>
+  <div *ngIf="!data">
+    <div class="product_content">
+      <ion-skeleton-text animated style="width: 40%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 20%;"></ion-skeleton-text>
+    </div>
+    <ion-skeleton-text animated style="width: 100%;height: 250px;"></ion-skeleton-text>
+    <ion-grid>
+      <ion-row>
+        <ion-col size='3' *ngFor="let data of ' '.repeat(4).split('')">
+          <ion-skeleton-text animated style="width: 100%;height:40px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-skeleton-text animated style="width: 100%;height:20px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-grid>
+      <ion-row>
+        <ion-col size='4' *ngFor="let data of ' '.repeat(3).split('')">
+          <ion-skeleton-text animated style="width: 100%;height:40px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="data">
+  <ion-toolbar style="-webkit-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);
+-moz-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);
+box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.39);">
+    <div style="display: inline-flex;width: 100%;">
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="this.CustomerLoginId" (click)="addToCart(data)">Add To Cart</button>
+      <button class="fbtn" style="background:#ec2664; color:#fff;" *ngIf="!this.CustomerLoginId" routerLink="/login">Add To Cart</button>
+      <button class="fbtn" style="background:#fff; color:#000;" *ngIf="this.CustomerLoginId" (click)="buyNow(data)">Buy Now</button>
+      <button class="fbtn" style="background:#fff; color:#000;" *ngIf="!this.CustomerLoginId" routerLink="/login">Buy Now</button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -104,6 +104,11 @@ export class Tab2Page implements OnInit {
 		// this.other.presentWalletPopover();
 		this.router.navigate(['/menu/wallet']);
 	}
+
+	openCard(){
+		this.router.navigate(['/menu/card-category'],{replaceUrl:true});
+	}
+
 	opennotification() {
 		this.other.presentNotificationPopover();
 	}

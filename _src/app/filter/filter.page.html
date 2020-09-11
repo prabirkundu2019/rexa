@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-button (click)="closeModel()">
+		    <ion-icon name="arrow-back" style="font-size: 22px;"></ion-icon>
+			</ion-button>
+	  </ion-buttons>
+    <ion-title>Filter</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-segment value="Refine" #segment>
+	  <ion-segment-button value="Refine">
+	    <ion-label>Refine by</ion-label>
+	  </ion-segment-button>
+	  <ion-segment-button value="Sort">
+	    <ion-label>Sort by</ion-label>
+	  </ion-segment-button>
+	</ion-segment>
+	<div [ngClass]="{'hide':segment.value != 'Refine'}" class="ion-padding">
+		<div class="accordion" id="accordionExample">
+		  <div class="card">
+		    <div class="card-header" id="headingOne">
+		      <h2 class="mb-0" style="margin: 0px;">
+		        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%;outline: none;font-size: 17px;background: #fff;padding: 10px;border-bottom: 1px solid #cacaca;text-align: left;">
+		          Price
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+		      <div class="card-body">
+		      	<ion-range (ionChange)="setFilter()" class="pricerange" dualKnobs="true" [min]="data[0]" [max]="data[1]" step="1" pin="true" #pricerange value="" color="dark">
+		      		<ion-label slot="start">&#8377; {{pricerange.min}}</ion-label>
+	            <ion-label slot="end">&#8377; {{pricerange.max}}</ion-label>
+		      	</ion-range>
+		      </div>
+		    </div>
+		  </div>
+		  <!-- <div class="card">
+		    <div class="card-header" id="headingTwo">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		          Collapsible Group Item #2
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+		      <div class="card-body">
+		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" id="headingThree">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+		          Collapsible Group Item #3
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+		      <div class="card-body">
+		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		      </div>
+		    </div>
+		  </div> -->
+		</div>
+	</div>
+	<div [ngClass]="{'hide':segment.value != 'Sort'}">
+    	<ion-list>
+          <ion-radio-group value="recent">
+            <ion-list-header>
+              <ion-label>Sort</ion-label>
+            </ion-list-header>        
+            <ion-item>
+              <ion-label>Recent</ion-label>
+              <ion-radio slot="start" value="recent" (click)="setOrder('recent')"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Popular</ion-label>
+              <ion-radio slot="start" value="popular" (click)="setOrder('popular')"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+    </div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar style="text-align: left;padding: 0 10px;--min-height: 30px;border-bottom: 1px solid #eaeaea;">
+    <ion-label>{{totalitems}} Products Available</ion-label>
+    <ion-label style="float: right;color: var(--primary-color);">Remove filter/s</ion-label>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-button class="fbtn white" (click)="closeModel()">cancel</ion-button>
+    <ion-button class="fbtn orange" (click)="modal.dismiss()">Done</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,13 @@
+<ion-content>
+	<div style="text-align: center;font-size: 20px;color: #3e3e3e;">
+		<p>Rate and Review</p>
+	</div>
+	<div style="display: inline-flex;justify-content: center;width: 100%;">
+		<ion-img (click)="rate(i+1,'c')" src="/assets/images/star-done.png" *ngFor="let dummy of ' '.repeat(no).split('');let i=index;" style="width: 40px;margin: 0px 5px;"></ion-img>
+		<ion-img (click)="rate(i+1,'uc')" src="/assets/images/star.png" *ngFor="let dummy of ' '.repeat(5-no).split('');let i=index;" style="width: 40px;margin: 0px 5px;"></ion-img>
+	</div>
+	<ion-textarea style="margin: 20px;width: inherit;--border-color: blue;border: 1px solid #d4d4d4;background: #f4f2f2;" rows="3" [(ngModel)]="text" cols="20" placeholder="Enter review here..."></ion-textarea>
+	<div style="text-align: center;">
+		<ion-button style="width: 200px;" color="cprimary" fill="outline" (click)="submit()">submit</ion-button>
+	</div>
+</ion-content>

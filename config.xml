@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.rexa.starter" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.rexaplanet" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="R Planet">Rexa Planet</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">ionicframework</author>
+    <description>Rexa Planet</description>
+    <author email="info@rasamv.company" href="http://www.rexaplanet.com/">Rexa Planet</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

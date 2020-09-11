@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar class="header">
+  	<ion-buttons slot="start">
+	    <ion-button (click)="modal.dismiss()">
+		    <ion-icon name="arrow-back" style="font-size: 22px;"></ion-icon>
+			</ion-button>
+	  </ion-buttons>
+    <ion-title>
+    	<div class="header_logo">
+        <div>Add Adderss</div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+	<form (ngSubmit)="addform.valid && add(addform)" id="checkout_form" #addform="ngForm">
+		<ion-label for="checkout_last_name">Address*</ion-label>
+		<ion-input type="text" [(ngModel)]="model.add1" id="add1" name="add1" required #add1="ngModel" class="input1" placeholder="Line 1"></ion-input>
+		<ion-input type="text" [(ngModel)]="model.add2" id="add2" name="add2" #add2="ngModel" class="input1" placeholder="Line 2"></ion-input>
+		<ion-label for="checkout_last_name">Zipcode*</ion-label>
+		<ion-input type="text" [(ngModel)]="model.zip" id="zip" name="zip" required #zip="ngModel" class="input1" placeholder="Enter Zipcode" (ionChange)="getadd(zip)"></ion-input>
+		<ion-label for="checkout_last_name">Alternate No*</ion-label>
+		<div style="display: inline-flex;width: 100%">
+			<!-- <div style="margin: 5px 0px 7px;padding: 16px 0px 0px 5px;text-align: center;background: #f4f2f2;">+{{ccode?ccode:'91'}}</div> -->
+			<ion-input type="tel" [maxlength]="Length" [(ngModel)]="model.ano" id="ano" name="ano" #ano="ngModel" class="input1" placeholder="Alternate no"> +{{ccode?ccode:'91'}}</ion-input>
+		</div>
+		<ion-label for="country">Country*</ion-label>
+	  	<ion-input type="text" [(ngModel)]="model.country" id="zip" name="country" required #country="ngModel" class="input1" placeholder="Country"></ion-input>
+		<ion-label for="state">State*</ion-label>
+	    <ion-input type="text" [(ngModel)]="model.state" id="state" name="state" required #state="ngModel" class="input1" placeholder="State"></ion-input>
+	  <ion-label for="city">City/Town/District*</ion-label>
+	  <ion-input type="text" [(ngModel)]="model.city" id="city" name="city" required #city="ngModel" class="input1" placeholder="State"></ion-input>
+	  <div class="in-flx" style="margin: 20px 0px;width: 100%;">
+	    <ion-checkbox color="cprimary" [(ngModel)]="model.isdefault" id="isdefault" name="isdefault" required #isdefault="ngModel"></ion-checkbox>
+	    <ion-label class="add-radio-label" for="isdefault" style="margin-top:0px;">Set as default address</ion-label>
+	  </div>
+	  <ion-label for="checkout_last_name">Save as*</ion-label>
+	  <ion-radio-group [(ngModel)]="model.addtype" id="addtype" name="addtype" required #addtype="ngModel">
+			<div class="in-flx">
+		    <ion-radio class="add-radio" slot="start" id="home" [value]="1"></ion-radio>
+		    <ion-label class="add-radio-label" for="#home">Home</ion-label>
+		  </div>
+			<div class="in-flx">
+	    	<ion-radio class="add-radio" slot="start" id="work" [value]="2"></ion-radio>
+				<ion-label class="add-radio-label" for="#work">Work</ion-label>
+			</div>
+			<div class="in-flx">
+	    	<ion-radio class="add-radio" slot="start" id="other" [value]="3"></ion-radio>
+				<ion-label class="add-radio-label" for="#other">Other</ion-label>
+			</div>
+	  </ion-radio-group>
+	  <ion-input   *ngIf="addtype.value == '3'" [(ngModel)]="model.other" id="other" name="other" required #other="ngModel" type="text" class="input1" placeholder="Address nick name"></ion-input>
+		
+
+		<button color="cprimary" class="ion-button1" type="submit" expand="full" >save</button>
+		
+		
+		
+  </form>
+</ion-content>
