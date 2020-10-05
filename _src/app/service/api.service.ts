@@ -131,8 +131,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/setting/CommonMaster2?CommonCode=103&CommonId1='+sid,{observe:'response'});
   }
 
-  getPaymentMethods():Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/paymentmethodlist',{observe:'response'}); 
+  getPaymentMethods(userId):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/paymentmethodlist?userid='+userId,{observe:'response'}); 
   }
 
   getCartItems(userId):Observable<HttpResponse<any>>{
@@ -143,8 +143,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/getcartWithDetails?IsWishingItem=false',{observe:'response'}); 
   }
 
-  addToCart(user_id, productId, quantity):Observable<HttpResponse<any>>{
-    let formdata = {"userid":user_id,"productid":productId,"quantity":quantity,"action":"add"};
+  addToCart(user_id, productId, price, attribute="", quantity):Observable<HttpResponse<any>>{
+    let formdata = {"userid":user_id,"productid":productId,"quantity":quantity,"price":price, "size": attribute, "action":"add"};
     return this.http.post<any>(environment.baseurl1+'/cart',formdata,{observe:'response'}); 
   }
 
@@ -183,8 +183,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/cardcategory/'+cardId,{observe:'response'}); 
   }
 
-  getWalletCardDetails(id):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/card/'+id,{observe:'response'}); 
+  getWalletCardDetails(id, userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/card/'+id+'?userid='+userid,{observe:'response'}); 
   }
 
   buycard(formdata):Observable<HttpResponse<any>>{
@@ -331,7 +331,7 @@ export class ApiService {
 
 
   vendoragent():Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/category?WorkDomain=pagaprint.pe.hu',{observe:'response'}); 
+    return this.http.get<any>(environment.baseurl1+'/category?WorkDomain=rexaplanet.com',{observe:'response'}); 
   }
 
   cancelOrder(oid,iid = 0,remarks = null){

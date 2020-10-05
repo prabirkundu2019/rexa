@@ -4,29 +4,83 @@
 	</div>
 	<div style="height: 69vh;overflow: auto;">
 		<ion-list-header>
-	    <ion-label style="margin: 0px;font-size: 18px;">Order Items</ion-label>
+	    <ion-label style="margin: 0px;font-size: 18px;">Why do you want to cancel?</ion-label>
 	  </ion-list-header>
-		<ion-item [disabled]="data.Status == 'Cancelled'" *ngFor="let data of order?.BuyNowOrderItemDetailsList">
-	    <ion-label style="margin: 0px">
-	    	<ion-grid>
-					<ion-row>
-						<ion-col size="2">
-							<ion-img [src]="data.ImagePath"></ion-img>
-						</ion-col>
-						<ion-col size="6">
-							<div class="product_title">
-			          <b class="font-weight-bold">{{data.itemname | titlecase}}</b>
-			          <p style="margin: 0px;color: #4a4a4a;">{{data.Status}}</p>
-			  			</div>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
-	    </ion-label>
-	    <ion-checkbox slot="start" [(ngModel)]="data.checked" (ionChange)="incordec(data.checked)"></ion-checkbox>
-	  </ion-item>
-	  <ion-textarea style="margin: 20px;width: inherit;--border-color: blue;border: 1px solid #d4d4d4;background: #f4f2f2;" rows="3" cols="20" placeholder="Enter reason of cancelation here..." [(ngModel)]="reason" #text></ion-textarea>
+        <ion-radio-group value="reason">
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">I needed earlier delivery</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                 <!--[(ngModel)]="data.checked" (ionChange)="incordec(data.checked)"-->
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">I was trying out grofers</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">Forgot to add/remove items</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">I don't need the products anymore</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">I needed earlier delivery</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">Not available to receive orders</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label style="margin: 0px">
+                    <ion-grid>
+                        <ion-row>
+                            <b class="font-weight-bold">I selected the wrong address</b>
+                        </ion-row>
+                    </ion-grid>
+                </ion-label>
+                <ion-radio slot="start"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
 	</div>
   <div class="cancel-btn">
-  	<ion-button color="cprimary" fill="outline" (click)="cancel()" style="width: 200px;text-transform: none;">Cancel Items <span *ngIf="Qty"> ({{Qty}})</span></ion-button>
+  	<ion-button color="cprimary" fill="outline" (click)="cancel()" style="width: 200px;text-transform: none;">Cancel Order</ion-button>
   </div>
 </ion-content>

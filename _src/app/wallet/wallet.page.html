@@ -18,11 +18,28 @@
 </ion-header>
 
 <ion-content class="home">
+	
+	<div class="col displayhead" style="margin-bottom: 0px; padding-bottom: 0px;">
+		<div style="float:left;width:50%;">
+			Wallet : Rexa<br>
+			 <span class="ng-star-inserted"> Balance : &#8377; {{walletBalance}}</span>	
+		</div>
+		<div style="float:left;width:50%;text-align:center;">
+			Active Card<br>
+			 <span class="ng-star-inserted"> {{cardname}}</span>	
+		</div>
+	</div>
+
+	<div class="col displayhead" style="padding-top: 0px;">
+	
+		<ion-button class="left" fill="clear" size="small" routerLink="/menu/topup/add" style="background : #ec2664;">Topup Wallet</ion-button>
+		<ion-button class="right" fill="clear" size="small" routerLink="/menu/card-category">Rexa Upgrade Card</ion-button>
+	</div>
 	<h3 style="text-align: center;">Transaction History</h3>
 	<table style="width: 100%">
 		<thead style="background: #f0f8ff;">
 			<tr>
-				<th>Sl No</th>
+				<!-- <th>Sl No</th> -->
 				<th>Spent On.</th>
 				<th>Order ID</th>
 				<th>Card</th>
@@ -31,11 +48,12 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let data of txndata;let i = index;">
-				<td>{{i+1}}</td>
-				<td>{{ data.spenton | date:'dd/MM/yyyy' }}</td>
+				<!-- <td>{{i+1}}</td> -->
+				<!-- <td>{{ data.spenton | date:'dd/MM/yyyy' }}</td> -->
+				<td>{{ data.spenton }}</td>
 				<td>{{data.orderid}}</td>
 				<td>{{data.cardname}}</td>
-				<td>{{data.amount}}</td>
+				<td>&#8377;{{data.amount}}</td>
 			</tr>
 		</tbody>
 	</table>

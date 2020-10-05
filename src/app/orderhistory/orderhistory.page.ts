@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { CancelorderPage } from '../cancelorder/cancelorder.page';
 import { OtherService } from '../service/other.service';
 
+
 @Component({
   selector: 'app-orderhistory',
   templateUrl: './orderhistory.page.html',

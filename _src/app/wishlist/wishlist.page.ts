@@ -103,7 +103,7 @@ export class WishlistPage implements OnInit {
   }
 
   moveToCart(id,cid){
-    this.apis.addToCart(this.CustomerLoginId,id,1).subscribe(res=>{
+    this.apis.addToCart(this.CustomerLoginId,id,'','',1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         this.other.presentToast('Item added to cart','success');

@@ -39,7 +39,7 @@
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-inappbrowser": "^3.2.0",
     "cordova-plugin-x-socialsharing": "^6.0.1",
-    "cordova-res": "^0.6.0",
+    "cordova-res": "^0.15.1",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "^4.2.2",
     "ionic-plugin-deeplinks": "^1.0.20",
@@ -104,7 +104,7 @@
       "ionic-plugin-deeplinks": {
         "URL_SCHEME": "appsaniiro",
         "DEEPLINK_SCHEME": "http",
-        "DEEPLINK_HOST": "pagaprint.pe.hu",
+        "DEEPLINK_HOST": "rexaplanet.com",
         "ANDROID_PATH_PREFIX": "/",
         "ANDROID_2_PATH_PREFIX": "/",
         "ANDROID_3_PATH_PREFIX": "/",

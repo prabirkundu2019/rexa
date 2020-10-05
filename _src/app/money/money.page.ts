@@ -44,7 +44,7 @@ export class MoneyPage implements OnInit {
   }
 
   goToCards(){
-    this.router.navigate(['/wallet-upgrade/add'],{replaceUrl:true})
+    this.router.navigate(['/menu/card-category'],{replaceUrl:true})
   }
 
   goToWallet(){
@@ -52,15 +52,15 @@ export class MoneyPage implements OnInit {
   }
 
   shareviaWhatsapp(){
-    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link";
+    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link http://rexaplanet.com/";
 		this.socialSharing.shareViaWhatsApp(message,this.imageForSharing,null)
 	}
 	shareviaFacebook(){
-    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link";
+    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link http://rexaplanet.com/";
 		this.socialSharing.shareViaFacebook(message,this.imageForSharing,null)
 	}
 	shareviaTwitter(){
-    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link";
+    var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link http://rexaplanet.com/";
 		this.socialSharing.shareViaTwitter(message,this.imageForSharing,null)
 	}
 

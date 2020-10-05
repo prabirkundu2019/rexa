@@ -24,15 +24,17 @@ export class MenuPage implements OnInit {
 
   	constructor(public router:Router,public navCtrl:NavController,private apis:ApiService,private other:OtherService,private menu:MenuController,private app:AppVersion, public events: Events) {
 		events.subscribe('user:created', (user, time) => {
-			console.log(user);
+			
 			// user and time are the same arguments passed in `events.publish(user, time)`
 			this.CustomerLoginId = user.id;
 			this.name = user.name;
 		});
+		//console.log(JSON.parse(localStorage.getItem('userdata')));
 		if(this.CustomerLoginId == "" && "userdata" in localStorage && localStorage.getItem('userdata') != "undefined" && localStorage.getItem('userdata') != null)
 		{
 			this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
 			this.name = JSON.parse(localStorage.getItem('userdata')).name;	
+			this.image = JSON.parse(localStorage.getItem('userdata')).image;
 			if (this.CustomerLoginId === undefined){
 				this.CustomerLoginId = '';
 			}

@@ -32,6 +32,7 @@ export class SingleitemPage implements OnInit {
   CustomerLoginId='';
   pincode="";
   enquiryMsg=0;
+  pictures:any=[];
   sliders:any=[];
   attribute_list:any=[];
   shortDescription:boolean=false;
@@ -104,6 +105,7 @@ export class SingleitemPage implements OnInit {
       this.totalmrpprice = res.body.productdetails.display_price;
       this.attribute_list = res.body.attribute_list;
       this.attribute_count = res.body.attribute_count;
+      this.pictures = res.body.picture_list;
       this.sliders = res.body.relatedproductlist;
       this.data.mrp_price = res.body.productdetails.mrp_price;
       this.activeimage.url = res.body.productdetails.image;
@@ -236,7 +238,16 @@ export class SingleitemPage implements OnInit {
   }
 
   shareviaWhatsapp(){
-		this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
+    var options = {
+      message: this.data.product_name,
+      files: [this.activeimage.url], // an array of filenames either locally or remotely
+      url: this.data.productlink,
+      chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title
+      //appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
+    };
+    this.socialSharing.shareWithOptions(options)
+    
+		//this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
 	}
 	shareviaFacebook(){
 		this.socialSharing.shareViaFacebook(null,this.activeimage.url,null)

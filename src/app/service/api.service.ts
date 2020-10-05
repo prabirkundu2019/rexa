@@ -183,8 +183,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/cardcategory/'+cardId,{observe:'response'}); 
   }
 
-  getWalletCardDetails(id):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/card/'+id,{observe:'response'}); 
+  getWalletCardDetails(id, userid):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/card/'+id+'?userid='+userid,{observe:'response'}); 
   }
 
   buycard(formdata):Observable<HttpResponse<any>>{
@@ -331,11 +331,11 @@ export class ApiService {
 
 
   vendoragent():Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/category?WorkDomain=pagaprint.pe.hu',{observe:'response'}); 
+    return this.http.get<any>(environment.baseurl1+'/category?WorkDomain=rexaplanet.com',{observe:'response'}); 
   }
 
-  cancelOrder(oid,iid = 0,remarks = null){
-    return this.http.get<any>(environment.baseurl1+'/SP_UpdateItemBuyNowStatus?OrderId='+oid+'&RowID='+iid+'&Status=3&Remark='+remarks+'&CustomerLoginID='+localStorage.getItem('userdata')?JSON.parse(localStorage.getItem('userdata')).CustomerLoginId:'',{observe:'response'});
+  cancelOrder(oid){
+    return this.http.post<any>(environment.baseurl1+'/cancelorder/'+oid,{observe:'response'});
   }
 
   rateAndReview(formdata,itemId=null){

@@ -69,7 +69,31 @@
   			<p class="checkout-price">&#8377; {{order?.delivery | number:'1.0-2'}}</p>
   		</ion-col>
   	</ion-row>
-    <ion-row class="bill-discount" *ngIf="order?.ccvalue != ''">
+    <ion-row *ngIf="express_delivery != '0'">
+  		<ion-col size="9">
+  			Express Delivery Charge
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.express_delivery | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row *ngIf="delivery_tip != '0'">
+  		<ion-col size="9">
+  			Delivery Hero
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.delivery_tip | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row *ngIf="donate_amount != '0'">
+  		<ion-col size="9">
+  			Donation
+  		</ion-col>
+  		<ion-col size="3">
+  			<p class="checkout-price">&#8377; {{order?.donate_amount | number:'1.0-2'}}</p>
+  		</ion-col>
+  	</ion-row>
+    <ion-row class="bill-discount" *ngIf="order?.ccvalue != '0'">
   		<ion-col size="9">
   			Coupon Discount
   		</ion-col>

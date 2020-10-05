@@ -283,11 +283,16 @@ export class CheckoutPage implements OnInit {
 		};
   		this.apis.checkCoupon(formdata).subscribe(res=>{	
 			console.log(res);
-  			if(res.body.status === "true"){    
-    			this.couponData = res.body.couponamount;
-				this.discount = parseFloat(res.body.couponamount);
-				this.subtotal =res.body.totalprice;
-    			this.couponCodeSucces ="Coupon applied Successfully. Discount of "+res.body.couponamount+" added to your cart.";
+  			if(res.body.status === "true"){  
+				//if(res.body.totalprice < this.final)
+				//{
+					this.couponData = res.body.couponamount;
+					this.discount = parseFloat(res.body.couponamount);
+					this.subtotal =res.body.totalprice;
+					this.couponCodeSucces ="Coupon applied Successfully. Discount of "+res.body.couponamount+" added to your cart.";
+				//}else{
+				//	alert("You can't add this coupon code");
+				//}
     		}
     		else{
     			this.couponCodeError = true;
@@ -319,6 +324,9 @@ export class CheckoutPage implements OnInit {
 		var gatewayAmount = this.othercharges+this.total-this.discount-parseFloat(this.WalletAmount);
 		let formdata = {
 			userid: this.CustomerLoginId,
+			express_delivery: this.expressshipcharge,
+			delivery_tip: this.tipAmount,
+			donate_amount: this.donateAmount,
 			payment_type: this.spmode,
 			address_id: this.address.id,
 			couponcode: this.couponCode,

@@ -23,8 +23,21 @@
 <!--ion-padding-->
 <ion-content class="">
   <div *ngIf="data">
-  	
-    <ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>
+  	<div>
+		<ion-slides pager="true" [options]="slideOpts" #slider (ionSlidesDidLoad)="slider.startAutoplay()" class="coupons">
+        	<ng-container>
+				<ion-slide>                  
+                    <ion-img src="{{activeimage.url}}"></ion-img>
+                </ion-slide>
+             </ng-container>
+			 <ng-container *ngFor="let data of pictures">
+				<ion-slide>                  
+                    <ion-img src="{{data.image}}"></ion-img>
+                </ion-slide>
+            </ng-container>
+		</ion-slides>
+	</div>
+    <!--<ion-img (ionError)="error()" style="height: 250px;margin: 10px 0;" [src]="activeimage.url"></ion-img>-->
     <div style="padding:15px;-webkit-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
 -moz-box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);
 box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
@@ -43,17 +56,16 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
             <div style="padding-top:10px;width:10%;display:inline-flex;" [hidden]="isNotWishlist">             
                 <ion-icon name="heart" style="font-size:26px; color:#ec2664;"></ion-icon>             
             </div>
-            <div style="padding-top:10px;width:10%;display:inline-flex;margin-left: 5px;" (click)="shareviaWhatsapp()">             
-                <!-- <ion-icon name="logo-whatsapp" style="font-size:26px; color:#ec2664;"></ion-icon>              -->
-                <ion-img style="width: 25px;border-radius: 4px;" src="assets/images/whatsapp.png"></ion-img> 
+            <div style="padding-top:10px;width:10%;display:inline-flex;margin-left: 5px;">             	
+            	<ion-icon name="md-share" style="font-size:26px;" (click)="shareviaWhatsapp()"></ion-icon> 
+                <!--<ion-img style="width: 25px;border-radius: 4px;" src="assets/images/whatsapp.png"></ion-img> -->
             </div>
-            <div style="padding-top:10px;width:10%;display:inline-flex;" (click)="shareviaFacebook()">             
+            <!--<div style="padding-top:10px;width:10%;display:inline-flex;" (click)="shareviaFacebook()">             
                 <ion-icon name="logo-facebook" style="font-size:26px; color:#ec2664;"></ion-icon>             
             </div> 
-            <div style="padding-top:10px;width:10%;display:inline-flex;margin-left: 5px;" (click)="shareviaTwitter()">             
-                <!-- <ion-icon name="logo-twitter" style="font-size:26px; color:#ec2664;"></ion-icon>              -->
+            <div style="padding-top:10px;width:10%;display:inline-flex;margin-left: 5px;" (click)="shareviaTwitter()">
                 <ion-img style="width: 25px;border-radius: 4px;" src="assets/images/twitter.png"></ion-img>    
-            </div>
+            </div>-->
        </div>
 
       <!--<div class="product_price" style="padding-top: 0px;
@@ -84,6 +96,14 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
     	 <span style="font-size:12px;font-weight:bold;color: #2aad4c;">{{ data.discount }}% OFF</span>   
         
     </div>-->
+    <ion-item *ngIf="attribute_count > 0" style="margin: 15px 0px;">
+      <ion-label>Select Variant</ion-label>
+      <br>
+      <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="variant" id="variant" name="variant" #damt="ngModel" class="input1" interface="action-sheet" placeholder="Select" style="padding: 15px 10px;" (ionChange)="setVariant()">
+        <ion-select-option [value]="data1.id" *ngFor="let data1 of attribute_list">{{data1.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-grid>
       <ion-row style="margin-top:20px;">
         <ion-col size='6' style="padding: 0px;">
@@ -167,13 +187,7 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
     </p>   
     
     </div>
-    <ion-item *ngIf="attribute_count > 0">
-      <ion-label>Select Variant</ion-label>
-      <br>
-      <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="variant" id="variant" name="variant" #damt="ngModel" class="input1" interface="action-sheet" placeholder="Select" style="padding: 15px 10px;" (ionChange)="setVariant()">
-        <ion-select-option [value]="data1.id" *ngFor="let data1 of attribute_list">{{data1.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+   
     <div style="padding:10px;margin-top:0px;">
     	
         <p style="margin-top:20px;font-weight: bold;   

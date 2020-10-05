@@ -11,6 +11,8 @@ import { OtherService } from '../service/other.service';
 export class WalletPage implements OnInit {
 
 	txndata:any;
+	walletBalance: "";
+	cardname = "";
 	walletdata={name:'',bal:''};
 	CustomerLoginId:"";
 
@@ -32,7 +34,9 @@ export class WalletPage implements OnInit {
   Txnhistory(){
   	this.apis.wallettransaction(this.CustomerLoginId).subscribe(res=>{
   		if(res.body.status === "true"){
-  			this.txndata = res.body.transactionhistory;
+			  this.txndata = res.body.transactionhistory;
+			  this.walletBalance = res.body.pendingbalance;
+			  this.cardname = res.body.cardname;
   		}
   	})
   }

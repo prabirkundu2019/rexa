@@ -64,8 +64,8 @@ export class CartPage implements OnInit {
 			this.totalsaleprice = 0;
 			this.totalmrpprice = 0;
 			for(let i=0;i<this.cartItems.length;i++){
-				this.cartItems[i].totalsaleprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.mrp_price;
-				this.cartItems[i].totalmrpprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.display_price;
+				this.cartItems[i].totalsaleprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.display_price;
+				this.cartItems[i].totalmrpprice = this.cartItems[i].quantity*this.cartItems[i].productdetails.mrp_price;
 				this.totalsaleprice += this.cartItems[i].totalsaleprice
 				this.totalmrpprice += this.cartItems[i].totalmrpprice
 			}

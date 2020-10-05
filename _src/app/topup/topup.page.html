@@ -10,7 +10,7 @@
 <ion-content class="ion-padding editprof">
 	<form id="checkout_form" class="checkout_form" #PForm="ngForm">
 		<ion-label *ngIf="!model.topupid" class="label1">Enter Amount to Topup</ion-label>
-		<ion-input *ngIf="!model.topupid" type="text" class="input1" [(ngModel)]="model.amt" name="amt" id="amt" #amt="ngModel" placeholder="Enter Amount to Topup"></ion-input>
+		<ion-input *ngIf="!model.topupid" type="tel" class="input1" [(ngModel)]="model.amt" name="amt" id="amt" #amt="ngModel" placeholder="Enter Amount to Topup"></ion-input>
 	</form>
 	<!-- <form id="checkout_form" class="checkout_form" #PForm="ngForm">
 		<ion-label class="label1">Assigned Wallet</ion-label>

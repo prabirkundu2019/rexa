@@ -106,7 +106,7 @@ export class Tab2Page implements OnInit {
 	}
 
 	openCard(){
-		this.router.navigate(['/menu/card-category']);
+		this.router.navigate(['/menu/card-category'],{replaceUrl:true});
 	}
 
 	opennotification() {

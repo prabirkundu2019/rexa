@@ -27,12 +27,13 @@ export class SingleitemPage implements OnInit {
   totalsaleprice = 0;
   cart:boolean = false;
   cartCount = '';
-  totalmrpprice = 0;
+  totalmrpprice:any;
   refresh:any;
   CustomerLoginId='';
   pincode="";
   enquiryMsg=0;
   sliders:any=[];
+  attribute_list:any=[];
   shortDescription:boolean=false;
   longDescription:boolean=true;
   availableMsg:boolean=true;
@@ -40,7 +41,11 @@ export class SingleitemPage implements OnInit {
   isWishlist:boolean=false;
   isNotWishlist:boolean=true;
   message: "";
-	imageForSharing: "";
+  imageForSharing: "";
+  variant: "";
+  variantName: "";
+  attribute_count: 0;
+  attributePrice:any;
 
   constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService,private socialSharing: SocialSharing) {
     if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
@@ -94,7 +99,11 @@ export class SingleitemPage implements OnInit {
 
   getItemDetail(cid,id){
   	this.apis.getItemDetail(cid,id,this.CustomerLoginId).subscribe(res=>{
+      //console.log(res.body);
       this.data = res.body.productdetails;
+      this.totalmrpprice = res.body.productdetails.display_price;
+      this.attribute_list = res.body.attribute_list;
+      this.attribute_count = res.body.attribute_count;
       this.sliders = res.body.relatedproductlist;
       this.data.mrp_price = res.body.productdetails.mrp_price;
       this.activeimage.url = res.body.productdetails.image;
@@ -167,7 +176,7 @@ export class SingleitemPage implements OnInit {
   }
 
   addToCart(item){  	
-    this.apis.addToCart(this.CustomerLoginId,item.id,1).subscribe(res=>{
+    this.apis.addToCart(this.CustomerLoginId,item.id,this.totalmrpprice,this.variantName,1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         this.other.presentToast('Item added to cart','success');
@@ -178,7 +187,7 @@ export class SingleitemPage implements OnInit {
   }
 
   buyNow(item){  	
-    this.apis.addToCart(this.CustomerLoginId,item.id,1).subscribe(res=>{
+    this.apis.addToCart(this.CustomerLoginId,item.id,this.totalmrpprice,this.variantName,1).subscribe(res=>{
       this.other.isValidToken(res.body.Message);
       if(res.body.userid === this.CustomerLoginId){
         localStorage.setItem('cartcount',res.body.cartcount);
@@ -229,11 +238,27 @@ export class SingleitemPage implements OnInit {
   shareviaWhatsapp(){
 		this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
 	}
-	// shareviaFacebook(){
-	// 	this.socialSharing.shareViaFacebook("test",this.activeimage.url,null)
-	// }
+	shareviaFacebook(){
+		this.socialSharing.shareViaFacebook(null,this.activeimage.url,null)
+	}
 	shareviaTwitter(){
 		this.socialSharing.shareViaTwitter(this.data.product_name,this.activeimage.url,this.data.productlink)
-	}
+  }
+  
+  setVariant(){
+    //console.log(this.data.mrp_price);
+    var attributeList = this.attribute_list;
+    for(var i=0; i< attributeList.length; i++)
+    {
+      console.log(attributeList[i].price);
+      if(this.variant == attributeList[i].id)
+      {
+        this.variantName = attributeList[i].name;
+        this.attributePrice = attributeList[i].price;
+        this.totalmrpprice = Number(attributeList[i].price);
+      }
+      console.log(this.totalmrpprice);
+    }
+  }
 
 }

@@ -5,7 +5,7 @@
 	  </ion-buttons>
     <ion-title>
     	<div class="header_logo">
-        <div>Cards</div>
+        <div>Cards Categories</div>
       </div>
     </ion-title>
     <ion-buttons slot="end">
@@ -21,18 +21,20 @@
 
 <ion-content>
 	<ion-grid class="newitem" *ngIf="cardlists">
-  	<ion-row *ngFor="let card of cardlists; let i = index">
-  		<ion-col size="4" [routerLink]="['/menu/wallet-upgrade',card.id]">
-  			<ion-img [src]="card.image?card.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
+  	  <ion-row *ngFor="let card of cardlists; let i = index">
+  		<ion-col size="12" [routerLink]="['/menu/wallet-upgrade',card.id]">
+        <ion-img [src]="card.image?card.image:'assets/images/product_1.jpg'" alt="" style="width:100%;border-radius:10px;"></ion-img>
+        <Br>
+          <a>{{ card.catname }}</a>
   		</ion-col>
-  		<ion-col size="8">
+  		<!-- <ion-col size="8">
   			<div class="product_title">
   				<a>{{ card.catname }}</a>
   			</div>
         <div class="product_button ml-auto mr-auto trans_200">
           <ion-button *ngIf="this.CustomerLoginId" [routerLink]="['/menu/wallet-upgrade',card.id]">Deatils</ion-button>
         </div>
-  		</ion-col>
+  		</ion-col> -->
   	</ion-row>
   </ion-grid>
   <div class="empty-cart" *ngIf="cardlists?.length == 0">

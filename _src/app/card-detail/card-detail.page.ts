@@ -32,6 +32,7 @@ export class CardDetailPage implements OnInit {
   refresh:any;
   CustomerLoginId='';
   topupid: "";
+  userBought = '';
 
   constructor(public router:Router,private apis:ApiService,private modalController:ModalController,private other:OtherService,private iab: InAppBrowser) {
     if(localStorage.getItem('userdata') != "undefined")
@@ -64,9 +65,10 @@ export class CardDetailPage implements OnInit {
   }
 
   getCardDetail(id){
-  	this.apis.getWalletCardDetails(id).subscribe(res=>{
+  	this.apis.getWalletCardDetails(id, this.CustomerLoginId).subscribe(res=>{
       this.data = res.body.cardlist;
       this.topuplist = res.body.topuplist;
+      this.userBought = res.body.user_bought;
       console.log(this.data);
   	})
   }

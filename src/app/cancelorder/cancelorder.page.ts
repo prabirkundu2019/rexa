@@ -18,9 +18,7 @@ export class CancelorderPage implements OnInit {
   constructor(private other:OtherService,private apis:ApiService,private model:ModalController) { }
 
   ngOnInit() {
-  	for(let i=0;i<this.order.BuyNowOrderItemDetailsList.length;i++){
-  		this.order.BuyNowOrderItemDetailsList[i].checked = false;
-  	}
+  	console.log(this.order)
   }
 
   incordec(val){
@@ -32,25 +30,21 @@ export class CancelorderPage implements OnInit {
   }
 
   cancel(){
-  	if(!this.Qty){
-  		this.other.presentToast('Select atleast one Item to delete !!','dark');
-  		return;
-  	}else if(!this.reason){
-  		this.other.presentToast('Enter the reason for cancelation','dark');
-  		this.text.setFocus();
-  		return;
-  	}
+  	// if(!this.Qty){
+  	// 	this.other.presentToast('Select atleast one Item to delete !!','dark');
+  	// 	return;
+  	// }else if(!this.reason){
+  	// 	this.other.presentToast('Enter the reason for cancelation','dark');
+  	// 	this.text.setFocus();
+  	// 	return;
+  	// }
   	let iid;
-  	for(let i=0;i<this.order.BuyNowOrderItemDetailsList.length;i++){
-  		iid = iid?iid+','+this.order.BuyNowOrderItemDetailsList[i].ID:this.order.BuyNowOrderItemDetailsList[i].ID;
-  	}
-  	this.apis.cancelOrder(this.order.BuyNowMainOrderList[0].OrderID,iid,this.reason).subscribe(res=>{
-      this.other.isValidToken(res.body.Message);
-  		if(res.body.Code === 1000){
-	  		this.other.ordercancel();
-	  		this.other.presentToast('Order canceled !!','success');
-	  		this.model.dismiss();
+  	this.apis.cancelOrder(this.order.id).subscribe(res=>{
+		if(res.status === "true"){
+			this.other.presentToast('Order canceled !!','success');
+			this.model.dismiss();
 	  	}
+  		
   	})
   }
 

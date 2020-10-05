@@ -32,7 +32,7 @@
         <div class="product_price" *ngIf="cat?.rate.length"><span class="cut">&#8377;{{card.price}}</span></div>
         <div class="product_button ml-auto mr-auto trans_200">
           <ion-button *ngIf="this.CustomerLoginId" [routerLink]="['/menu/carddetail',card.id]">Buy Now</ion-button>
-          <ion-button *ngIf="!this.CustomerLoginId" [routerLink]="['/menu/carddetail',card.id]">Buy Now</ion-button>
+          <ion-button *ngIf="!this.CustomerLoginId" [routerLink]="['/login']">Buy Now</ion-button>
         </div>
   		</ion-col>
   	</ion-row>

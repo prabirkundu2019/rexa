@@ -23,7 +23,7 @@
 	<ion-grid class="newitem" *ngIf="cardlists">
   	<ion-row *ngFor="let card of cardlists; let i = index">
   		<ion-col size="4" [routerLink]="['/menu/carddetail',card.id]">
-  			<ion-img [src]="card.image?card.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
+  			<ion-img [src]="card.image?card.image:'assets/images/product_1.jpg'" alt="" ></ion-img>
   		</ion-col>
   		<ion-col size="8">
   			<div class="product_title">
@@ -31,8 +31,8 @@
   			</div>
         <div class="product_price" *ngIf="cat?.rate.length"><span class="cut">&#8377;{{card.price}}</span></div>
         <div class="product_button ml-auto mr-auto trans_200">
-          <ion-button *ngIf="this.CustomerLoginId" [routerLink]="['/menu/carddetail',card.id]">Deatils</ion-button>
-          <ion-button *ngIf="!this.CustomerLoginId" [routerLink]="['/menu/carddetail',card.id]">Deatils</ion-button>
+          <ion-button *ngIf="this.CustomerLoginId" [routerLink]="['/menu/carddetail',card.id]">Buy Now</ion-button>
+          <ion-button *ngIf="!this.CustomerLoginId" [routerLink]="['/login']">Buy Now</ion-button>
         </div>
   		</ion-col>
   	</ion-row>

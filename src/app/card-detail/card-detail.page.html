@@ -29,7 +29,7 @@
         <ion-select-option [value]="data.id" *ngFor="let data of topuplist">{{data.catname}}</ion-select-option>
       </ion-select>
     </ion-item>    
-    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;">
+    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;" *ngIf="userBought == 'false'">
       <ion-button (click)=buy() style="width: 170px;
       border-radius: 5px;
       white-space: normal;
@@ -44,6 +44,9 @@
       text-decoration: none;
       height: 44px;
       margin-top: 15px;">Buy Now</ion-button>
+    </div>
+    <div class="product_button ml-auto mr-auto trans_200" style="text-align:center;" *ngIf="userBought == 'true'">
+      You already bought this card
     </div>
     <hr>
     

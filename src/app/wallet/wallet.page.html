@@ -18,9 +18,20 @@
 </ion-header>
 
 <ion-content class="home">
-	<div class="col displayhead">
-		Wallet : Rexa<br>
-		<!-- <span class="ng-star-inserted"> Balance : &#8377; {{walletdata.bal}}</span><br/> -->
+	
+	<div class="col displayhead" style="margin-bottom: 0px; padding-bottom: 0px;">
+		<div style="float:left;width:50%;">
+			Wallet : Rexa<br>
+			 <span class="ng-star-inserted"> Balance : &#8377; {{walletBalance}}</span>	
+		</div>
+		<div style="float:left;width:50%;text-align:center;">
+			Active Card<br>
+			 <span class="ng-star-inserted"> {{cardname}}</span>	
+		</div>
+	</div>
+
+	<div class="col displayhead" style="padding-top: 0px;">
+	
 		<ion-button class="left" fill="clear" size="small" routerLink="/menu/topup/add" style="background : #ec2664;">Topup Wallet</ion-button>
 		<ion-button class="right" fill="clear" size="small" routerLink="/menu/card-category">Rexa Upgrade Card</ion-button>
 	</div>

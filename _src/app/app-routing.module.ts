@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'mainwallet', loadChildren: './mainwallet/mainwallet.module#MainwalletPageModule' },
   { path: 'milktopup', loadChildren: './milktopup/milktopup.module#MilktopupPageModule' },
   { path: 'wallet-upgrade', loadChildren: './wallet-upgrade/wallet-upgrade.module#WalletUpgradePageModule' },
-  { path: 'offer', loadChildren: './offer/offer.module#OfferPageModule' },
+  //{ path: 'offer', loadChildren: './offer/offer.module#OfferPageModule' },
   { path: 'referral', loadChildren: './referral/referral.module#ReferralPageModule' },
   { path: 'mainnotification', loadChildren: './mainnotification/mainnotification.module#MainnotificationPageModule' },
   { path: 'legel/:type', loadChildren: './legel/legel.module#LegelPageModule' },

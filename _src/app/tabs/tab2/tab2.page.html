@@ -19,10 +19,10 @@
       			<ion-badge *ngIf="cart" class="badge">{{cartCount}}</ion-badge>
 			</ion-button>
             
-			<ion-button routerLink="/menu/profile" *ngIf="this.CustomerLoginId">
+			<ion-button *ngIf="this.CustomerLoginId">
 				<ion-icon name="notifications"></ion-icon>
 			</ion-button>
-            <ion-button routerLink="/login" *ngIf="!this.CustomerLoginId">
+            <ion-button  *ngIf="!this.CustomerLoginId">
 				<ion-icon name="notifications"></ion-icon>
 			</ion-button> 
             
