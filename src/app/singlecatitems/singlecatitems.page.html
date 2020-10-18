@@ -48,8 +48,8 @@
       <ion-col size="4" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
         <ion-img [src]="cat.image?cat.image:'assets/images/product_1.jpg'" alt="" style="height: 120px;"></ion-img>
       </ion-col>
-      <ion-col size="8" [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">
-        <div class="product_title" style="line-height: 14px; margin-top: 15px;"> <a >{{ cat.pname }}<br />
+      <ion-col size="8">
+        <div class="product_title" style="line-height: 14px; margin-top: 15px;"> <a [routerLink]="['/menu/singleitem',replacespace(cat.product_slug),cat.catid,cat.id]">{{ cat.pname }}<br />
           <br />
           <span style="font-size:16px;font-weight:bold;">&#8377; {{ cat.display_price }}</span> &nbsp;&nbsp; 
           <span *ngIf="cat.discount!=0" style="font-size:12px;font-weight:bold;color: #999;text-decoration: line-through;" >&#8377; {{ cat.mrp_price }}</span> &nbsp;&nbsp; 
@@ -57,7 +57,7 @@
           <div class="in-flx" style="width: 100%;margin-top: 10px;">
           <div class="qty mt-1 in-flx" style="">
             <span class="minus bg-dark" (click)="dec(i)">-</span>
-            <ion-input type="number" class="count" readonly name="qty" style="width: 50px;
+            <ion-input type="number" class="count" readonly name="qty" [value]="cat.product_quantity" style="width: 50px;
     text-align: center;
     --padding-start: 6px;
     font-size: 18px;

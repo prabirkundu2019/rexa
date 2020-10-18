@@ -238,6 +238,7 @@ export class SingleitemPage implements OnInit {
   }
 
   shareviaWhatsapp(){
+    this.other.presentLoading();
     var options = {
       message: this.data.product_name,
       files: [this.activeimage.url], // an array of filenames either locally or remotely
@@ -245,7 +246,9 @@ export class SingleitemPage implements OnInit {
       chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title
       //appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
     };
-    this.socialSharing.shareWithOptions(options)
+    this.socialSharing.shareWithOptions(options).then(() => {
+      this.other.dismissLoading();
+    })
     
 		//this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
 	}

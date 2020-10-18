@@ -11,6 +11,7 @@ import { OtherService } from '../service/other.service';
 export class MilktopupPage implements OnInit {
 
 	txndata:any;
+	cardname:any;
 	walletdata={name:'',bal:''};
 	CustomerLoginId:"";
 
@@ -43,7 +44,8 @@ export class MilktopupPage implements OnInit {
   Txnhistory(){
   	this.apis.Txnhistory(this.CustomerLoginId).subscribe(res=>{
   		if(res.body.status === "true"){
-  			this.txndata = res.body.history;
+			  this.txndata = res.body.history;
+			  this.cardname = res.body.cardname;
   		}
   	})
   }

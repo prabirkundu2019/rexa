@@ -21,12 +21,10 @@ export class CancelorderPage implements OnInit {
   	console.log(this.order)
   }
 
-  incordec(val){
-  	if(val){
-  		this.Qty+=1;
-  		return;
-  	}
-  	this.Qty-=1;
+  updateReason(val)
+  {
+	console.log(val.detail.value);
+	this.reason = val.detail.value;
   }
 
   cancel(){
@@ -39,8 +37,8 @@ export class CancelorderPage implements OnInit {
   	// 	return;
   	// }
   	let iid;
-  	this.apis.cancelOrder(this.order.id).subscribe(res=>{
-		if(res.status === "true"){
+  	this.apis.cancelOrder(this.order.id, this.reason).subscribe(res=>{
+		if(res.body.status == "true"){
 			this.other.presentToast('Order canceled !!','success');
 			this.model.dismiss();
 	  	}

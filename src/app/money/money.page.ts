@@ -16,7 +16,7 @@ export class MoneyPage implements OnInit {
   message: "";
 	imageForSharing: "";
 
-  constructor(public router:Router, private apis:ApiService,private socialSharing: SocialSharing) { 
+  constructor(public router:Router, private apis:ApiService,private socialSharing: SocialSharing, private other:OtherService) { 
     if("userdata" in localStorage && localStorage.getItem('userdata') != "undefined")
     {
       this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
@@ -52,8 +52,20 @@ export class MoneyPage implements OnInit {
   }
 
   shareviaWhatsapp(){
+    this.other.presentLoading();
     var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link http://rexaplanet.com/";
-		this.socialSharing.shareViaWhatsApp(message,this.imageForSharing,null)
+    var options = {
+      message: message,
+      //files: [this.imageForSharing], // an array of filenames either locally or remotely
+      //url: "http://www.rexaplanet.com/",
+      chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title
+      //appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
+    };
+    this.socialSharing.shareWithOptions(options).then(() => {
+      this.other.dismissLoading();
+    })
+    
+		//this.socialSharing.shareViaWhatsApp(this.data.product_name,this.activeimage.url,this.data.productlink)
 	}
 	shareviaFacebook(){
     var message = "Register with below referral code "+this.referenceCode+" and get cashback upto 100. Install, Register and use the referral code. Click this link http://rexaplanet.com/";

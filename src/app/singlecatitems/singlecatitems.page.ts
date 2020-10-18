@@ -18,7 +18,8 @@ export class SinglecatitemsPage implements OnInit {
 	catName:any;
   cid:any;
   subcatid: any;
-	items:any;
+  items:any;
+  brands:any;
 	customPopoverOptions: any = {
     	header: 'Select Quantity'
  	};
@@ -27,9 +28,10 @@ export class SinglecatitemsPage implements OnInit {
 	filter:any;
 	order:any;
 	cart:boolean = false;
-	cartCount = '';
+  cartCount = '';
+  action:any;
 	filterapplied:any;
-	CustomerLoginId='';
+	CustomerLoginId:any;
   selectedOption=0;
   listHidden=false;
   gridHidden=true;
@@ -41,7 +43,7 @@ export class SinglecatitemsPage implements OnInit {
     {
       this.CustomerLoginId = JSON.parse(localStorage.getItem('userdata')).id;	
       if (this.CustomerLoginId === undefined){
-        this.CustomerLoginId = '';
+        this.CustomerLoginId = 0;
       }
     }
 		this.other.getrefresh().subscribe(res=>{
@@ -116,6 +118,55 @@ export class SinglecatitemsPage implements OnInit {
     return name.replace(/\s/g,'_');
   }
 
+  inc(i){
+    if(this.CustomerLoginId == 0 || this.CustomerLoginId == "" || this.CustomerLoginId == undefined)
+    {
+      this.router.navigate(['/login'],{replaceUrl:true});
+    }else{
+      this.items[i].product_quantity ++;
+      if(this.items[i].product_quantity < 0)
+      {
+        this.items[i].product_quantity == 0;
+      }
+
+      if(this.items[i].cart_status == 'false'){
+        this.action = "add";
+      }else{
+        this.action = "update";
+      }
+      this.updateCartItem(this.action,i,this.items[i].id,this.items[i].product_quantity);
+    }
+  }
+  
+  dec(i){
+    if(this.CustomerLoginId == 0 || this.CustomerLoginId == "" || this.CustomerLoginId == undefined)
+    {
+      this.router.navigate(['/login'],{replaceUrl:true});
+    }else{
+      this.items[i].product_quantity --;
+      if(this.items[i].product_quantity < 0)
+      {
+        this.items[i].product_quantity == 0;
+      }
+      
+      if(this.items[i].cart_status == 'false'){
+        this.action = "add";
+      }else{
+        this.action = "update";
+      }
+      this.updateCartItem(this.action,i,this.items[i].id,this.items[i].product_quantity);
+    }
+  }
+
+  updateCartItem(action, i, id, qty){
+    if(action == "add")
+    {
+      this.apis.addToCart(this.CustomerLoginId,id,this.items[i].display_price, "", qty).subscribe(res=>{});
+    }else{
+  	  this.apis.updateCartItem(this.CustomerLoginId,id,qty).subscribe(res=>{})
+    }
+  }
+
   getItemswithFilter(filter,order){
     console.log(filter);
     this.items = [];
@@ -135,12 +186,13 @@ export class SinglecatitemsPage implements OnInit {
 
   getItems(){  	
 	
-  	this.apis.getItems(this.cid,this.subcatid).subscribe(res=>{
+  	this.apis.getItems(this.cid,this.subcatid,this.CustomerLoginId).subscribe(res=>{
       console.log(res.body.productlist.length);
       //this.other.dismissLoading();
       //this.items = [];
       this.ItemRateListMinMax = res.body.ItemRateListMinMax;
       this.items = res.body.productlist;
+      this.brands = res.body.brandlist;
       console.log(this.items);
   		for(let i=0;i<res.body.productlist.length;i++){
         this.items[i].cartQuantity = 1;
@@ -165,6 +217,7 @@ export class SinglecatitemsPage implements OnInit {
       // cssClass:'incdecmodal',
       componentProps:{
         'data':this.ItemRateListMinMax,
+        'brands':this.brands,
         'filter':this.filter,
         'order':this.order
       }

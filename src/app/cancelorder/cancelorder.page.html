@@ -6,7 +6,7 @@
 		<ion-list-header>
 	    <ion-label style="margin: 0px;font-size: 18px;">Why do you want to cancel?</ion-label>
 	  </ion-list-header>
-        <ion-radio-group value="reason">
+        <ion-radio-group value="reason" (ionChange)="updateReason($event)">
             <ion-item>
                 <ion-label style="margin: 0px">
                     <ion-grid>
@@ -16,7 +16,7 @@
                     </ion-grid>
                 </ion-label>
                  <!--[(ngModel)]="data.checked" (ionChange)="incordec(data.checked)"-->
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="I needed earlier delivery"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -26,7 +26,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="I was trying out grofers"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -36,7 +36,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="Forgot to add/remove items"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -46,7 +46,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="I don't need the products anymore"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -56,7 +56,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="I needed earlier delivery"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -66,7 +66,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="Not available to receive orders"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label style="margin: 0px">
@@ -76,7 +76,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-label>
-                <ion-radio slot="start"></ion-radio>
+                <ion-radio slot="start" value="I selected the wrong address"></ion-radio>
             </ion-item>
         </ion-radio-group>
 	</div>

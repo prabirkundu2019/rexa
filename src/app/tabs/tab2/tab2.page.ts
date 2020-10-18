@@ -157,7 +157,7 @@ export class Tab2Page implements OnInit {
 	}
 
 	getItems() {
-		this.apis.getItems(0, 'IsMobile=1').subscribe(res => {
+		this.apis.getItems(0, 'IsMobile=1',0).subscribe(res => {
 			this.other.isValidToken(res.body.Message);
 			this.newitems = [];
 			this.page = 2;

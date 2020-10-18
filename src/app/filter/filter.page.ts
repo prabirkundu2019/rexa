@@ -11,8 +11,10 @@ export class FilterPage implements OnInit {
 
 	@ViewChild('pricerange',{static:false}) pricerange:any;
 	@Input() data:any;
+	@Input() brands:any;
 	@Input() filter:any;
 	@Input() order:any;
+	brand:any;
 	settimeout:any;
 	totalitems:any;
 
@@ -33,10 +35,16 @@ export class FilterPage implements OnInit {
   	})
   }
 
+  setBrand(){
+	let filter = 'minprice='+this.pricerange.value.lower+'&maxprice='+this.pricerange.value.upper+'&brandid='+this.brand;
+	this.filter = filter;
+	this.other.setFilter(this.filter,this.order);
+  }
+
   setFilter(){
   	clearTimeout(this.settimeout);
   	this.settimeout = setTimeout(()=>{
-		let filter = 'minprice='+this.pricerange.value.lower+'&maxprice='+this.pricerange.value.upper;
+		let filter = 'minprice='+this.pricerange.value.lower+'&maxprice='+this.pricerange.value.upper+'&brandid='+this.brand;
 		this.filter = filter;
 	  	this.other.setFilter(this.filter,this.order);
   	},700);

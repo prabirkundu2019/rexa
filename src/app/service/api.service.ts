@@ -59,8 +59,8 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/subcategory/'+pid,{observe:'response'});
   }
 
-  getItems(cid = 0,subcatid):Observable<HttpResponse<any>>{
-    return this.http.get<any>(environment.baseurl1+'/productlist/'+cid+'/'+subcatid,{observe:'response'});
+  getItems(cid = 0,subcatid,userId):Observable<HttpResponse<any>>{
+    return this.http.get<any>(environment.baseurl1+'/productlist/'+cid+'/'+subcatid+"?userid="+userId,{observe:'response'});
   }
 
   getItemsWithFilter(cid = 0,filter=null,order=null):Observable<HttpResponse<any>>{
@@ -334,8 +334,9 @@ export class ApiService {
     return this.http.get<any>(environment.baseurl1+'/category?WorkDomain=rexaplanet.com',{observe:'response'}); 
   }
 
-  cancelOrder(oid){
-    return this.http.post<any>(environment.baseurl1+'/cancelorder/'+oid,{observe:'response'});
+  cancelOrder(oid, reason):Observable<HttpResponse<any>>{
+    let formadata = {"reason" : reason};
+    return this.http.post<any>(environment.baseurl1+'/cancelorder/'+oid,formadata,{observe:'response'});
   }
 
   rateAndReview(formdata,itemId=null){

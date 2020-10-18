@@ -30,9 +30,9 @@
                     <ion-img src="{{activeimage.url}}"></ion-img>
                 </ion-slide>
              </ng-container>
-			 <ng-container *ngFor="let data of pictures">
+			 <ng-container *ngFor="let data1 of pictures">
 				<ion-slide>                  
-                    <ion-img src="{{data.image}}"></ion-img>
+                    <ion-img src="{{data1.image}}"></ion-img>
                 </ion-slide>
             </ng-container>
 		</ion-slides>
@@ -97,7 +97,7 @@ box-shadow: 0px -3px 11px -3px rgba(0,0,0,0.31);border-radius:10px;">
         
     </div>-->
     <ion-item *ngIf="attribute_count > 0" style="margin: 15px 0px;">
-      <ion-label>Select Variant</ion-label>
+      <ion-label>Select Weight</ion-label>
       <br>
       <ion-select [interfaceOptions]="customPopoverOptions" [(ngModel)]="variant" id="variant" name="variant" #damt="ngModel" class="input1" interface="action-sheet" placeholder="Select" style="padding: 15px 10px;" (ionChange)="setVariant()">
         <ion-select-option [value]="data1.id" *ngFor="let data1 of attribute_list">{{data1.name}}</ion-select-option>
